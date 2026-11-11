@@ -1,0 +1,5 @@
+WARNING: Your project contains .lean files but no .lake folder.
+Aristotle works better with access to your project's dependencies.
+Did you forget to run `lake build`?
+
+Project created: c0959aa3-42e4-405d-a61c-e126ef6c06cc

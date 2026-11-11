@@ -1,0 +1,395 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[a4paper,margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\raggedbottom
+\hypersetup{
+  pdftitle={Finite Pauli Densities and Exact Compatibility},
+  pdfauthor={}
+}
+
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cG}{\mathcal G}
+\newcommand{\cS}{\mathcal S}
+\newcommand{\bbC}{\mathbb C}
+\newcommand{\id}{\mathbf 1}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\rhoF}{\rho_F}
+\newcommand{\PF}{P_F}
+
+\title[Finite Pauli density realization]{Finite Pauli Densities and Exact Compatibility\\
+\large A checked finite-volume realization for the stabilizer finite-fiber proof}
+\author{}
+\date{August 3, 2026}
+
+\begin{document}
+
+\begin{abstract}
+This note records Investigation~I003, the finite-volume realization layer for
+the finite-fiber formalization.  It machine-checks explicit qubit Pauli
+matrices, tensor-product trace orthogonality, finite signed stabilizer group
+averages, their trace-normalized density matrices, positivity and normalization
+of the associated finite functional, and its traciality after compression to
+the finite code space.  It also machine-checks finite partial trace for
+signed Pauli sums.  Its generic partial-trace layer concerns normalized signed
+Pauli expressions: an explicit survivor equality records one required part of
+the conditional actual-density bridge described below, rather than granting
+arbitrary term families the density properties.
+
+These results establish the actual finite-group density calculation and the
+algebraic partial-trace calculation in the current Overleaf proof.  They also
+establish the conditional bridge from actual nested finite stabilizer groups to
+the generic expression data: a supplied tensor-coordinate decomposition,
+injective local-group inclusion, and exact survivor iff-condition imply
+compatibility of the positive, trace-one local densities.  They do not derive
+that contract from the countable-lattice local-group definition.  The checked
+initial/final $\operatorname{Fin}$ coordinate split now yields typed unital
+star-algebra maps between every ordered pair of finite volumes.  Their
+identity, composition, injectivity, and operator-norm preservation are
+checked, and they form a directed system.  At a target written as an
+explicitly added block, the endpoint map is
+also checked equal to the earlier length-indexed recursion, so its
+signed-Pauli identity-padding calculation transfers without an implicit
+identification.  The compatible values descend to its module direct limit as a
+complex-linear functional.  This does not construct a noncommutative
+star-algebra colimit on that quotient, the norm-closed quasi-local algebra or
+a state on it, or remove the explicit GNS-orbit and corner-traciality
+hypotheses in the central-fiber theorem of Investigation~I002.
+\end{abstract}
+
+\maketitle
+
+\section{Contract and relation to the manuscript}
+\label{sec:contract}
+
+The source proof is the live manuscript
+\path{writing/overleaf_prl_stabilizer_region_algebras/main.tex}.
+Its finite local construction is in the appendix ``Infinite Stabilizer
+Systems'': local groups and the code projector occur in lines 881--902, the
+density formula in lines 903--914, and the partial-trace compatibility
+calculation in lines 916--949.  The support-corner conclusion consuming the
+GNS data is formalized separately in Investigation~I002.
+
+The present I003 Lean source lies in the following package directory:
+\begin{center}
+  \path{formalization_finite_fibers/FiniteFiber/}
+\end{center}
+Its modules are:
+\begin{itemize}[noitemsep,topsep=0.2em]
+  \item \path{FinitePauli.lean};
+  \item \path{FiniteQubitMatrix.lean};
+  \item \path{FiniteDensity.lean};
+  \item \path{FinitePauliStabilizer.lean};
+  \item \path{FiniteLocalPauli.lean};
+  \item \path{FiniteNestedPauli.lean};
+  \item \path{FiniteLocalGroupSupport.lean};
+  \item \path{ProjectivePauliLattice.lean};
+  \item \path{FullPauliLattice.lean};
+  \item \path{FiniteTensorMatrixChain.lean};
+  \item \path{FiniteNestedTensorState.lean};
+  \item \path{FiniteStabilizerStateChain.lean};
+  \item \path{SequentialLocalFunctional.lean};
+  \item \path{FinitePauliGNS.lean}.
+\end{itemize}
+No
+theorem below uses a project-local axiom,
+placeholder, or an opaque stabilizer-state construction.
+
+\section{Finite signed-Pauli stabilizers}
+\label{sec:finite_stabilizers}
+
+For $n$ qubits, the Lean development represents the computational basis by a
+finite type of cardinality $2^n$ and defines the four Hermitian one-qubit
+matrices $id,X,Y,Z$.  It constructs the recursively parenthesized tensor
+product $P(a)$ of a label function $a:\operatorname{Fin}(n)\to
+\{\id,X,Y,Z\}$ and proves
+\begin{equation}
+  \Tr(P(a))=0
+  \quad\text{if some }a(i)\neq\id,
+  \qquad
+  \Tr(P(\id,\ldots,\id))=2^n.
+  \label{eq:pauli_trace_orthogonality}
+\end{equation}
+
+The finite stabilizer interface is not an unstructured assertion that a set
+is a stabilizer group.  It contains a group homomorphism
+\begin{equation}
+  r:G\longrightarrow \operatorname{Mat}_{2^n}(\bbC),
+  \label{eq:finite_representation}
+\end{equation}
+an explicit sign and Pauli label for every $g\in G$, injectivity of $r$, and
+the condition $r(g)\neq-\id$ for every $g$.  Thus a nonidentity $g$ cannot be
+the all-identity string with either sign, and the checked conclusion is
+\begin{equation}
+  g\neq e\quad\Longrightarrow\quad\Tr(r(g))=0.
+  \label{eq:nonidentity_traceless}
+\end{equation}
+The self-adjointness of every represented element is also derived from its
+signed Pauli form.
+
+For finite $G$, define
+\begin{equation}
+  P_G=\frac{1}{\lvert G\rvert}\sum_{g\in G}r(g),
+  \qquad
+  \rho_G=2^{-n}\sum_{g\in G}r(g).
+  \label{eq:finite_projector_density}
+\end{equation}
+The checked results give
+\begin{equation}
+  P_G^2=P_G=P_G^*,
+  \qquad
+  \Tr(P_G)=\frac{2^n}{\lvert G\rvert},
+  \qquad
+  \Tr(\rho_G)=1,
+  \qquad
+  \rho_G=\Tr(P_G)^{-1}P_G.
+  \label{eq:finite_density_identities}
+\end{equation}
+In particular $P_G\neq0$, and $\rho_G$ is positive semidefinite.  The last
+assertion is proved from the explicit self-adjoint idempotence of $P_G$, not
+by an unproved positivity axiom.
+
+\section{Finite state and code-corner trace}
+\label{sec:finite_state}
+
+The finite functional is defined by
+\begin{equation}
+  \omega_G(A)=\Tr(\rho_G A).
+  \label{eq:finite_state_functional}
+\end{equation}
+Lean proves its complex linearity, normalization, and positivity on every
+positive finite matrix.  In particular,
+\begin{equation}
+  \omega_G(\id)=1,
+  \qquad
+  \omega_G(P_G)=1,
+  \qquad
+  \omega_G(A^*A)\geq0.
+  \label{eq:finite_state_properties}
+\end{equation}
+The functional is bundled as a positive complex-linear map for the finite
+matrix order used in the proof.
+
+The manuscript later relies on ordinary matrix-trace cyclicity after
+compression to the local code space.  That step is now also checked:
+\begin{equation}
+  \omega_G\bigl((P_GAP_G)(P_GBP_G)\bigr)
+  =
+  \omega_G\bigl((P_GBP_G)(P_GAP_G)\bigr).
+  \label{eq:finite_corner_traciality}
+\end{equation}
+The proof uses only $P_G^2=P_G$, the formula
+$\rho_G=\Tr(P_G)^{-1}P_G$, and cyclicity of the finite matrix trace.  This is
+the finite-dimensional precursor of the corner-traciality field in I002; it
+is not yet the strong-operator extension to $q\cM q$.
+
+\section{Signed partial trace and exact survivor condition}
+\label{sec:partial_trace}
+
+For an $n$-qubit retained subsystem and an $m$-qubit discarded subsystem, the
+finite partial trace is defined entrywise.  For a signed tensor-product Pauli
+term, Lean proves
+\begin{equation}
+  \Tr_{\mathrm{right}}\bigl(\varepsilon\,P(a)\otimes P(b)\bigr)
+  =
+  \begin{cases}
+    2^m\,\varepsilon\,P(a),& b=(\id,\ldots,\id),\\
+    0,&\text{otherwise},
+  \end{cases}
+  \label{eq:signed_pauli_partial_trace}
+\end{equation}
+where $\varepsilon\in\{+1,-1\}$.  Keeping $\varepsilon$ is essential:
+consistent stabilizer groups can contain negative Hermitian Pauli strings,
+even though they cannot contain $-\id$.
+
+For any finite family of signed terms, partial trace therefore returns the
+normalized signed-Pauli expression over precisely the right-identity terms.
+The formal expression-compatibility structure contains the explicit equality
+\begin{equation}
+  T_{F'}\cap\{g:\text{$g$ is identity on }F'\setminus F\}=T_F.
+  \label{eq:explicit_survivor_equality}
+\end{equation}
+Under \eqref{eq:explicit_survivor_equality}, the checked conclusion is
+\begin{equation}
+  \Tr_{F'\setminus F}(E_{F'})=E_F.
+  \label{eq:checked_expression_compatibility}
+\end{equation}
+Here $E_{F'}$ and $E_F$ are only normalized signed-Pauli expressions.  This
+is exactly the algebraic division in the manuscript calculation: Pauli trace
+orthogonality proves survival, while the definition of the local stabilizer
+groups must identify the survivors with $\cG_{\cS,F}$.  The current Lean
+structure makes the latter requirement visible rather than silently folding it
+into a generic ``stabilizer'' predicate.  It does not supply a group law,
+positivity, or trace-one statement for arbitrary finite term families.
+
+The new module \path{FiniteNestedPauli.lean} supplies the missing finite
+bridge at an explicit conditional level.  Its input consists of actual finite
+larger and smaller stabilizer groups, a tensor-coordinate equivalence, a
+decomposition of every larger-group element into signed left/right Pauli
+labels, an injective inclusion of the smaller group, and the iff-condition
+that the right-identity elements are exactly the included smaller group.  It
+then checks
+\begin{equation}
+  \Tr_{F'\setminus F}(\rho_{F'})=\rho_F,
+  \label{eq:checked_actual_density_compatibility}
+\end{equation}
+in those tensor coordinates.  The reindexed larger density is also proved
+positive semidefinite and trace-one.  Thus the generic expressions in
+\eqref{eq:checked_expression_compatibility} are now identified with actual
+finite density matrices under the displayed nested-group contract.  What is
+not yet formalized is its full derivation from
+$\cG_{\cS,F}=\cG_{\cS}\cap\cA_F$ on a countable lattice.
+
+The checked refinement \path{FiniteLocalGroupSupport.lean} isolates one
+precise part of that derivation.  Given a finite-support map with its subgroup
+closure laws, together with the condition that the discarded labels are all
+identity exactly when support is contained in the smaller region, it defines
+the two local groups by support containment.  It then derives their canonical
+inclusion and the survivor iff-condition used above.  Thus those two clauses
+are no longer independent fields once such support data is supplied.  The
+support realization itself, the Pauli-coordinate factorization, and the
+discarded-label detection condition remain inputs to be constructed from the
+actual countable-lattice Pauli group and its local algebras.
+
+The algebraic normal-form modules now supply this discarded-label detection
+for their own syntactic support, when the finite complement is explicitly
+enumerated.  More precisely, the projective $X/Z$ coordinates are assigned
+the canonical Hermitian labels $\id,X,Y,Z$, and a site belongs to the support
+exactly when its label is not $\id$.  This records the survivor calculation
+for an enumerated complement without an extra hypothesis.  It does not
+represent the central $\mathbb Z/4$ phase of a full normal-form word as a
+matrix phase, so it is not a realization of the full Pauli group or of the
+manuscript's local matrix algebra.
+
+The finite-coordinate refinement makes the restriction calculation usable in
+the physical ordered-qubit convention.  The checked equivalence between the
+recursive computational basis and functions on $\operatorname{Fin}(n)$ splits
+the first $n$ and final $m$ labels explicitly.  The tensor inclusion is then
+the reindexed map $A\mapsto A\otimes\id$, and Lean checks its trace adjointness
+with the right partial trace.  Combining this with
+\eqref{eq:checked_actual_density_compatibility} proves equality of the actual
+finite state functionals on one inclusion.  Longer maps are defined by
+recursion from those physical one-site embeddings, and a stepwise compatible
+family has the checked equality of state values along every displayed
+sequential transition.
+
+The module \path{SequentialLocalFunctional.lean} then uses those equalities to
+define a complex-linear functional on the corresponding
+\texttt{Module.DirectLimit}.  The finite component maps are checked injective,
+operator-norm-preserving unital star-algebra homomorphisms with identity and
+composition laws, so the quotient is now a module direct limit of a genuine
+directed system.  The
+endpoint-to-added-block bridge transfers the actual signed-Pauli padding
+formula to these typed maps.  Mathlib's module-colimit construction still
+supplies no multiplication or star operation on this noncommutative quotient.
+Positivity there and norm completion remain separate obligations.  Accordingly
+the new quotient is not called a quasi-local $C^*$-algebra and its functional
+is not called a global state.
+
+\section{Bridge to the support-corner theorem}
+\label{sec:bridge}
+
+The finite stabilizer representation can be transported through any unital
+star-algebra representation.  The checked image of the group average is the
+image of $P_G$.  Consequently, once an actual quasi-local GNS representation
+has supplied the represented local stabilizers, this finite construction is
+the same group-average input consumed by the decreasing-support theorem of
+I002.  It is not a second, incompatible notion of local support.
+
+The separate package module \path{GNSVector.lean} also supplements
+mathlib's generic GNS construction.  For any supplied positive linear
+functional on a unital $C^*$-algebra, the image of the unit reconstructs that
+functional as a vector coefficient and has dense represented-algebra orbit;
+it has norm one if the functional is normalized.  This does not construct the
+compatible quasi-local functional from the finite densities or prove that the
+represented local stabilizers fix its vector.
+
+At finite volume, \path{FinitePauliGNS.lean} applies this construction to the
+actual stabilizer density.  It derives that each represented stabilizer has
+zero squared deviation in its own finite state and hence fixes the resulting
+GNS vector.  This is a finite-dimensional statement; it does not provide the
+compatible countable-lattice state needed to identify a global GNS vector.
+
+The following dependencies are now checked:
+\begin{equation}
+  \begin{aligned}
+    \text{signed Pauli data}
+    &\longrightarrow (P_G,\rho_G,\omega_G) \\
+    &\longrightarrow \text{finite code-corner traciality} \\
+    &\longrightarrow \text{represented finite group averages of I002}.
+  \end{aligned}
+  \label{eq:checked_dependency_chain}
+\end{equation}
+
+\section{Remaining boundary}
+\label{sec:boundary}
+
+The following are not claimed by I003.
+\begin{enumerate}[leftmargin=2.2em]
+  \item Construction of the global Pauli group on a countable lattice, its
+  concrete local algebras, and a finite-support realization identifying
+  support containment with the global definition
+  $\cG_{\cS,F}=\cG_{\cS}\cap\cA_F$ for arbitrary finite lattice regions.
+  \item A full matrix realization of the $\mathbb Z/4$-phased normal form and
+  its relation to arbitrary finite lattice regions.  The literal ordered-block
+  factorization and syntactic discarded-label test for an enumerated complement
+  are checked, but they do not identify support with membership in a global
+  local matrix algebra.
+  \item Construction of a noncommutative star-algebra colimit on the checked
+  coherent finite system, followed by a norm-closed quasi-local $C^*$-algebra
+  and extension of \eqref{eq:finite_state_functional} to a positive global
+  state.  The present module direct limit and its functional are deliberately
+  weaker than this.
+  \item Construction of the compatible quasi-local functional whose generic
+  GNS vector is supplied by \path{GNSVector.lean}, and a compatibility proof
+  lifting the finite \path{FinitePauliGNS.lean} fixed-vector calculation to
+  represented local $P_G$.
+  \item Extension of \eqref{eq:finite_corner_traciality} from finite local
+  operators to all of $q\cM q$ through bounded strong convergence and
+  Kaplansky density.
+  \item Proof of the regional/complementary product-orbit density used for
+  fullness and projection-faithfulness in I002.
+\end{enumerate}
+
+Thus I003 formalizes the actual finite-group density input, the signed
+partial-trace algebra with its correct signs and survivor hypothesis, the
+conditional equality of nested local stabilizer density matrices, and
+finite-volume sequential state compatibility.  It also supplies a linear
+functional on the module direct limit of its coherent finite star-algebra
+system, with intentionally limited scope.  The infinite-volume conclusion
+remains the conditional, explicitly parameterized theorem of I002 until the
+six listed steps are implemented.
+
+\section{Verification record}
+\label{sec:verification}
+
+The intended Lean verification is
+\begin{equation}
+  \texttt{lake build}
+  \qquad\text{and}\qquad
+  \texttt{lake env lean tests/AxiomAudit.lean}
+  \label{eq:lean_verification_commands}
+\end{equation}
+from \texttt{formalization\_finite\_fibers/}.  The latter audit prints only
+Lean's standard logical axioms for the public theorems and no project-local
+axiom.  Independent mathematical-fidelity and Lean/API adversarial reviews
+for this investigation are recorded alongside this note.
+
+\end{document}

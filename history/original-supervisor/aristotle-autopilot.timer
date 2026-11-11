@@ -1,0 +1,10 @@
+[Unit]
+Description=Poll prepared Aristotle formalization queues
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+Persistent=true
+
+[Install]
+WantedBy=timers.target

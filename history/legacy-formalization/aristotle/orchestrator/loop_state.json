@@ -1,0 +1,90 @@
+{
+  "handled_tasks": {
+    "1de252be-38e4-4892-b963-af4dad514346": {
+      "blocker_repair_status": "NOT_REQUIRED",
+      "codex_exit_code": 0,
+      "codex_final": "aristotle/logs/orchestrator-20260624T203848Z-codex-final.md",
+      "codex_log": "aristotle/logs/orchestrator-20260624T203848Z-codex.jsonl",
+      "handled_at": "20260624T210653Z",
+      "packet_id": "SYMP-INF-REC-001-2026-06-24",
+      "project": "81233f6c-6893-4049-8dec-318863e21da7",
+      "prompt_log": "aristotle/logs/orchestrator-20260624T203848Z-1de252be-prompt.md",
+      "status": "COMPLETE"
+    },
+    "3ae275d6-ba2a-4849-942b-6f2cb283e913": {
+      "blocker_repair_status": "NOT_REQUIRED",
+      "codex_exit_code": 0,
+      "codex_final": "aristotle/logs/orchestrator-20260625T015105Z-codex-final.md",
+      "codex_log": "aristotle/logs/orchestrator-20260625T015105Z-codex.jsonl",
+      "handled_at": "20260625T021657Z",
+      "packet_id": "SYMP-INF-REC-CLOSED-001-2026-06-24",
+      "project": "7f6837ad-6ea7-4855-95f9-c02d676ae41e",
+      "prompt_log": "aristotle/logs/orchestrator-20260625T015105Z-3ae275d6-prompt.md",
+      "status": "COMPLETE"
+    },
+    "4792bf3f-ea3d-4109-a579-426aa4c9221b": {
+      "blocker_repair_status": "NOT_REQUIRED",
+      "codex_exit_code": 0,
+      "codex_final": "aristotle/logs/orchestrator-20260624T171635Z-codex-final.md",
+      "codex_log": "aristotle/logs/orchestrator-20260624T171635Z-codex.jsonl",
+      "handled_at": "20260624T172930Z",
+      "packet_id": "SYMP-001-GRAM-SCHMIDT-2026-06-23",
+      "project": "fee11fa8-de4e-48a6-9fce-917eb032543f",
+      "prompt_log": "aristotle/logs/orchestrator-20260624T171635Z-4792bf3f-prompt.md",
+      "status": "COMPLETE"
+    },
+    "64779911-a022-4fb9-bd7a-42b99cc12d74": {
+      "blocker_repair_status": "NOT_REQUIRED",
+      "codex_exit_code": 0,
+      "codex_final": "aristotle/logs/orchestrator-20260624T211654Z-codex-final.md",
+      "codex_log": "aristotle/logs/orchestrator-20260624T211654Z-codex.jsonl",
+      "handled_at": "20260624T213003Z",
+      "packet_id": "SYMP-CLOSED-PARTNER-001-2026-06-24",
+      "project": "0d8f3e8b-e5b6-47c2-a5c2-fe5e5cfc2cd1",
+      "prompt_log": "aristotle/logs/orchestrator-20260624T211654Z-64779911-prompt.md",
+      "status": "COMPLETE"
+    },
+    "89bd2613-3b98-4bf2-9625-129da9817445": {
+      "codex_exit_code": 0,
+      "codex_final": "aristotle/logs/orchestrator-20260624T055100Z-codex-final.md",
+      "codex_log": "aristotle/logs/orchestrator-20260624T055100Z-codex.jsonl",
+      "handled_at": "20260624T055614Z",
+      "packet_id": "TOY-ROUND-001",
+      "project": "9632c540-1ef3-4eda-a7c9-27876a322a8e",
+      "prompt_log": "aristotle/logs/orchestrator-20260624T055100Z-89bd2613-prompt.md",
+      "status": "COMPLETE"
+    },
+    "c0b7fb3f-be4c-4c7d-bd4f-4df61fe39b00": {
+      "blocker_repair_status": "NOT_REQUIRED",
+      "codex_exit_code": 0,
+      "codex_final": "aristotle/logs/orchestrator-20260625T043713Z-codex-final.md",
+      "codex_log": "aristotle/logs/orchestrator-20260625T043713Z-codex.jsonl",
+      "handled_at": "20260625T044859Z",
+      "packet_id": "PAULI-002-2026-06-25",
+      "project": "84e02548-ecc4-4988-8104-4d61ba9f3fdf",
+      "prompt_log": "aristotle/logs/orchestrator-20260625T043713Z-c0b7fb3f-prompt.md",
+      "status": "COMPLETE"
+    },
+    "d0918862-45b3-40d0-9f6e-77e189b2dc2d": {
+      "blocker_repair_status": "NOT_REQUIRED",
+      "codex_exit_code": 0,
+      "codex_final": "aristotle/logs/orchestrator-20260624T184039Z-codex-final.md",
+      "codex_log": "aristotle/logs/orchestrator-20260624T184039Z-codex.jsonl",
+      "handled_at": "20260624T190825Z",
+      "packet_id": "SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24",
+      "project": "9c4c5a0f-4173-4f5b-8323-65a5dd144534",
+      "prompt_log": "aristotle/logs/orchestrator-20260624T184039Z-d0918862-prompt.md",
+      "status": "COMPLETE"
+    },
+    "fe79721a-9156-4820-bb13-0cbd3ad845eb": {
+      "codex_exit_code": 0,
+      "codex_final": "aristotle/logs/orchestrator-20260624T055847Z-codex-final.md",
+      "codex_log": "aristotle/logs/orchestrator-20260624T055847Z-codex.jsonl",
+      "handled_at": "20260624T060353Z",
+      "packet_id": "TOY-ROUND-002",
+      "project": "ef49110e-d44b-4097-b552-cb9552160a17",
+      "prompt_log": "aristotle/logs/orchestrator-20260624T055847Z-fe79721a-prompt.md",
+      "status": "COMPLETE"
+    }
+  }
+}

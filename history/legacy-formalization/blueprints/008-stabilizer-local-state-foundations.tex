@@ -1,0 +1,664 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable}
+\usepackage{hyperref}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{convention}[definition]{Convention}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{\detokenize{#1}}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+\newcommand{\depends}[1]{\par\noindent\textbf{Depends on.} #1}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\Ftwo}{\mathbb F_2}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\supp}{\operatorname{supp}}
+
+\begin{document}
+
+\section*{Blueprint 008: Stabilizer and Local-State Foundations}
+
+\subsection*{Scope}
+
+This note promotes the first remaining blueprint block from
+\path{agents/2026-06-22-remaining-blueprint-suite-goal.md}.  It supports
+targets
+\[
+  \texttt{PAULI-001},\quad
+  \texttt{QL-002},\quad
+  \texttt{STATE-002},\quad
+  \texttt{STATE-003},\quad
+  \texttt{STATE-004}.
+\]
+It does not add Lean declarations, Aristotle packets, or any gLU/local-circuit
+claim.  It is the prerequisite informal source for the finite-support Pauli
+label layer, region algebras, finite stabilizer code projections,
+finite-local canonical-state positivity, quasi-local state extension, and
+region restriction.
+
+The stabilizer definitions and finite-dimensional Pauli reductions are
+project-local.  The operator-algebraic extension step is Takesaki-first:
+the relevant \(C^*\)-inductive-limit and state/positive-functional facts are
+located below before the project specialization is stated.
+
+\subsection*{Source Policy}
+
+Operator-algebraic source statements are cited by numbered statement and PDF
+page.  The Takesaki environments below are direct statement transcripts or
+notation-normalized transcripts from the scanned local PDFs.  Project-local
+stabilizer specializations are stated later and kept separate from the
+Takesaki statements.  Before extracting Aristotle packets, compare each cited
+statement against the local PDF page.
+
+\subsection*{Takesaki Statement Transcripts}
+
+\begin{definition}[PositiveLinearFunctionalState, Takesaki I Definition I.9.4, PDF p.~56]
+A linear functional \(\omega\) on an involutive Banach algebra \(A\) is called
+positive if \(\omega(x^*x)\geq 0\) for every \(x\in A\).  A positive linear
+functional of norm one is called a state.  If
+\(\omega(x^*x)\neq 0\) for every nonzero \(x\in A\), then \(\omega\) is said
+to be faithful.
+\end{definition}
+
+\begin{lemma}[PositiveFunctionalContinuousUnital, Takesaki I Lemma I.9.9, PDF p.~58]
+If \(A\) is a unital involutive Banach algebra, then every positive linear
+functional \(\omega\) of \(A\) is continuous and
+\[
+  \|\omega\|=\omega(1).
+\]
+\end{lemma}
+
+\begin{proof}
+For a self-adjoint \(x\) with \(\|x\|<1\), Lemma I.9.8 writes \(1-x\) as
+\(y^*y\), so positivity gives \(\omega(1)-\omega(x)\geq0\).  Applying this to
+\(x^*x\) and using the Cauchy--Schwarz inequality for positive functionals
+gives \(|\omega(x)|\leq\omega(1)\) on the unit ball.  The reverse inequality is
+immediate from evaluating at \(1\).
+\end{proof}
+
+\begin{proposition}[PositiveFunctionalContinuousCStar, Takesaki I Proposition I.9.12, PDF p.~59]
+A positive linear functional on a \(C^*\)-algebra is continuous.
+\end{proposition}
+
+\begin{proof}
+Boundedness on the unit ball is obtained by testing an arbitrary sequence there
+against every positive summable scalar sequence.  The resulting uniform bound on
+positive elements gives a bound on self-adjoint elements by Jordan decomposition
+and then on all elements by decomposing into real and imaginary parts.
+\end{proof}
+
+\begin{definition}[InductiveSequenceCStar, Takesaki III Definition XIV.1.1, PDF p.~104]
+An inductive sequence of \(C^*\)-algebras means a sequence
+\(\{A_n:n\in\mathbb N\}\) of \(C^*\)-algebras together with a sequence
+\(\{\pi_n:n\in\mathbb N\}\) of \(*\)-homomorphisms such that \(\pi_n\) maps
+\(A_n\) into \(A_{n+1}\) for each \(n\in\mathbb N\).  If each \(A_n\) is
+unital and \(\pi_n\) preserves the identity, then the inductive sequence is
+called unital.
+\end{definition}
+
+\begin{definition}[InductiveLimitCStar, Takesaki III Definition XIV.1.3, PDF p.~105]
+For a proper inductive sequence of \(C^*\)-algebras, the algebraic limit
+\(A_\infty\) is a pre-\(C^*\)-algebra under the eventual quotient norm.  The
+\(C^*\)-algebra \(A\) obtained by completing \(A_\infty\) is called the
+inductive limit of \(\{A_n,\pi_n\}\), and is written
+\[
+  A=\operatorname{Lim}\{A_n,\pi_n\}.
+\]
+\end{definition}
+
+\begin{definition}[InfiniteTensorProductCStar, Takesaki III Definition XIV.1.5, PDF p.~106]
+Let \(\{A_n\}\) be a sequence of unital \(C^*\)-algebras and put
+\[
+  A_n=A_1\otimes_{\min}A_2\otimes_{\min}\cdots\otimes_{\min}A_n.
+\]
+With the connecting isomorphism \(x\mapsto x\otimes 1\), the inductive limit
+\[
+  A=\operatorname{Lim}\{A_1\otimes_{\min}A_2\otimes_{\min}\cdots
+  \otimes_{\min}A_n,\pi_n\}
+\]
+is called the infinite tensor product of \(\{A_n\}\) and is written
+\[
+  A=\bigotimes_{n=1}^{\infty} A_n.
+\]
+\end{definition}
+
+\begin{definition}[InfiniteTensorProductVNStates, Takesaki III Definition XIV.1.6, PDF p.~107]
+Given a sequence \(\{M_n\}\) of von Neumann algebras and normal states
+\(\omega_n\) of \(M_n\), define the product state
+\(\omega=\bigotimes_{n=1}^{\infty}\omega_n\) on the \(C^*\)-algebraic
+infinite tensor product by
+\[
+  \omega(x_1\otimes x_2\otimes\cdots\otimes x_n\otimes 1\otimes 1\otimes
+  \cdots)
+  =
+  \omega_1(x_1)\omega_2(x_2)\cdots\omega_n(x_n).
+\]
+If \(\{\pi_\omega,\mathcal H_\omega,\xi_\omega\}\) is the cyclic
+representation of this product state, then
+\[
+  M=\pi_\omega\!\left(\bigotimes_{n=1}^{\infty}M_n\right)''
+  \quad\hbox{on }\mathcal H_\omega
+\]
+is called the infinite tensor product of \(\{M_n\}\) relative to the states
+\(\{\omega_n\}\).
+\end{definition}
+
+\subsection*{Conventions}
+
+\begin{convention}[Finite-support labels and inclusions]
+Let \(\Gamma\) be a finite or countably infinite qubit index set.  For
+\(\Lambda\subseteq\Gamma\), write
+\[
+  V_\Lambda=(\Lambda\to_0\Ftwo)\oplus(\Lambda\to_0\Ftwo).
+\]
+If \(\Lambda\subseteq\Gamma\), we identify \(V_\Lambda\) with the subspace of
+\(V_\Gamma\) of labels whose finite support lies in \(\Lambda\).  For finite
+\(F\subseteq\Gamma\), the finite local algebra is
+\[
+  \cA_F=\bigotimes_{j\in F}M_2(\mathbb C),
+\]
+with normalized tensor trace \(\tr_F\).  The Pauli section \(P_F(v)\) and its
+finite trace coefficient formula are those of
+\path{blueprints/007-pauli-quasilocal-algebra.tex}.
+\source{Gottesman, Chapter 3.5, Definitions 3.11 and 3.13, PDF pp.~55--56;
+project proof note 004, Section 2; \path{blueprints/007-pauli-quasilocal-algebra.tex}.}
+\status{Convention for all targets in this note.}
+\end{convention}
+
+\begin{convention}[Canonical stabilizer character]
+Let \(S=(\Gamma,W)\) be an algebraic stabilizer system and let
+\(\chi:W\to\{\pm1\}\) be a stabilizer character.  For a finite
+\(F\subseteq\Gamma\), write \(W_F=W\cap V_F\).  The projection-defined finite
+state constructed below is required to have the canonical coefficient formula
+\[
+  \omega_F(P_F(v))=
+  \begin{cases}
+    \chi(v), & v\in W_F,\\
+    0, & v\notin W_F.
+  \end{cases}
+\]
+When \(v\in W_F\), \(\chi(v)\) denotes the value of the character restricted
+to \(W_F\).  This formula is not used as the definition of the finite state in
+\texttt{STATE-002}; it is derived from the local code projection.
+\source{\path{blueprints/002-canonical-state.tex}, target \texttt{STATE-001};
+project proof note 004, stabilizer-character convention and Section 2.}
+\status{Coefficient convention for \texttt{STATE-002}, \texttt{STATE-003},
+and \texttt{STATE-004}.}
+\end{convention}
+
+\subsection*{Pauli Labels and Commutation}
+
+\begin{definition}[PauliLabel, ID: PAULI-001, Gottesman Chapter 3.5 Definitions 3.11 and 3.13, PDF pp.~55--56]
+The finite-support Pauli label space on \(\Gamma\) is
+\[
+  V_\Gamma=(\Gamma\to_0\Ftwo)\oplus(\Gamma\to_0\Ftwo).
+\]
+For \(v=(x,z)\) and \(w=(x',z')\), define the binary symplectic form
+\[
+  \sigma(v,w)=
+  \sum_{j\in\Gamma} x_jz'_j+\sum_{j\in\Gamma}z_jx'_j\in\Ftwo .
+\]
+Both sums are finite because the labels have finite support.
+\source{Gottesman, Chapter 3.5, Definitions 3.11 and 3.13, PDF pp.~55--56,
+for binary Pauli labels and the symplectic commutation convention; project
+proof note 004, Section 2.}
+\depends{\texttt{SYS-001}.}
+\lean{Formalization.Stabilizer.PauliLabel; Formalization.Stabilizer.symplecticForm}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{lemma}[PauliCommuteIffSymplecticEqZero, supporting ID: PAULI-001, Gottesman Chapter 3.5 Definitions 3.11 and 3.13, PDF pp.~55--56]
+For finite \(F\subseteq\Gamma\) and labels \(v,w\in V_F\), the finite Pauli
+representatives satisfy
+\[
+  P_F(v)P_F(w)=(-1)^{\sigma(v,w)}P_F(w)P_F(v).
+\]
+Consequently the representatives commute exactly when \(\sigma(v,w)=0\).
+\source{Gottesman, Chapter 3.5, Definitions 3.11 and 3.13, PDF pp.~55--56;
+\path{blueprints/007-pauli-quasilocal-algebra.tex}, finite Pauli
+representative convention.}
+\depends{\texttt{SYS-001}, \texttt{PAULI-002}.}
+\lean{Formalization.Stabilizer.PauliAlgebra.pauli_commute_iff_symplectic_eq_zero}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+On one site, the only nontrivial commutation sign is the sign from exchanging
+\(X\) and \(Z\).  For tensor products over \(F\), the total sign is the product
+of the one-site signs.  In \(\Ftwo\), this product is
+\((-1)^{\sum_j x_jz'_j+\sum_jz_jx'_j}\), which is the displayed formula.
+\end{proof}
+
+\subsection*{Region Algebras}
+
+\begin{definition}[RegionAlgebra, ID: QL-002, Takesaki III Definitions XIV.1.3 and XIV.1.5, PDF pp.~105--106]
+For a region \(\Lambda\subseteq\Gamma\), the region algebra is the
+\(\texttt{QL-001}\) local-net subalgebra of the fixed global carrier
+\(\cA_\Gamma\)
+\[
+  \cA_\Lambda=
+  \overline{\bigcup_{F\Subset\Lambda}j_F(\cA_F)}^{\|\cdot\|}
+  \leq \cA_\Gamma.
+\]
+Equivalently, for finite or countably infinite \(\Lambda\), choose a cofinal
+increasing exhaustion \(F_1\subseteq F_2\subseteq\cdots\) of finite subsets of
+\(\Lambda\).  Then \(\cA_\Lambda\) is the \(C^*\)-inductive limit of the
+finite tensor products \(\cA_{F_n}\) under the unital inclusions
+\[
+  a\mapsto a\otimes 1_{F_{n+1}\setminus F_n}.
+\]
+Its finite-support Pauli labels are exactly \(V_\Lambda\subseteq V_\Gamma\).
+If \(\Lambda\subseteq\Lambda'\), then the inclusions into the common global
+carrier satisfy
+\[
+  \cA_\Lambda\leq \cA_{\Lambda'}\leq \cA_\Gamma .
+\]
+\source{Project proof note 004, Section 2, for region Pauli label spaces;
+Takesaki III, Definition XIV.1.3, PDF p.~105, for \(C^*\)-inductive limits,
+and Definition XIV.1.5, PDF p.~106, for the countable unital infinite
+tensor-product model.}
+\depends{\texttt{QL-001}, \texttt{PAULI-002}.}
+\lean{Formalization.Stabilizer.RegionAlgebra}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proof}[Informal well-formedness]
+The finite subsets of \(\Lambda\) are directed by union, and the maps
+\(\cA_F\to\cA_G\) for \(F\subseteq G\) tensor by identities.  These maps are
+unital \(*\)-homomorphisms and satisfy the compatibility equation for an
+inductive system, and \(\texttt{QL-001}\) supplies the maps
+\(j_F:\cA_F\to\cA_\Gamma\) into the global carrier.  If \(\Lambda\) is
+countable, any increasing exhaustion is cofinal, so the closure of the
+directed union agrees with the sequential inductive-limit model.  The label
+statement follows from finite support: a Pauli label belongs to the region
+algebra precisely when its support is a finite subset of \(\Lambda\).  Isotony
+is \(\texttt{RegionSubalgebraIsotony}\) from
+\path{blueprints/007-pauli-quasilocal-algebra.tex}.
+\end{proof}
+
+\subsection*{Finite Code Projections}
+
+\begin{definition}[FiniteStabilizerCodeProjection, supporting ID: STATE-002, STATE-001; project proof note 004 product form and Section 4; finite adapted-basis input from blueprint 009]
+Let \(F\subseteq\Gamma\) be finite and put \(W_F=W\cap V_F\).  Choose a finite
+adapted symplectic basis for \(V_F\) whose first \(r=\dim_{\Ftwo}W_F\)
+stabilizer basis vectors \(b_1,\ldots,b_r\) span \(W_F\), together with the
+finite Pauli algebra \(*\)-isomorphism supplied by the adapted-basis
+construction.  In the adapted coordinates define
+\[
+  q_F=
+  \prod_{i=1}^{r}\frac{1+\chi(b_i)Z_i}{2}
+  \otimes 1_{\mathrm{free}},
+\]
+where \(Z_i\) is the \(i\)-th adapted \(Z\)-Pauli operator and
+\(1_{\mathrm{free}}\) is the identity on the remaining modes.  The finite
+stabilizer code projection \(p_F=p_{F,W,\chi}\in\cA_F\) is the inverse image of
+\(q_F\) under this adapted Pauli algebra isomorphism.
+
+Equivalently, after the same adapted observable Pauli section has been fixed,
+\[
+  p_F=\frac{1}{|W_F|}\sum_{w\in W_F}\chi(w)S_F(w),
+\]
+where \(S_F(w)\) is the commuting self-adjoint Pauli observable with label
+\(w\).  In adapted \(Z\)-coordinates \(S_F(w)=P_F(w)\).
+\source{\path{blueprints/002-canonical-state.tex}, target
+\texttt{STATE-001}; project proof note 004, ``Product form after symplectic
+basis reduction'' and Section 4; finite adapted-basis input from
+\path{blueprints/009-internal-stabilizer-reduction.tex}, finite form of
+\texttt{SYMP-001} and \texttt{SYMP-002}.}
+\depends{\texttt{STATE-001}, \texttt{PAULI-002}, finite adapted-basis form of
+\texttt{SYMP-001}, finite Pauli-isomorphism form of \texttt{SYMP-002}.}
+\lean{Formalization.Stabilizer.FiniteCanonicalState.codeProjection}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proof}[Informal well-formedness]
+The space \(V_F\) is finite-dimensional, so the finite adapted-basis
+Gram--Schmidt theorem applies to the isotropic subspace \(W_F\).  The adapted
+Pauli algebra isomorphism carries the original finite algebra to coordinates
+in which \(W_F\) is generated by commuting \(Z\)-operators.  Each factor
+\((1+\chi(b_i)Z_i)/2\) is the spectral projection for the eigenvalue
+\(\chi(b_i)\) of \(Z_i\), and all factors commute.  Their product is therefore
+a well-defined element \(q_F\) of the adapted finite matrix algebra, and its
+inverse image is a well-defined element \(p_F\in\cA_F\).  The range
+characterization in the next theorem is independent of the adapted-basis
+choice and is the Lean-facing uniqueness principle for this projection.
+\end{proof}
+
+\begin{theorem}[FiniteCodeProjectionProperties, supporting ID: STATE-002, project proof note 004 product form and Section 4; finite-dimensional spectral projections for commuting self-adjoint Pauli operators]
+For every finite \(F\subseteq\Gamma\), the element \(p_F\) satisfies
+\[
+  p_F^2=p_F,\qquad p_F^*=p_F.
+\]
+Its normalized trace is
+\[
+  \tr_F(p_F)=2^{-\dim_{\Ftwo} W_F}=\frac{1}{|W_F|}>0.
+\]
+As an operator on
+\(\mathcal H_F=\bigotimes_{j\in F}\mathbb C^2\), its range is the simultaneous
+stabilizer eigenspace
+\[
+  \operatorname{Ran}(p_F)
+  =
+  \{\xi\in\mathcal H_F:S_F(w)\xi=\chi(w)\xi
+    \text{ for every }w\in W_F\}.
+\]
+It is the unique orthogonal projection with this range, and therefore it is
+independent of the adapted-basis choice used to construct it.
+\source{Project proof note 004, ``Product form after symplectic basis
+reduction'' and Section 4; finite-dimensional spectral projections for
+commuting self-adjoint Pauli operators.}
+\depends{\texttt{STATE-001}, \texttt{PAULI-002}, \texttt{FiniteStabilizerCodeProjection}.}
+\lean{Formalization.Stabilizer.FiniteCanonicalState.codeProjection_properties}
+\status{blueprint_note_complete}
+\end{theorem}
+
+\begin{proof}
+In adapted coordinates \(q_F\) is a product of commuting orthogonal
+projections \((1+\chi(b_i)Z_i)/2\).  Hence \(q_F^2=q_F=q_F^*\).  A
+\(*\)-isomorphism preserves multiplication and adjoints, so the same equations
+hold for \(p_F\).
+
+The normalized trace is invariant under finite matrix \(*\)-isomorphism.  Each
+fixed stabilizer mode contributes normalized trace \(1/2\) for its one-site
+eigenprojection, and each free mode contributes trace \(1\).  Therefore
+\(\tr_F(p_F)=2^{-r}\) with \(r=\dim_{\Ftwo}W_F\).  Since \(W_F\) is an
+\(\Ftwo\)-vector space, \(|W_F|=2^r\).
+
+The range of the product of commuting spectral projections is the intersection
+of the individual eigenspaces.  Because the \(b_i\) form a basis of \(W_F\) and
+\(\chi\) is a character, satisfying the eigenvalue equation for all \(b_i\) is
+equivalent to satisfying it for every \(w\in W_F\).  Transporting this
+description back through the adapted Pauli algebra isomorphism gives the
+displayed range condition.  In finite-dimensional Hilbert space an orthogonal
+projection is uniquely determined by its range, so the construction is
+independent of the adapted-basis choice.
+\end{proof}
+
+\begin{definition}[FiniteProjectionState, supporting ID: STATE-002, finite-dimensional normalized projection trace; project proof note 004 Section 4]
+The finite projection-defined canonical state on \(\cA_F\) is
+\[
+  \omega_F^{\mathrm{proj}}(a)
+  =
+  \frac{\tr_F(p_Fa)}{\tr_F(p_F)}
+  =
+  |W_F|\,\tr_F(p_Fa).
+\]
+Equivalently, using the ordinary matrix trace \(\operatorname{Tr}_F\),
+\[
+  \omega_F^{\mathrm{proj}}(a)
+  =
+  \frac{\operatorname{Tr}_F(p_Fa)}{\operatorname{Tr}_F(p_F)}.
+\]
+\source{Finite-dimensional normalized projection trace; project proof note
+004, Section 4.}
+\depends{\texttt{FiniteCodeProjectionProperties}.}
+\lean{Formalization.Stabilizer.FiniteCanonicalState.projectionState}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proof}[Informal well-formedness]
+The denominator is nonzero by
+\(\tr_F(p_F)=|W_F|^{-1}>0\).  The formula is linear in \(a\).  It is unital
+because \(\omega_F^{\mathrm{proj}}(1)=\tr_F(p_F)/\tr_F(p_F)=1\).  Positivity
+is proved in \(\texttt{FiniteCanonicalState}\) below from the projection
+identity and cyclicity of the finite trace.
+\end{proof}
+
+\begin{lemma}[FiniteProjectionStatePauliCoefficients, supporting ID: STATE-002, blueprint 002 STATE-001; blueprint 007 PAULI-002; project proof note 004 Section 4]
+For every finite \(F\subseteq\Gamma\) and \(v\in V_F\),
+\[
+  \omega_F^{\mathrm{proj}}(P_F(v))=
+  \begin{cases}
+    \chi(v), & v\in W_F,\\
+    0, & v\notin W_F.
+  \end{cases}
+\]
+\source{\path{blueprints/002-canonical-state.tex}, target
+\texttt{STATE-001}; \path{blueprints/007-pauli-quasilocal-algebra.tex},
+\texttt{PAULI-002}; project proof note 004, Section 4.}
+\depends{\texttt{PAULI-002}, \texttt{FiniteProjectionState}, finite
+Pauli-isomorphism form of \texttt{SYMP-002}.}
+\lean{Formalization.Stabilizer.FiniteCanonicalState.projectionState_pauliCoeff}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+In adapted coordinates the projection has the finite Fourier expansion
+\[
+  q_F=\frac{1}{|W_F|}\sum_{w\in W_F}\chi(w)P_F^{\mathrm{ad}}(w),
+\]
+because the product of the factors
+\((1+\chi(b_i)Z_i)/2\) expands into the sum over all binary products of the
+basis stabilizers.  Therefore
+\[
+  \omega_F^{\mathrm{proj}}(P_F^{\mathrm{ad}}(v))
+  =
+  \sum_{w\in W_F}\chi(w)
+  \tr_F(P_F^{\mathrm{ad}}(w)^*P_F^{\mathrm{ad}}(v)).
+\]
+The finite Pauli trace orthogonality theorem gives zero unless \(w=v\).  If
+\(v\in W_F\), the only surviving term is \(w=v\), giving \(\chi(v)\).  If
+\(v\notin W_F\), no term survives.  Transport through the adapted Pauli
+\(*\)-isomorphism gives the stated coefficient formula in the original Pauli
+coordinates, with the phase convention already fixed in
+\texttt{STATE-001}/\texttt{PAULI-002}.
+\end{proof}
+
+\begin{lemma}[FiniteProjectionStateIncludeCompatible, supporting ID: STATE-002, project proof note 004 crossing-stabilizer locality; TraceCoeffInclude]
+If \(F\subseteq G\subseteq\Gamma\) are finite, then for every
+\(a\in\cA_F\),
+\[
+  \omega_G^{\mathrm{proj}}(\iota_{F,G}(a))
+  =
+  \omega_F^{\mathrm{proj}}(a).
+\]
+Equivalently, the projection-defined finite states are compatible with the
+finite local inclusions.
+\source{Project proof note 004, ``Crossing stabilizers do not change the
+local coefficients''; \path{blueprints/007-pauli-quasilocal-algebra.tex},
+\texttt{TraceCoeffInclude}.}
+\depends{\texttt{PAULI-002}, \texttt{FiniteProjectionStatePauliCoefficients}.}
+\lean{Formalization.Stabilizer.FiniteCanonicalState.projectionState_include}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+Expand \(a\) in the Pauli basis of \(\cA_F\):
+\[
+  a=\sum_{v\in V_F}\widehat a(v)P_F(v).
+\]
+The finite inclusion sends this to
+\[
+  \iota_{F,G}(a)=\sum_{v\in V_F}\widehat a(v)P_G(v),
+\]
+where \(v\) is viewed as a label in \(V_G\) supported on \(F\).  For such
+\(v\), membership \(v\in W_G=W\cap V_G\) is equivalent to
+\(v\in W_F=W\cap V_F\).  Applying
+\(\texttt{FiniteProjectionStatePauliCoefficients}\) term by term gives the
+same scalar on both sides.
+\end{proof}
+
+\subsection*{Finite-Local Canonical States}
+
+\begin{theorem}[FiniteCanonicalState, ID: STATE-002, Takesaki I Definition I.9.4, PDF p.~56]
+Let \(W\subseteq V_\Gamma\) be isotropic and let
+\(\chi:W\to\{\pm1\}\) be a stabilizer character.  For every finite
+\(F\subseteq\Gamma\), let \(p_F=p_{F,W,\chi}\) be the finite stabilizer code
+projection and define
+\[
+  \omega_F(a)=\omega_F^{\mathrm{proj}}(a)
+  =
+  \frac{\tr_F(p_Fa)}{\tr_F(p_F)}.
+\]
+Then \(\omega_F\) is a positive unital linear functional on \(\cA_F\), and
+its Pauli coefficients are
+\[
+  \omega_F(P_F(v))=
+  \begin{cases}
+    \chi(v), & v\in W_F,\\
+    0, & v\notin W_F
+  \end{cases}
+\]
+If \(F\subseteq G\), then the projection-defined finite states are consistent:
+\[
+  \omega_G(\iota_{F,G}(a))=\omega_F(a),\qquad a\in\cA_F.
+\]
+\source{\path{blueprints/002-canonical-state.tex}, target \texttt{STATE-001};
+\path{blueprints/007-pauli-quasilocal-algebra.tex}, target \texttt{PAULI-002};
+project proof note 004, Sections 2 and 4.  Takesaki I, Definition I.9.4, PDF
+p.~56, supplies the state terminology.}
+\depends{\texttt{STATE-001}, \texttt{PAULI-001}, \texttt{PAULI-002},
+\texttt{FiniteStabilizerCodeProjection},
+\texttt{FiniteProjectionStatePauliCoefficients},
+\texttt{FiniteProjectionStateIncludeCompatible}, finite adapted-basis form of
+\texttt{SYMP-001}.}
+\lean{Formalization.Stabilizer.FiniteCanonicalState}
+\status{blueprint_note_complete}
+\end{theorem}
+
+\begin{proof}
+Linearity is immediate from the trace formula.  Since
+\(\tr_F(p_F)>0\), the functional is well defined and unital:
+\[
+  \omega_F(1)=\frac{\tr_F(p_F)}{\tr_F(p_F)}=1.
+\]
+For positivity, let \(a\in\cA_F\).  Cyclicity of the finite matrix trace gives
+\[
+  \tr_F(p_Fa^*a)=\tr_F(ap_Fa^*).
+\]
+Because \(p_F=p_F^2=p_F^*\), the operator \(ap_Fa^*=(ap_F)(ap_F)^*\) is
+positive, so its finite trace is nonnegative.  Thus
+\(\omega_F(a^*a)\geq0\).  By Takesaki I Definition I.9.4, \(\omega_F\) is a
+state.
+
+The displayed Pauli coefficient formula is exactly
+\(\texttt{FiniteProjectionStatePauliCoefficients}\).  The consistency under
+finite inclusions is exactly
+\(\texttt{FiniteProjectionStateIncludeCompatible}\).
+\end{proof}
+
+\subsection*{Quasi-Local State Extension}
+
+\begin{theorem}[QuasiLocalCanonicalState, ID: STATE-003, Takesaki III Definition XIV.1.3, PDF p.~105, Takesaki I Proposition I.9.12, PDF p.~59]
+Let \((\omega_F)_{F\Subset\Gamma}\) be the projection-defined finite-local
+canonical states
+\[
+  \omega_F(a)=\frac{\tr_F(p_Fa)}{\tr_F(p_F)}
+\]
+from \(\texttt{STATE-002}\).  There is a unique state
+\[
+  \omega:\cA_\Gamma\to\mathbb C
+\]
+whose restriction to every finite local algebra \(\cA_F\) is \(\omega_F\).
+Equivalently, \(\omega\) is the unique continuous extension to the
+\(\texttt{QL-001}\) global carrier \(\cA_\Gamma\) of the compatible normalized
+projection trace states on the dense algebraic local union.
+\source{Takesaki III, Definition XIV.1.3, PDF p.~105, for the
+\(C^*\)-inductive limit used as the quasi-local completion; Takesaki III,
+Definition XIV.1.5, PDF p.~106, for the countable unital infinite tensor
+product model; Takesaki I, Lemma I.9.9 and Proposition I.9.12, PDF
+pp.~58--59, for continuity and norm control of positive linear functionals.
+The stabilizer-specific compatible finite states are supplied by
+\texttt{STATE-002}.}
+\depends{\texttt{QL-001}, \texttt{QL-002}, \texttt{STATE-002},
+\texttt{CompatibleLocalStateExtension}.}
+\lean{Formalization.Stabilizer.QuasiLocalCanonicalState}
+\status{blueprint_note_complete}
+\end{theorem}
+
+\begin{proof}
+By \(\texttt{STATE-002}\), each \(\omega_F\) is a positive unital linear
+functional and the family is compatible with every finite inclusion
+\(\iota_{F,G}\).  Applying
+\(\texttt{CompatibleLocalStateExtension}\) from
+\path{blueprints/007-pauli-quasilocal-algebra.tex} gives a unique state
+\(\omega\) on the global carrier \(\cA_\Gamma\) with the stated finite
+restrictions.  The proof of that theorem constructs the functional on the
+dense local union, proves positivity and norm boundedness there, extends by
+continuity to \(\cA_\Gamma\), and obtains uniqueness from density.  Thus the
+quasi-local state is the extension of the projection-defined finite states,
+not a separate coefficient-rule functional.
+\end{proof}
+
+\subsection*{Region Restriction}
+
+\begin{lemma}[RestrictedCoefficientEqInternal, ID: STATE-004, project proof note 004 crossing-stabilizer locality and Section 2; blueprint 002 STATE-001]
+Let \(S'\) be a consistent stabilizer extension with label subspace \(W'\),
+and let \(\Lambda\subseteq\Gamma\) be a region.  The restriction of the
+projection-defined quasi-local canonical state from \(\texttt{STATE-003}\) to
+\(\cA_\Lambda\) has nonzero Pauli coefficient at a label \(v\in V_\Lambda\)
+exactly when
+\[
+  v\in W'\cap V_\Lambda .
+\]
+Crossing stabilizers affect the restricted state only through products whose
+total label lies in \(V_\Lambda\).
+\source{Project proof note 004, Lemma ``Crossing stabilizers do not change
+the local coefficients'' and Section 2; \path{blueprints/002-canonical-state.tex}
+for the canonical coefficient rule.}
+\depends{\texttt{QL-002}, \texttt{STATE-003}.}
+\lean{Formalization.Stabilizer.restrictedCoefficient_eq_internal}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+The global coefficient rule is inherited from the projection-defined finite
+states: a label \(v\) has finite support, so it lies in some finite
+\(F\subseteq\Gamma\), and \(\texttt{STATE-003}\) restricts to the
+\(\texttt{STATE-002}\) projection state on \(\cA_F\).  Thus the coefficient is
+nonzero exactly when \(v\in W'\), with value determined by the stabilizer
+character.  If \(v\in V_\Lambda\), then it is supported inside the region.
+Therefore the nonzero labels visible in the restricted state are precisely
+\(W'\cap V_\Lambda\).  A stabilizer crossing the boundary of \(\Lambda\) has
+a label outside \(V_\Lambda\), so it is invisible to Pauli coefficients inside
+\(\cA_\Lambda\) unless multiplied with other crossing stabilizers so that the
+total finite-support label lies entirely in \(V_\Lambda\).
+\end{proof}
+
+\subsection*{Lean Extraction Notes}
+
+\begin{longtable}{@{}p{0.16\linewidth}p{0.34\linewidth}p{0.40\linewidth}@{}}
+\toprule
+Target & Intended file & Notes \\
+\midrule
+\endhead
+\texttt{PAULI-001} &
+\texttt{Formalization/Stabilizer/PauliAlgebra.lean} &
+The carrier and symplectic form already exist in \texttt{SYS-001}; this target
+adds the finite matrix commutation theorem. \\
+\texttt{QL-002} &
+\texttt{Formalization/Stabilizer/RegionAlgebra.lean} &
+Use the fixed \texttt{QL-001} local-net fields: region subalgebras are
+subalgebras of \(\cA_\Gamma\), with isotony from the 007 interface. \\
+\texttt{STATE-002} &
+\texttt{Formalization/Stabilizer/FiniteCanonicalState.lean} &
+Define \(p_F\), prove its projection/range/trace properties, define
+\(\omega_F(a)=\tr_F(p_Fa)/\tr_F(p_F)\), then derive positivity, Pauli
+coefficients, and finite-inclusion consistency. \\
+\texttt{STATE-003} &
+\texttt{Formalization/Stabilizer/QuasiLocalState.lean} &
+Apply \texttt{CompatibleLocalStateExtension} from 007 to the compatible
+projection-defined finite states. \\
+\texttt{STATE-004} &
+\texttt{Formalization/Stabilizer/RegionRestriction.lean} &
+Coefficient-level region restriction; no GNS or von Neumann algebra target yet. \\
+\bottomrule
+\end{longtable}
+
+\begin{thebibliography}{9}
+\bibitem{TakesakiI}
+M. Takesaki, \emph{Theory of Operator Algebras I}.  Local source:
+\path{../sources/takesaki_1.pdf}.
+
+\bibitem{TakesakiIII}
+M. Takesaki, \emph{Theory of Operator Algebras III}.  Local source:
+\path{../sources/Takesaki_III.pdf}.
+\end{thebibliography}
+
+\end{document}

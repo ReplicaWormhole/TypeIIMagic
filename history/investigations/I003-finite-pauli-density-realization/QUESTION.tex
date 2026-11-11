@@ -1,0 +1,62 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[a4paper,margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{question}{Question}
+\newtheorem{assumption}{Assumption}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\id}{\mathbf 1}
+\newcommand{\Tr}{\operatorname{Tr}}
+
+\title{Question I003: Finite Pauli Densities and Their Exact Compatibility}
+\date{August 3, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{question}
+Can the finite-volume input used in the stabilizer-region manuscript be made
+fully explicit in Lean: signed Pauli strings, the finite code projector and
+density matrix, positivity and normalization of the resulting functional, and
+the partial-trace identity for nested normalized signed-Pauli expressions?
+Which exact finite-group restriction statement turns that identity into an
+equality of local densities, and which infinite-volume GNS obligations remain
+after it is checked?
+\end{question}
+
+\begin{assumption}[Fidelity rule]
+The formalization must retain the sign of a Hermitian Pauli stabilizer and
+must not infer that a surviving partial-trace term belongs to a smaller local
+stabilizer group merely from tracelessness.  That identification must be
+implemented or occur as an explicit equality of finite term families.
+\end{assumption}
+
+\paragraph{Approved scope.}
+This investigation constructs the finite qubit matrix realization, a faithful
+finite signed-Pauli stabilizer interface, the projector/density/state and
+finite code-corner trace calculation, and a signed partial-trace theorem.  It
+also packages the exact survivor equality used by the manuscript.  It bridges
+the resulting finite group average to the abstract support theorem of I002
+through an arbitrary unital star-algebra representation.
+
+The signed partial-trace theorem is deliberately expression-level: its finite
+term families have no hidden group law, positivity, or trace-one property.
+The accompanying conditional nested-group layer identifies them with actual
+larger and smaller stabilizer densities when supplied a tensor-coordinate
+decomposition, an injective local-group inclusion, and the exact survivor
+iff-condition.  Deriving that displayed contract from the countable-lattice
+definition of local stabilizer groups remains future work.
+
+\paragraph{Deliberate boundary.}
+This investigation does not claim to construct the global countable lattice,
+the quasi-local $C^*$-completion, a compatible GNS representation, the
+strong-density extension of corner traciality, or the regional/complementary
+product orbit.  Those obligations remain visible in I002 rather than becoming
+unstated fields of a theorem called ``stabilizer''. 
+
+\end{document}

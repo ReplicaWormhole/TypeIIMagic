@@ -1,0 +1,201 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[a4paper,margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\raggedbottom
+\hypersetup{
+  pdftitle={Countable Pauli Realization and Quasi-Local Algebra},
+  pdfauthor={}
+}
+
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cB}{\mathcal B}
+\newcommand{\bbC}{\mathbb C}
+\newcommand{\id}{\mathbf 1}
+\newcommand{\cL}{\Lambda}
+\newcommand{\Tr}{\operatorname{Tr}}
+
+\title[Countable Pauli realization]{Countable Pauli Realization and the Quasi-Local Algebra\\
+\large Investigation I004: a construction contract for the finite-fiber proof}
+\author{}
+\date{August 3, 2026}
+
+\begin{document}
+
+\begin{abstract}
+This note records the next construction layer needed to instantiate the
+finite-fiber theorem of Investigations I001--I003 for the countable lattice in
+the live Overleaf manuscript.  I003 gives a coherent, norm-preserving chain of
+finite ordered-qubit star-algebra embeddings and compatible finite stabilizer
+functionals, but its quotient is only a module direct limit.  The present
+investigation fixes a concrete target: a countable configuration Hilbert space
+carrying shift and phase operators, finite-site matrix subalgebras, their
+norm-closed union, and a positive normalized extension of the compatible
+finite functionals.  Its first Lean module now constructs the countable
+configuration Hilbert space, bounded shifts and phases, and their
+almost-everywhere action formulas.  This remains a construction contract, not
+a claim that finite-site matrix subalgebras, a global state, or the GNS,
+corner-traciality, and regional-density hypotheses are already proved.
+\end{abstract}
+
+\maketitle
+
+\section{Relation to the manuscript}
+\label{sec:relation_to_manuscript}
+
+The current manuscript defines finite local algebras, identifies them by
+tensoring with identities, and takes their norm-closed union in the appendix
+``Infinite Stabilizer Systems.''  It then uses compatible finite density
+matrices to assert a global state.  The operative displayed constructions are
+the local-algebra identification, quasi-local closure, density compatibility,
+and state-extension proof in
+\path{writing/overleaf_prl_stabilizer_region_algebras/main.tex}, source
+lines~815--999; the manuscript labels the central displayed formulas
+\texttt{eq:lattice\_embedding}, \texttt{eq:local\_density\_full}, and
+\texttt{eq:rho-compatibility}.
+
+I003 checks the finite matrix and compatibility content but does not put its
+module direct limit under a multiplication, involution, or $C^*$-norm.  Thus
+the intended implication is not
+\begin{equation}
+  \text{module direct limit}
+  \quad\Longrightarrow\quad
+  \text{quasi-local }C^*\text{-algebra};
+  \label{eq:no_automatic_colimit}
+\end{equation}
+which would be false without further construction.  Instead I004 must build
+a concrete common ambient operator algebra first.
+
+\section{Concrete configuration representation}
+\label{sec:configuration_representation}
+
+Let
+\begin{equation}
+  K:=\mathbb N\to_0\mathbb Z/2\mathbb Z,
+  \qquad
+  \cH:=L^2(K,\mathrm{count};\bbC),
+  \label{eq:configuration_space}
+\end{equation}
+where $K$ has the discrete measurable structure and counting measure.  The
+finite support in $K$ is essential: a configuration differs from the all-zero
+configuration at finitely many sites, so addition by a one-site vector is a
+permutation of $K$.
+
+For $i\in\mathbb N$, write $e_i\in K$ for the configuration that is one at
+$i$ and zero elsewhere.  The target local generators are
+\begin{equation}
+  (X_i f)(x)=f(e_i+x),
+  \qquad
+  (Z_i f)(x)=(-1)^{x(i)}f(x).
+  \label{eq:shift_phase_generators}
+\end{equation}
+The first is induced by a counting-measure-preserving translation and the
+second by multiplication with a bounded measurable sign function.  Lean has
+now exposed these constructions in
+\path{formalization_finite_fibers/FiniteFiber/CountablePauliRepresentation.lean}.
+It defines the two bounded operators and proves their indicated
+almost-everywhere action formulas, exact norm preservation for translations,
+the identity of the neutral translation, the translation-composition identity
+that the shift by $g+h$ is the composition of the shift by $g$ followed by
+the shift by $h$, the involution of each $X_i$ and $Z_i$, commutation within
+each generator family, same-site anticommutation, and distinct-site mixed
+commutation.  These are bounded-operator statements proved from the binary
+character identities through almost-everywhere equality of $L^2$
+representatives.  They establish the elementary generator relations, but do
+not yet supply a full phased Pauli representation or a finite/tail matrix
+factorization.  At the configuration-group level, the same Lean module now
+also defines the additive initial and tail filters at every cut and proves
+their recomposition, their complementary coordinate-vanishing properties, and
+their action on the one-site generators.  This is an algebraic prerequisite
+for a finite/tail split, not yet a unitary $L^2$ factorization.
+
+The desired finite-site conclusion is more than the generator relations.  If
+$F\subset\mathbb N$ is finite, one needs a concrete unitary identification
+\begin{equation}
+  \cH\simeq
+  \ell^2\bigl((F\to\mathbb Z/2\mathbb Z)\bigr)
+  \mathbin{\widehat\otimes}
+  \ell^2\bigl(K_{F^c}\bigr),
+  \label{eq:finite_tail_factorization}
+\end{equation}
+under which the $F$-site Pauli algebra is
+\begin{equation}
+  \cA_F\simeq M_{2^{\lvert F\rvert}}(\bbC)\otimes\id.
+  \label{eq:finite_local_matrix_image}
+\end{equation}
+Without a checked form of Eqs.~\eqref{eq:finite_tail_factorization}--
+\eqref{eq:finite_local_matrix_image}, the construction has generators but
+not the manuscript's finite local algebras.
+
+\section{Concrete quasi-local algebra and state}
+\label{sec:closure_state}
+
+Once a nested initial-segment family of concrete star subalgebras
+$(\cA_n)_{n\in\mathbb N}\subseteq\cB(\cH)$ is present, define its concrete
+quasi-local algebra by
+\begin{equation}
+  \cA_{\mathrm{ql}}
+  :=\overline{\bigcup_{n\in\mathbb N}\cA_n}^{\|\cdot\|}
+  \subseteq\cB(\cH).
+  \label{eq:concrete_quasilocal_closure}
+\end{equation}
+The closure must be constructed as a star subalgebra of the bounded operators;
+this provides an actual $C^*$-algebra rather than a formal completion label.
+
+For compatible finite states $\omega_n$, first define a functional on the
+concrete algebraic union.  Its well-definedness uses equality of the values
+along the checked finite embeddings.  To extend it to
+Eq.~\eqref{eq:concrete_quasilocal_closure}, the formal proof must establish a
+uniform norm bound, apply a continuous-linear extension theorem, and prove
+positivity of the extension through closedness of the positive cone.  Neither
+the existence nor positivity of that extension is to be inferred merely from
+the linear functional on I003's module quotient.
+
+\section{Dependency map and remaining theorem input}
+\label{sec:dependency_map}
+
+The planned checked bridge is
+\begin{equation}
+  \begin{aligned}
+    \text{finite ordered matrix chain}
+    &\longrightarrow \text{concrete finite-site subalgebras of }\cB(\cH) \\
+    &\longrightarrow \cA_{\mathrm{ql}} \\
+    &\longrightarrow \text{positive normalized global state} \\
+    &\longrightarrow \text{the generic GNS cyclic-vector layer of I002}.
+  \end{aligned}
+  \label{eq:planned_bridge}
+\end{equation}
+At that point, I002 supplies only the generic cyclic-vector facts.  The
+regional/complementary product-orbit density, the strong extension of the
+finite corner trace, and the actual local-stabilizer support construction are
+still independent inputs required by the full support-corner conclusion.  In
+particular, a passing build of I004's early modules must not be reported as a
+proof of the manuscript theorem
+\texttt{thm:finite\_projections\_exist}.
+
+\section{Verification contract}
+\label{sec:verification_contract}
+
+Every public Lean theorem added by this investigation is to have a
+placeholder-free proof and appear in the package axiom audit.  The technical
+record and question are compiled after material revisions.  Independent
+mathematical-fidelity and Lean/API adversarial reviews are required before an
+I004 claim is promoted to the status of a completed bridge.
+
+\end{document}

@@ -1,0 +1,11 @@
+[Unit]
+Description=Prepared two-lane Aristotle/Codex formalization supervisor
+
+[Service]
+Type=oneshot
+WorkingDirectory=source-workspace
+ExecStart=/usr/bin/python3 workflow/aristotle_autopilot.py --once
+Environment=PYTHONUNBUFFERED=1
+Environment=PATH=<original-home>/.nvm/versions/node/v24.14.0/bin:<original-home>/.local/bin:<original-home>/.elan/bin:<original-home>/.cargo/bin:/usr/local/bin:/usr/bin:/bin
+Environment=AUTOPILOT_CODEX_BIN=<original-home>/.nvm/versions/node/v24.14.0/bin/codex
+TimeoutStartSec=0

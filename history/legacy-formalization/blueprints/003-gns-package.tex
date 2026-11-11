@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{#1}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+
+\begin{document}
+
+\section*{Blueprint 003: GNS Package}
+
+\paragraph{Superseded note.}
+This historical draft is superseded by
+\texttt{blueprints/010-gns-represented-region-layer.tex}.  It is preserved
+only as provenance for the earlier draft and should not be used as an active
+Aristotle source.
+
+\begin{theorem}[GNSPackage, superseded ID: GNS-001]
+Let \(A\) be a unital \(C^*\)-algebra and let \(\omega\) be a state on \(A\).
+There exists a Hilbert space \(H_\omega\), a unital \(*\)-representation
+\[
+  \pi_\omega:A\to B(H_\omega),
+\]
+and a cyclic unit vector \(\Omega_\omega\in H_\omega\) such that
+\[
+  \omega(a)=\langle \Omega_\omega,\pi_\omega(a)\Omega_\omega\rangle
+\]
+for all \(a\in A\).
+\source{Kadison--Ringrose, \emph{Fundamentals of the Theory of Operator
+Algebras, Vol.~I}, Theorem 4.5.2 and Proposition 4.5.3, PDF pp.~287--288.
+Lean infrastructure: \texttt{Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal};
+see also the coverage audit in
+\texttt{agents/2026-06-21-mathlib-operator-algebra-coverage-audit.md}.}
+\lean{Formalization.GNS.GNSPackage}
+\status{blueprint_draft_source_locator_fixed}
+\end{theorem}
+
+\end{document}

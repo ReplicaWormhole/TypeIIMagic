@@ -1,0 +1,49 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[a4paper,margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{question}{Question}
+\newtheorem{assumption}{Assumption}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cZ}{\mathcal Z}
+\newcommand{\id}{\mathbf 1}
+
+\title{Question I001: Full Tracial Corners and Finite Central Fibers}
+\date{August 2, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{question}
+Let $\cM\subseteq B(\cH)$ be a concrete von Neumann algebra and let
+$q\in\cM$ be a projection.  Suppose that $q\cM q$ carries a faithful
+tracial state and that $q$ is full, in the explicit sense that
+\begin{equation}
+  0\neq z\in\cZ(\cM)\quad\Longrightarrow\quad zq\neq0.
+  \label{eq:question_fullness}
+\end{equation}
+Can one formalize, using mathlib's concrete
+\texttt{VonNeumannAlgebra H}, the conclusion that every nonzero central
+summand $z\cM$ contains a nonzero finite projection?
+\end{question}
+
+\begin{assumption}[Finite-fiber specialization]
+The center is presented by finitely many nonzero pairwise orthogonal central
+projections $(z_i)_{i\in I}$ with $\sum_{i\in I}z_i=\id$.  When each
+$z_i\cM$ is a factor, it is called a finite central fiber.
+\end{assumption}
+
+The immediate Lean target is the stronger ambient central-summand statement:
+it supplies a nonzero finite projection $e\leq z_i$ for every index $i$.
+The standard factor/type-III conclusion requires a later bundled construction
+of the represented central corner $z_i\cM$ and is deliberately not claimed as
+machine checked here.  The central-summand statement is primary because it is
+precisely the conclusion of the current manuscript's
+Theorem~\texttt{thm:finite\_projections\_exist}.
+
+\end{document}

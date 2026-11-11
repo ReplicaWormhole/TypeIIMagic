@@ -1,0 +1,389 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[a4paper,margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\raggedbottom
+\hypersetup{
+  pdftitle={Stabilizer/GNS Support Realization and Finite Central Fibers},
+  pdfauthor={}
+}
+
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cB}{\mathcal B}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cR}{\mathcal R}
+\newcommand{\cC}{\mathcal C}
+\newcommand{\cZ}{\mathcal Z}
+\newcommand{\id}{\mathbf 1}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\fin}{\mathrm{fin}}
+\newcommand{\sot}{\mathrm{s}}
+
+\title[Stabilizer/GNS Support Realization]{Stabilizer/GNS Support Realization and Finite Central Fibers\\
+\large A checked bridge from finite stabilizer averages and specified GNS-orbit hypotheses}
+\author{}
+\date{August 3, 2026}
+
+\begin{document}
+
+\begin{abstract}
+This note records the stabilizer/GNS layer behind the finite-fiber theorem in
+the current stabilizer-region manuscript.  It machine-checks four load-bearing
+implications that the earlier abstract corner theorem left open: a finite
+self-adjoint group average is a projection; nested finite stabilizer subgroups
+give decreasing local supports; every such decreasing sequence has a canonical
+strong limit; and the specified dense regional/complementary product orbit
+makes the compressed vector functional projection-faithful and the support
+full.  Combined with the checked full-tracial-corner theorem of
+Investigation~I001, this proves that every nonzero central summand contains a
+nonzero finite projection, and supplies the canonical witness in every
+explicitly presented finite family of central fibers.
+
+The note is deliberately fail-closed about the remaining analytic layer.  The
+Lean theorem constructs the strong limit after receiving the finite group
+averages, but it still receives the represented stabilizer action, the
+stabilized GNS vector, and the already-extended corner-traciality statement.
+It does not yet construct the tensor-product Pauli realization, the
+quasi-local stabilizer state or its reduced density matrices, derive the
+Kaplansky extension of local traciality, construct the GNS product orbit, or
+formalize direct-integral/type-III vocabulary.  Those are
+reported as open formalization obligations rather than hidden axioms.
+\end{abstract}
+
+\maketitle
+
+\section{Target and checked scope}
+\label{sec:target}
+
+Let $\cM\subseteq\cB(\cH)$ be a concrete von Neumann algebra, let
+$\xi\in\cH$, and let $p_n\in\cM$ be local support projections.  The target
+is the central-summand conclusion of the manuscript's theorem
+\texttt{thm:finite\_projections\_exist}:
+\begin{equation}
+  0\neq z\in\cZ(\cM)
+  \quad\Longrightarrow\quad
+  \exists e\in\cM:\ e\neq0,\ e\leq z,\ e\text{ is finite}.
+  \label{eq:central_summand_goal}
+\end{equation}
+The final phrase is the Murray--von Neumann finiteness of a projection in the
+ambient concrete algebra.  Since $e\leq z$, it is the concrete
+central-summand statement that $z\cM$ contains a finite projection.  This is
+stronger and more precise than merely presenting a finite list of fibers.
+
+The formal development in
+\texttt{formalization\_finite\_fibers/FiniteFiber/} now proves the following
+conditional theorem without project-local axioms or placeholders.
+
+\begin{theorem}[Checked nested-stabilizer-sequence-to-central-summand theorem]
+\label{thm:checked_stabilizer_to_central_summand}
+Assume the following data.
+\begin{enumerate}[label=\textup{(H\arabic*)},leftmargin=3.1em]
+  \item A group $K$ acts on $\cH$ by bounded operators $\rho(k)$, every
+  $\rho(k)$ is self-adjoint, and $S_n\leq K$ is a finite increasing sequence
+  of subgroups.  Define
+  \begin{equation}
+    p_n=\frac{1}{\lvert S_n\rvert}\sum_{s\in S_n}\rho(s).
+    \label{eq:stabilizer_group_average}
+  \end{equation}
+  \item The represented finite stabilizers lie in $\cM$ and fix $\xi$:
+  \begin{equation}
+    \rho(s)\in\cM,
+    \qquad
+    \rho(s)\xi=\xi,
+    \qquad s\in S_n.
+    \label{eq:represented_stabilizers_fix_xi}
+  \end{equation}
+  The formal construction defines the strong limit $q$ from the $p_n$.
+  \item There are regional and complementary operator sets
+  $\cR,\cC\subseteq\cB(\cH)$ such that $\cR\subseteq\cM$,
+  region and complement commute, every element of $\cM$ commutes with
+  $\cC$, and
+  \begin{equation}
+    \overline{\operatorname{span}\{ab\xi:a\in\cR,\ b\in\cC\}}=\cH.
+    \label{eq:product_orbit_dense}
+  \end{equation}
+  \item The compressed vector functional
+  \begin{equation}
+    \tau(x):=\langle\xi,x\xi\rangle
+    \label{eq:compressed_vector_functional}
+  \end{equation}
+  is tracial on the support corner: for $a,b\in q\cM q$,
+  \begin{equation}
+    \tau(ab)=\tau(ba).
+    \label{eq:corner_traciality}
+  \end{equation}
+\end{enumerate}
+Then $q\in\cM$ is a full projection, and its tracial vector functional is
+faithful on projections below $q$ (the exact property used for the
+Murray--von Neumann finiteness argument); \eqref{eq:central_summand_goal}
+holds.  More explicitly, the witness for a nonzero central projection $z$ is
+\begin{equation}
+  e=zq.
+  \label{eq:canonical_central_witness}
+\end{equation}
+For any supplied finite pairwise-orthogonal central partition
+$(z_i)_{i\in I}$ of $\id$, each $z_iq$ is therefore a nonzero finite
+projection below $z_i$.
+\end{theorem}
+
+The exact Lean entry point for all clauses of
+Theorem~\ref{thm:checked_stabilizer_to_central_summand} is the following
+declaration.  Its fields \texttt{q\_projection},
+\texttt{q\_fixes\_xi}, \texttt{full}, \texttt{projection\_faithful}, and
+\texttt{central\_witness} match the displayed conclusions; \texttt{semifinite}
+is their existential central-summand corollary.  The line segments concatenate
+within the identifier:
+\begin{quote}\small
+\texttt{stabilizerAverageSequence\_}\\
+\texttt{canonicalSupportCornerConclusion\_}\\
+\texttt{of\_gnsOrbit}
+\end{quote}
+The canonical semifiniteness and central-witness specializations have the
+separate entry points
+\begin{quote}\small
+\texttt{stabilizerAverageSequence\_canonicalSemifinite\_of\_gnsOrbit}\\
+\texttt{stabilizerAverageSequence\_canonicalCentralWitness\_of\_gnsOrbit}.
+\end{quote}
+
+\section{Strong-limit support}
+\label{sec:strong_support}
+
+The formal predicate \texttt{StronglyTendsTo} means pointwise norm
+convergence on $\cH$.  The development no longer receives it as a hypothesis.
+For $U_n=(\operatorname{ran}p_n)^\perp$, it defines
+\begin{equation}
+  q=\id-\operatorname{Proj}_{\overline{\bigcup_n U_n}}.
+  \label{eq:formal_strong_limit}
+\end{equation}
+The ranges are decreasing because $S_n\leq S_m$ implies that the average over
+$S_m$ is a subprojection of the average over $S_n$.  Thus the $U_n$ are
+increasing, and mathlib's theorem on monotone orthogonal projections gives
+pointwise norm convergence to \eqref{eq:formal_strong_limit}.
+
+\begin{proposition}[Constructed strong support]
+\label{prop:strong_support_consequences}
+Under (H1)--(H2), each $p_n$ is a projection in $\cM$, the sequence is
+decreasing, $p_n\xi=\xi$, and the constructed $q$ is a projection in $\cM$
+with $q\xi=\xi$.
+\end{proposition}
+
+\begin{proof}
+For a finite group average, left and right multiplication by a represented
+group element permutes the finite sum.  Hence the average is idempotent; the
+self-adjointness of every summand makes it a projection.  If $S_n\leq S_m$,
+each summand of $p_n$ fixes $p_m$ on both sides, so
+\begin{equation}
+  p_mp_n=p_np_m=p_m.
+  \label{eq:stage_fixes_limit}
+\end{equation}
+Every element of $S_n$ fixes $\xi$, so averaging gives $p_n\xi=\xi$.  The
+orthogonal-complement construction in \eqref{eq:formal_strong_limit} gives
+$p_n\to q$ strongly.  The checked strong-limit consequences then prove
+$q\in\cM$, $q^2=q=q^*$, and $q\xi=\xi$.
+\end{proof}
+
+The construction is compatible with the standard operator-algebraic result
+that a decreasing family of projections has a strong limit; compare
+Blackadar, I.5.1.3, PDF p.~29.  The strong-closure and corner facts used in
+the manuscript are also located in Blackadar, I.9.1.2--I.9.1.4, PDF p.~58.
+The Lean proof does not appeal to an unimplemented closure axiom: it builds
+the limit through orthogonal projections and derives membership directly from
+the concrete double-commutant definition.
+
+\section{Projection-faithfulness from a specified GNS product orbit}
+\label{sec:faithfulness}
+
+The key correction to the first formalization layer is that
+projection-faithfulness is not now a field of the theorem statement.  It is
+derived from (H3)--(H4).
+Let $r\leq q$ be a projection satisfying $\tau(r)=0$.  Since $r=r^*=r^2$,
+\begin{equation}
+  0=\tau(r)=\langle r\xi,r\xi\rangle,
+  \qquad\text{so}\qquad r\xi=0.
+  \label{eq:null_projection_annihilates_xi}
+\end{equation}
+For $y\in q\cM q$, all three factors below remain in the corner, and
+traciality gives
+\begin{equation}
+  \begin{aligned}
+    \lVert ry\xi\rVert^{2}
+    &=\tau(y^*ry) \\
+    &=\tau(yy^*r) \\
+    &=0.
+  \end{aligned}
+  \label{eq:corner_nullity}
+\end{equation}
+For $a\in\cR$, choose $y=qaq$.  Equations
+\eqref{eq:corner_nullity} and $q\xi=\xi$ show that $ra\xi=0$.  If
+$b\in\cC$, locality and the commutation of $\cM$ with $\cC$ yield
+\begin{equation}
+  rab\xi=bra\xi=0.
+  \label{eq:product_orbit_annihilation}
+\end{equation}
+Density in \eqref{eq:product_orbit_dense} and continuity of $r$ now imply
+$r=0$.  Thus the vector functional is faithful on all support
+subprojections, which is exactly the projection-faithfulness needed by the
+Murray--von Neumann finiteness argument.  The stronger positive-element
+faithfulness of Proposition~\texttt{prop:faithful} in the manuscript is not
+claimed as a Lean theorem here.
+
+The corresponding checked declaration is the concatenation
+\begin{quote}\small
+\texttt{VectorCornerData.}\\
+\hspace*{1em}\texttt{projection\_eq\_zero\_}\\
+\hspace*{1em}\texttt{of\_vectorFunctional\_eq\_zero}.
+\end{quote}
+The proof exposes the two commutations that cannot be omitted: regional with
+complement, and $\cM$ with complement.
+
+\section{Fullness and the central witness}
+\label{sec:fullness}
+
+Let $z\in\cZ(\cM)$ and suppose $zq=0$.  Since $q\xi=\xi$,
+\begin{equation}
+  z\xi=zq\xi=0.
+  \label{eq:central_nullity}
+\end{equation}
+Centrality commutes $z$ with regional operators; (H3) commutes $z$ with the
+complement.  Hence $zab\xi=abz\xi=0$ for every product-orbit vector.
+Equation~\eqref{eq:product_orbit_dense} forces $z=0$.  Therefore $q$ is full
+in the operational form
+\begin{equation}
+  0\neq z\in\cZ(\cM)
+  \quad\Longrightarrow\quad
+  zq\neq0.
+  \label{eq:checked_fullness}
+\end{equation}
+
+By the checked I001 theorem, a faithful tracial support corner makes every
+subprojection of $q$ finite.  For nonzero central $z$, the product $zq$ is a
+projection, is below $q$ and $z$, and is nonzero by
+\eqref{eq:checked_fullness}.  It is thus the claimed finite witness in
+\eqref{eq:canonical_central_witness}.  This is the algebraic content of the
+central-carrier argument; compare Blackadar, III.1.1.5, PDF p.~245, the
+definition of finite projection, III.1.3.1, PDF p.~250, and the
+semifinite/purely-infinite distinction, III.1.4.2, PDF p.~253.
+
+\section{Exact boundary of the checked theorem}
+\label{sec:boundary}
+
+The theorem above is a faithful formalization of the finite-group/support-
+corner portion of the live proof, but it is not an end-to-end construction
+from a raw tensor-product Pauli presentation.  Five boundaries matter.
+
+\begin{enumerate}[label=\textup{(B\arabic*)},leftmargin=3.1em]
+  \item \textbf{Pauli and density-matrix realization.}  The checked finite
+  group layer proves the projection and monotonicity properties of
+  \eqref{eq:stabilizer_group_average} from an explicitly supplied
+  self-adjoint operator action and a nested finite-subgroup sequence.  Its
+  separate finite-dimensional trace lemma assumes, exactly,
+  $\Tr(\rho(s))=0$ for every $s\neq1$ and $\dim\cH_F\neq0$; under those
+  hypotheses it proves $\Tr(P_F)=\dim\cH_F/\lvert S_F\rvert$ and
+  $P_F\neq0$.  That lemma is not used to produce a nonzero global GNS
+  support in the central-summand theorem.  The package does not yet construct
+  the action, the tracelessness condition, or the qubit-dimension identity
+  from tensor-product Pauli operators, and it does not prove partial-trace
+  consistency of the reduced density matrices.
+  \item \textbf{Stabilizer-state realization.}  The condition
+  \eqref{eq:represented_stabilizers_fix_xi} is explicit.  The Lean package
+  does not yet construct the quasi-local stabilizer state and prove that its
+  GNS vector has this property.
+  \item \textbf{GNS-orbit realization.}  The structure
+  \texttt{GNSOrbitConditions} receives the regional and complementary operator
+  sets, their membership and commutation properties, and the density statement
+  \eqref{eq:product_orbit_dense} as fields.  It packages their exact
+  consequence for the support corner, but does not construct the GNS
+  representation or prove density from the quasi-local algebra.  This is a
+  separate formalization task; in the installed mathlib version the relevant
+  GNS source still records the cyclic-vector construction as unfinished.
+  \item \textbf{Local trace extension.}  The manuscript obtains the
+  corner-traciality hypothesis by
+  finite-dimensional matrix-trace cyclicity, bounded strong continuity of
+  multiplication, and Kaplansky density.  Blackadar states that multiplication
+  is separately continuous in all of the listed operator topologies and jointly
+  continuous on bounded sets for the strong and strong-$*$ topologies in
+  I.3.2.1, PDF p.~23; Kaplansky density is I.9.1.3, PDF p.~58.
+  Mathlib~v4.28 has no ready-made theorem connecting those ingredients to this
+  corner-traciality statement, so it remains an explicit analytic input.
+  \item \textbf{Fiber/type language.}  The installed mathlib version has no
+  direct-integral or type-III-factor API.  The checked result is therefore
+  the stronger central-projection statement \eqref{eq:central_summand_goal}
+  and its finite-family specialization, rather than an unimplemented
+  ``almost every direct-integral factor'' predicate.
+\end{enumerate}
+
+These boundaries are not defects in the theorem statement: they prevent the
+formalization from silently converting an analytic or measure-theoretic step
+into a project-local axiom.  In particular, the theorem does not state an
+unchecked \texttt{not\_typeIII} conclusion.
+
+\section{Lean artifact and verification map}
+\label{sec:verification}
+
+\begin{center}\footnotesize
+\begin{tabular}{p{.34\linewidth}p{.58\linewidth}}
+\hline
+Lean module & Checked responsibility \\
+\hline
+\texttt{FiniteFiber/Basic.lean} & projections, central slices, Murray--von Neumann finiteness \\
+\texttt{FiniteFiber/TracialCorner.lean} & a projection-faithful tracial corner makes support subprojections finite \\
+\texttt{FiniteFiber/FiniteFibers.lean} & full support gives finite witnesses below all nonzero central projections \\
+\texttt{FiniteFiber/}\par\texttt{FiniteStabilizer.lean} & finite group averages are projections and respect nested subgroup constraints \\
+\texttt{FiniteFiber/}\par\texttt{FiniteStabilizerTrace.lean} & conditional finite-dimensional trace/rank formula and nonzero local support \\
+\texttt{FiniteFiber/}\par\texttt{StabilizerSequence.lean} & an increasing finite-subgroup sequence gives decreasing supports and fixed vectors \\
+\texttt{FiniteFiber/StrongSupport.lean} & constructs the strong limit and proves its membership, projection, and fixed-vector properties \\
+\texttt{FiniteFiber/VectorCorner.lean} & projection-faithfulness and fullness from the dense product orbit \\
+\texttt{FiniteFiber/GNSOrbit.lean} & bundled I002 conclusion and finite-family witness \\
+\texttt{FiniteFiber/}\par\texttt{StabilizerFiniteFiber.lean} & central-fiber conclusion from nested subgroup data \\
+\hline
+\end{tabular}
+\end{center}
+
+The expected verification commands are
+\begin{verbatim}
+lake build FiniteFiber.StrongSupport
+lake build FiniteFiber.FiniteStabilizer
+lake build FiniteFiber.FiniteStabilizerTrace
+lake build FiniteFiber.StabilizerSequence
+lake build FiniteFiber.VectorCorner
+lake build FiniteFiber.GNSOrbit
+lake build FiniteFiber.StabilizerFiniteFiber
+lake build
+lake env lean tests/AxiomAudit.lean
+\end{verbatim}
+The axiom audit must report only Lean's three standard logical axioms for all
+public theorems, including the bundled I002 theorem and finite-family witness.
+\begin{center}
+\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}
+\end{center}
+
+\section{Source locator policy}
+\label{sec:sources}
+
+The staged PDF used for the operator-algebra references is
+\texttt{sources/blackadar.pdf}.  Citations in this note use printed
+section/theorem numbers together with PDF page numbers.  The mathematical
+derivations in Sections~\ref{sec:strong_support}--\ref{sec:fullness} are
+proved directly in Lean; the citations identify the standard analytic and
+classification facts delimiting the formal interface.
+
+\end{document}

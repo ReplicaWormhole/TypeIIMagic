@@ -1,0 +1,1095 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable}
+\usepackage{hyperref}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Corollary}
+
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{\detokenize{#1}}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+\newcommand{\depends}[1]{\par\noindent\textbf{Depends on.} #1}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cZ}{\mathcal Z}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cB}{\mathcal B}
+
+\begin{document}
+
+\section*{Blueprint 011: Project-Local Von Neumann Type Theory}
+
+\subsection*{Scope}
+
+This note promotes the fourth remaining blueprint block from
+\path{agents/2026-06-22-remaining-blueprint-suite-goal.md}.  It supports
+\[
+\texttt{VN-002},\quad
+\texttt{VECTOR-ANALYTIC-001},\quad
+\texttt{PROJ-001},\quad
+\texttt{CENTRAL-SUPPORT-001},\quad
+\texttt{TRACE-001},\quad
+\texttt{TYPE-DEF-001},\quad
+\texttt{TYPE-ALT-001},\quad
+\texttt{MATRIX-001},
+\]
+and the supporting represented-region criteria
+\[
+\texttt{REGION-VECTOR-001},\quad
+\texttt{REGION-VECTOR-NORMAL-001},\quad
+\texttt{REGION-VECTOR-TRACE-001},\quad
+\texttt{REGION-VECTOR-FAITH-001},\quad
+\texttt{TRACE-TYPE-CRITERION-001},\quad
+\texttt{REGION-VECTOR-TYPE-001}.
+\]
+It gives the project-local vocabulary for centers, factors, projection
+comparison, traces, factor types, and the vector-state criteria used later for
+represented region algebras.  It does not prove the final stabilizer
+classification and does not create Aristotle packets; the Lean-facing names
+below are blueprint targets, not integrated Lean declarations.
+The represented-region IDs above are mirrored in \path{MANIFEST.toml} and
+remain pending adversarial review and formalization.
+
+\subsection*{Takesaki Statement Transcripts}
+
+The local Takesaki I PDF is scanned; the cited Chapter V pages were rendered
+and OCR-checked in \path{/tmp/formalization-ocr}.
+
+\begin{definition}[VonNeumannAlgebraFactor, Takesaki I Definition II.3.2, PDF p.~92]
+A von Neumann algebra on \(\mathcal H\) is a \(*\)-subalgebra
+\(\mathcal M\) of \(\mathcal L(\mathcal H)\) such that
+\[
+  \mathcal M=\mathcal M''.
+\]
+A factor is a von Neumann algebra \(\mathcal M\) with trivial center,
+\(\mathcal M\cap\mathcal M'=\mathbb C1\).
+\end{definition}
+
+\begin{definition}[ProjectionEquivalence, Takesaki I Definition V.1.2, PDF p.~310]
+Two projections \(e\) and \(f\) in a von Neumann algebra \(\mathcal M\) are
+said to be equivalent if there exists an element \(u\in\mathcal M\) with
+\[
+  u^*u=e,\qquad uu^*=f.
+\]
+This is written \(e\sim f\).  The projections \(e\) and \(f\) are called,
+respectively, the initial projection and the final projection of \(u\).  If a
+projection \(e\in\mathcal M\) is equivalent to a projection \(f_0\in\mathcal M\)
+with \(f_0\leq f\in\mathcal M\), then one writes \(e\precsim f\).
+\end{definition}
+
+\begin{theorem}[ProjectionComparability, Takesaki I Theorem V.1.8, PDF p.~313]
+For any pair \(e,f\) of projections in a von Neumann algebra \(\mathcal M\),
+there exists a central projection \(z\) such that
+\[
+  ze\precsim zf,\qquad (1-z)e\succeq (1-z)f.
+\]
+In particular, if \(\mathcal M\) is a factor, then one and only one of the
+following relations holds:
+\[
+  e\prec f,\qquad e\sim f,\qquad e\succ f.
+\]
+\end{theorem}
+
+\begin{proof}
+Choose a maximal family of orthogonal subprojections \(e_i\leq e\) and
+\(f_i\leq f\) with \(e_i\sim f_i\), and let \(e_0=\sum_i e_i\) and
+\(f_0=\sum_i f_i\).  Maximality and the central-orthogonality lemma imply
+that \(e-e_0\) and \(f-f_0\) are separated by a central projection \(z\).
+Multiplying the equivalence \(e_0\sim f_0\) by \(z\) and \(1-z\) gives the
+two comparison inequalities.  In a factor, the only central projections are
+\(0\) and \(1\), giving the trichotomy.
+\end{proof}
+
+\begin{definition}[FiniteInfiniteProjection, Takesaki I Definition V.1.15, PDF p.~316]
+A projection \(e\) in a von Neumann algebra \(\mathcal M\) is said to be
+finite if \(e\sim f<e\) implies \(e=f\).  Otherwise it is said to be
+infinite.  A projection \(e\) is said to be purely infinite if there is no
+nonzero finite projection \(f<e\) in \(\mathcal M\).  If \(ze\) is infinite
+for every central projection \(z\in\mathcal M\) with \(ze\neq0\), then \(e\)
+is called properly infinite.  If \(e\mathcal M e\) is abelian, then \(e\) is
+said to be abelian.
+\end{definition}
+
+\begin{definition}[FiniteInfiniteVonNeumannAlgebra, Takesaki I Definition V.1.16, PDF p.~316]
+A von Neumann algebra \(\mathcal M\) is said to be finite, infinite, properly
+infinite, or purely infinite according to the property of the identity
+projection \(1\).
+\end{definition}
+
+\begin{definition}[VonNeumannAlgebraTypes, Takesaki I Definition V.1.17, PDF p.~316]
+A von Neumann algebra \(\mathcal M\) is said to be of type I if every nonzero
+central projection in \(\mathcal M\) majorizes a nonzero abelian projection
+in \(\mathcal M\).  If there is no nonzero finite projection in
+\(\mathcal M\), that is, if \(\mathcal M\) is purely infinite, then it is said
+to be of type III.  If \(\mathcal M\) has no nonzero abelian projection and if
+every nonzero central projection in \(\mathcal M\) majorizes a nonzero finite
+projection of \(\mathcal M\), then it is said to be of type II.  If
+\(\mathcal M\) is finite and of type II, then it is said to be of type
+\(II_1\).  If \(\mathcal M\) is of type II and has no nonzero central finite
+projection, then \(\mathcal M\) is said to be of type \(II_\infty\).
+\end{definition}
+
+\begin{theorem}[CentralTypeDecomposition, Takesaki I Theorem V.1.19, PDF pp.~316--317]
+Every von Neumann algebra \(\mathcal M\) is uniquely decomposable into the
+direct sum of those of type I, type \(II_1\), type \(II_\infty\), and type
+III.  Moreover, every projection \(e\) in \(\mathcal M\) is uniquely written
+as the sum of centrally orthogonal projections \(e_1\) and \(e_2\) in
+\(\mathcal M\) such that \(e_1\) is finite and \(e_2\) is properly infinite.
+\end{theorem}
+
+\begin{proof}
+Take a maximal centrally orthogonal family of abelian projections; its central
+support gives the type I summand.  In the complement, take a maximal centrally
+orthogonal family of finite projections; its central support gives the type II
+summand and the remaining central part is type III.  Splitting the type II
+part by maximal central finite projections separates \(II_1\) and
+\(II_\infty\).  The same central-support argument proves uniqueness.  Applying
+the construction inside the corner \(e\mathcal M e\) gives the projection
+decomposition.
+\end{proof}
+
+\begin{theorem}[FactorTypeAlternatives, Takesaki I Corollary V.1.20, PDF p.~317]
+A factor is either of type I, type \(II_1\), type \(II_\infty\), or type III.
+\end{theorem}
+
+\begin{proof}
+Apply Theorem V.1.19.  Since the center of a factor has no nontrivial
+projections, exactly one central type summand can be nonzero.
+\end{proof}
+
+\begin{definition}[SemifiniteVonNeumannAlgebra, Takesaki I Definition V.1.21, PDF p.~317]
+In the decomposition of Theorem V.1.19, if the type III central summand is
+zero, then \(\mathcal M\) is said to be semifinite.
+\end{definition}
+
+\begin{proposition}[MatrixAlgebraOverAbelianTypeI, Takesaki I Proposition V.1.23, PDF p.~318]
+\leavevmode
+\begin{enumerate}
+\item If \(\mathcal A\) is an abelian von Neumann algebra, then
+\(\mathcal A\bar\otimes\mathcal L(\mathcal H)\) is of type I for any Hilbert
+space \(\mathcal H\).
+\item If \(\mathcal A\) is an abelian von Neumann algebra, then
+\(M_n(\mathcal A)\), the \(n\times n\) matrix algebra with entries from
+\(\mathcal A\), is a finite von Neumann algebra of type I, and the
+\(\mathcal A\)-valued map
+\[
+  \Phi(x)=\frac1n\sum_i x_{i,i},
+  \qquad x=[x_{i,j}]\in M_n(\mathcal A),
+\]
+satisfies
+\[
+  \Phi(a)=a,\qquad a\in\mathcal A,
+\]
+\[
+  \Phi(axb)=a\Phi(x)b,\qquad a,b\in\mathcal A,
+\]
+and
+\[
+  \Phi(x^*x)=\Phi(xx^*)>0,\qquad
+  \Phi(x^*x)=0\Rightarrow x=0.
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+For the tensor product statement, take a minimal projection \(p\) in
+\(\mathcal L(\mathcal H)\); then \(1\otimes p\) is abelian and has central
+support \(1\).  For the matrix statement, the displayed properties of
+\(\Phi\) follow from the normalized diagonal sum and direct matrix
+multiplication, and faithfulness follows from summing the positive diagonal
+entries of \(x^*x\).
+\end{proof}
+
+\begin{theorem}[TypeIFactorIsBoundedOperators, Takesaki I Corollary V.1.28, PDF p.~320]
+A factor of type I is isomorphic to \(\mathcal L(\mathcal H)\) for some
+Hilbert space \(\mathcal H\).  Therefore, the dimension of
+\(\mathcal H\) determines completely the algebraic type of the factor.
+\end{theorem}
+
+\begin{proof}
+In a factor of type I, the identity is homogeneous of some cardinal dimension.
+The preceding homogeneous type I structure theorem identifies the algebra with
+operators on a Hilbert space of that dimension.
+\end{proof}
+
+\begin{definition}[TypeICardinalHomogeneous, Takesaki I Definition V.1.33, PDF p.~322]
+A von Neumann algebra \(\mathcal M\) of type I is said to be of type
+\(I_\alpha\) if \(1\) is \(\alpha\)-homogeneous.  By Corollary V.1.28, a
+factor of type \(I_n\), \(n<+\infty\), is nothing but the \(n\times n\) matrix
+algebra over \(\mathbb C\).
+\end{definition}
+
+\begin{definition}[TraceOnVonNeumannAlgebra, Takesaki I Definition V.2.1, PDF p.~329]
+A trace on a von Neumann algebra \(\mathcal M\) is a function \(\tau\) on the
+positive cone \(\mathcal M_+\), with values in the extended positive reals
+\([0,+\infty]\), satisfying
+\[
+  \tau(x+y)=\tau(x)+\tau(y),\qquad x,y\in\mathcal M_+,
+\]
+\[
+  \tau(\lambda x)=\lambda\tau(x),\qquad \lambda\geq0,\ x\in\mathcal M_+,
+\]
+and
+\[
+  \tau(x^*x)=\tau(xx^*),\qquad x\in\mathcal M,
+\]
+with the usual convention \(0(+\infty)=0\).  A trace \(\tau\) is said to be
+faithful if \(\tau(x)>0\) for any nonzero \(x>0\), semifinite if every nonzero
+\(x\in\mathcal M_+\) majorizes some nonzero \(y>0\) with
+\(\tau(y)<+\infty\), finite if \(\tau(1)<+\infty\), and normal if
+\[
+  \tau(\sup x_i)=\sup\tau(x_i)
+\]
+for every bounded increasing net \(\{x_i\}\) in \(\mathcal M_+\).
+\end{definition}
+
+\begin{theorem}[FiniteIffEnoughFiniteNormalTraces, Takesaki I Theorem V.2.4, PDF p.~331]
+For a von Neumann algebra \(\mathcal M\), the following conditions are
+equivalent:
+\begin{enumerate}
+\item \(\mathcal M\) is finite;
+\item \(\mathcal M\) admits sufficiently many finite normal traces.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+If sufficiently many finite traces exist, an isometry \(u\) with \(u^*u=1\)
+satisfies \(\tau(uu^*)=\tau(1)\) for every such trace, so \(1-uu^*=0\).
+Conversely, for a finite algebra, average normal positive functionals over
+unitary conjugacy using the fixed-point theorem to obtain finite normal
+traces.  Their supports cover the identity because their central supports
+match the supports of the original normal functionals on the center.
+\end{proof}
+
+\begin{theorem}[SemifiniteIffFaithfulSemifiniteNormalTrace, Takesaki I Theorem V.2.15, PDF p.~337]
+For a von Neumann algebra \(\mathcal M\), the following conditions are
+equivalent:
+\begin{enumerate}
+\item \(\mathcal M\) is semifinite;
+\item \(\mathcal M\) admits a faithful semifinite normal trace.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+A faithful semifinite normal trace makes every nonzero projection majorize a
+nonzero finite projection, by cutting a finite-trace positive element by a
+nonzero spectral projection.  Conversely, take a maximal family of semifinite
+normal traces with mutually orthogonal supports.  If the total support were
+not \(1\), the remaining semifinite central summand would contain a nonzero
+part of the form \(\mathcal N\bar\otimes\mathcal L(\mathcal H)\) with
+\(\mathcal N\) finite; a finite normal trace on \(\mathcal N\) and the
+standard trace construction would contradict maximality.
+\end{proof}
+
+\subsection*{Centers and Factors}
+
+\begin{definition}[CenterAndFactor, ID: VN-002, Takesaki I Definition II.3.2, PDF p.~92]
+Let \(\cM\subseteq\cB(\cH)\) be a concrete von Neumann algebra.  Its center is
+\[
+  \cZ(\cM)=\cM\cap\cM'.
+\]
+The algebra \(\cM\) is a factor if \(\cZ(\cM)=\mathbb C\,1\).
+\source{Takesaki I, Definition II.3.2, PDF p.~92.}
+\depends{\texttt{VN-001}.}
+\lean{Formalization.OperatorAlgebra.Factor.center; Formalization.OperatorAlgebra.Factor.IsFactor}
+\status{blueprint_note_complete}
+\end{definition}
+
+\subsection*{Projection Comparison}
+
+\begin{definition}[ConcreteProjectionVocabulary, ID: PROJ-001, Takesaki I Definitions V.1.2 and V.1.15, PDF pp.~310, 316]
+Let \(\cM\) be a concrete \(\mathrm{VonNeumannAlgebra}\,\cH\), viewed as a
+unital \(*\)-subalgebra of \(\cB(\cH)\).
+\begin{itemize}
+\item A projection in \(\cM\) is an operator \(p\in\cM\) satisfying
+\[
+  p^*=p,\qquad p^2=p.
+\]
+\item For projections \(p,q\in\cM\), the projection order \(p\le q\) means
+\[
+  pq=p,
+\]
+equivalently \(qp=p\), equivalently \(\operatorname{Ran}(p)\subseteq
+\operatorname{Ran}(q)\).  A subprojection of \(q\) is a projection \(p\in\cM\)
+with \(p\le q\).  A proper subprojection is a subprojection \(p\le q\) with
+\(p\neq q\).
+\item A central projection is a projection \(z\in\cM\) lying in
+\(\cZ(\cM)\); equivalently \(zx=xz\) for every \(x\in\cM\).
+\item A partial isometry in \(\cM\) is an operator \(v\in\cM\) such that
+\[
+  v^*v\quad\hbox{and}\quad vv^*
+\]
+are projections in \(\cM\).  These are the initial and final projections of
+\(v\).
+\item For a projection \(e\in\cM\), the corner \(e\cM e\) is the set
+\[
+  e\cM e=\{exe:x\in\cM\}.
+\]
+It is treated as a unital von Neumann algebra with identity \(e\), represented
+on the Hilbert subspace \(e\cH=\operatorname{Ran}(e)\).  A projection \(e\) is
+abelian when this corner is commutative.
+\end{itemize}
+The well-formedness facts used by Lean are: \(p^*=p\) and \(p^2=p\) imply that
+\(\operatorname{Ran}(p)\) is closed; if \(e\in\cM\), then \(e\cM e\) is closed
+under multiplication and adjoint because \(\cM\) is; and strong-operator
+closedness of \(e\cM e\) follows by compressing strong limits by the bounded
+operator \(e\).
+\source{Takesaki I, Definition V.1.2, PDF p.~310; Definition V.1.15,
+PDF p.~316.}
+\depends{\texttt{VN-002}.}
+\lean{Formalization.OperatorAlgebra.ProjectionComparison}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{definition}[MurrayVonNeumannAndFinitePredicates, supporting ID: PROJ-001, Takesaki I Definitions V.1.2 and V.1.15--V.1.16, PDF pp.~310, 316]
+For projections \(e,f\in\cM\), define Murray--von Neumann equivalence
+\[
+  e\sim_{\cM} f
+\]
+to mean that there is a partial isometry \(u\in\cM\) with
+\[
+  u^*u=e,\qquad uu^*=f.
+\]
+Define subequivalence \(e\precsim_{\cM} f\) to mean that there is a
+projection \(f_0\in\cM\) such that \(f_0\le f\) and \(e\sim_{\cM} f_0\).  Write
+\(e\prec_{\cM} f\) when \(e\precsim_{\cM} f\) but \(e\not\sim_{\cM} f\).
+
+A projection \(e\in\cM\) is finite if every projection \(f\in\cM\) with
+\[
+  f\le e,\qquad f\sim_{\cM} e
+\]
+satisfies \(f=e\).  It is infinite if it is not finite.  It is properly
+infinite if for every central projection \(z\in\cM\),
+\[
+  ze\neq0\quad\Longrightarrow\quad ze\hbox{ is infinite in }z\cM z.
+\]
+The algebra \(\cM\) is finite, infinite, or properly infinite when its
+identity projection has the corresponding property.
+\source{Takesaki I, Definition V.1.2, PDF p.~310; Definition V.1.15 and
+Definition V.1.16, PDF p.~316.}
+\depends{\texttt{VN-002}.}
+\lean{Formalization.OperatorAlgebra.ProjectionComparison}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{definition}[CentralSupportProjectionLatticePackage, ID: CENTRAL-SUPPORT-001, Takesaki I Proposition V.1.1, Lemma V.1.7, Lemma V.1.18, Theorems V.1.8 and V.1.19, PDF pp.~310, 312--313, 316--317]
+For Lean extraction, the central-support infrastructure used below is the
+following source-backed package for a concrete von Neumann algebra \(\cM\).
+It may be implemented either by proving these fields from the cited Takesaki
+results or, temporarily, by importing them as explicitly named assumptions in
+packets that need comparability or central decomposition.
+\begin{itemize}
+\item \(\operatorname{ProjSupInf}_{\cM}\): the projections of \(\cM\) form a
+complete lattice.  For every family \((p_i)\), the projections
+\(\bigvee_i p_i\) and \(\bigwedge_i p_i\) lie in \(\cM\).  If the \(p_i\)
+are pairwise orthogonal, then \(\bigvee_i p_i\) is the strong-operator sum of
+the \(p_i\).
+\item \(\operatorname{CentralSupport}_{\cM}(p)\): for every projection
+\(p\in\cM\), \(c_{\cM}(p)\) is the least central projection \(z\in\cM\) with
+\(p\le z\).  For a central projection \(z\), central cutting satisfies
+\[
+  c_{z\cM z}(zp)=z\,c_{\cM}(p)
+\]
+inside the corner \(z\cM z\), and central cuts preserve projection order.
+\item \(\operatorname{CentralCutMvN}_{\cM}\): if \(p\sim_{\cM}q\) is
+implemented by a partial isometry \(v\in\cM\) and \(z\) is central, then
+\[
+  zp\sim_{z\cM z} zq
+\]
+is implemented by \(zv\).  Consequently central cuts preserve
+subequivalence, finiteness, infiniteness, proper infiniteness, and abelian
+corners.
+\item \(\operatorname{CentralSupportSeparation}_{\cM}\): if projections
+\(r,s\in\cM\) have no nonzero subprojections \(r_0\le r\) and \(s_0\le s\)
+with \(r_0\sim_{\cM}s_0\), then \(c_{\cM}(r)c_{\cM}(s)=0\).  Equivalently,
+there is a central projection separating \(r\) from \(s\).
+\item \(\operatorname{OrthogonalPartialIsometrySum}_{\cM}\): for any family
+of partial isometries \((v_i)\subseteq\cM\) with pairwise orthogonal initial
+projections and pairwise orthogonal final projections, the strong sum
+\(\sum_i v_i\) belongs to \(\cM\) and is a partial isometry whose initial and
+final projections are \(\bigvee_i v_i^*v_i\) and \(\bigvee_i v_i v_i^*\).
+\item \(\operatorname{CentrallyOrthogonalFiniteSup}_{\cM}\): suprema of
+centrally orthogonal abelian projections are abelian, and suprema of
+centrally orthogonal finite projections are finite.  In particular, maximal
+centrally orthogonal families of abelian or finite projections have central
+supports that define central type summands.
+\item \(\operatorname{LargestCentralFiniteProjection}_{\cM}\): for every
+central projection \(z\), the supremum of all central finite projections
+below \(z\) exists and is the largest central finite subprojection of \(z\);
+its complement \(z-z_f\) has no nonzero central finite subprojection.  This
+is the construction later applied in \texttt{TYPE-ALT-001} to split the
+central part that satisfies the type-II predicate.
+\end{itemize}
+This target is definition-only at the blueprint level: it names the exact
+Lean-facing fields used by later proof routes and records their source
+locators, instead of leaving central support, projection-lattice completeness,
+orthogonal sums, or largest central finite projections implicit.
+\source{Takesaki I, Proposition V.1.1, PDF p.~310, for the complete
+projection lattice; Lemma V.1.7, PDF p.~312, for central support and central
+orthogonality; Theorem V.1.8, PDF p.~313, for central cuts in comparability;
+Lemma V.1.18 and Theorem V.1.19, PDF pp.~316--317, for centrally orthogonal
+finite and abelian suprema and the largest central finite projection used in
+the type decomposition.}
+\depends{\texttt{VN-002}, \texttt{PROJ-001}.}
+\lean{Formalization.OperatorAlgebra.CentralSupportProjectionLatticePackage}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{theorem}[ProjectionComparability, supporting ID: PROJ-001, Takesaki I Theorem V.1.8, PDF p.~313]
+For projections \(e,f\) in a von Neumann algebra \(\cM\), there exists a
+central projection \(z\in\cM\) such that
+\[
+  ze\precsim zf,\qquad
+  (1-z)e\succeq (1-z)f.
+\]
+If \(\cM\) is a factor, exactly one of \(e\prec f\), \(e\sim f\), or
+\(e\succ f\) holds.
+\source{Takesaki I, Theorem V.1.8, PDF p.~313.}
+\depends{\texttt{VN-002}, \texttt{PROJ-001}, \texttt{CENTRAL-SUPPORT-001}.}
+\lean{Formalization.OperatorAlgebra.projection_comparability}
+\status{blueprint_note_complete}
+\end{theorem}
+
+\begin{proof}
+The formal proof route is the standard Murray--von Neumann comparison
+argument.  Consider the partially ordered set of families
+\[
+  \{(e_i,f_i,u_i)\}_{i\in I}
+\]
+where the \(e_i\le e\) are pairwise orthogonal subprojections, the
+\(f_i\le f\) are pairwise orthogonal subprojections, and \(u_i\in\cM\) is a
+partial isometry with \(u_i^*u_i=e_i\) and \(u_i u_i^*=f_i\).  Order such
+families by extension.  Zorn's lemma gives a maximal family.  Since \(\cM\)
+is a von Neumann algebra, \texttt{CENTRAL-SUPPORT-001} supplies the
+orthogonal projection suprema
+\[
+  e_0=\bigvee_i e_i,\qquad f_0=\bigvee_i f_i
+\]
+in \(\cM\), and it supplies the strong sum \(u=\sum_i u_i\) as a partial
+isometry in \(\cM\) with \(u^*u=e_0\) and \(uu^*=f_0\).
+
+Let \(r=e-e_0\) and \(s=f-f_0\).  Maximality says that no nonzero
+subprojection of \(r\) is equivalent to a subprojection of \(s\).  The
+central-support separation field of \texttt{CENTRAL-SUPPORT-001} says that
+the residual central supports are orthogonal, so a central projection \(z\)
+separates the residual \(e\)-side from the residual \(f\)-side.  The
+central-cut Murray--von Neumann field says that if \(a\sim b\) is implemented
+by \(v\), then \(za\sim zb\) is implemented by \(zv\).  Applying this to
+\(e_0\sim f_0\), and using the central support separation of \(r\) and \(s\),
+gives
+\[
+  ze\precsim zf,\qquad (1-z)f\precsim (1-z)e.
+\]
+If \(\cM\) is a factor, the only central projections are \(0\) and \(1\).
+Thus comparability is global.  Antisymmetry modulo equivalence gives exactly
+one of \(e\prec f\), \(e\sim f\), or \(e\succ f\).
+\end{proof}
+
+\subsection*{Trace Interfaces}
+
+\begin{definition}[TraceInterfaces, ID: TRACE-001, Takesaki I Definition V.2.1, PDF p.~329]
+The positive cone of a concrete von Neumann algebra \(\cM\subseteq\cB(\cH)\) is
+\[
+  \cM_+=\{x\in\cM:x=x^*\hbox{ and }\langle x\xi,\xi\rangle\ge0
+  \hbox{ for all }\xi\in\cH\}.
+\]
+Equivalently, \(x\in\cM_+\) iff \(x=y^*y\) for some \(y\in\cM\).
+
+A normal positive functional on \(\cM\) is a complex-linear functional
+\(\varphi:\cM\to\mathbb C\) such that \(\varphi(x)\ge0\) for all
+\(x\in\cM_+\), and for every bounded increasing net
+\((x_i)\) in \(\cM_+\) with supremum \(x\in\cM_+\),
+\[
+  \varphi(x)=\sup_i\varphi(x_i).
+\]
+It is faithful if \(\varphi(x)=0\) for \(x\in\cM_+\) implies \(x=0\), finite
+as a functional when \(\varphi(1)<+\infty\), a state when \(\varphi(1)=1\),
+and tracial when
+\[
+  \varphi(xy)=\varphi(yx),\qquad x,y\in\cM.
+\]
+
+An extended positive trace on \(\cM\) is a map
+\[
+  \tau:\cM_+\to[0,+\infty]
+\]
+such that
+\[
+  \tau(x+y)=\tau(x)+\tau(y),\qquad x,y\in\cM_+,
+\]
+\[
+  \tau(\lambda x)=\lambda\tau(x),\qquad \lambda\ge0,\ x\in\cM_+,
+\]
+with \(0(+\infty)=0\), and
+\[
+  \tau(x^*x)=\tau(xx^*),\qquad x\in\cM.
+\]
+It is faithful if \(\tau(x)=0\) for \(x\in\cM_+\) implies \(x=0\), finite if
+\(\tau(1)<+\infty\), semifinite if every nonzero \(x\in\cM_+\) majorizes a
+nonzero \(y\in\cM_+\) with \(\tau(y)<+\infty\), and normal if
+\[
+  \tau(\sup_i x_i)=\sup_i\tau(x_i)
+\]
+for every bounded increasing net in \(\cM_+\).  A finite normal tracial state
+\(\varphi\) gives such a trace by restricting \(\varphi\) to \(\cM_+\) and
+viewing its nonnegative values in \([0,+\infty]\).
+\source{Takesaki I, Definition V.2.1, PDF p.~329.}
+\depends{\texttt{VN-002}, \texttt{PROJ-001}.}
+\lean{Formalization.OperatorAlgebra.TraceInterfaces}
+\status{blueprint_note_complete}
+\end{definition}
+
+\subsection*{Type Predicates and Alternatives}
+
+\begin{definition}[FactorTypes, ID: TYPE-DEF-001, Takesaki I Definitions V.1.17, V.1.21, and V.1.33, PDF pp.~316--322]
+For a concrete von Neumann algebra \(\cM\), use the projection predicates of
+\texttt{PROJ-001} to define:
+\begin{itemize}
+\item \(\cM\) is type I if every nonzero central projection \(z\in\cM\)
+majorizes a nonzero abelian projection \(e\in\cM\), meaning
+\[
+  0\neq e\le z,\qquad e\cM e\hbox{ is commutative}.
+\]
+\item \(\cM\) is type III if it has no nonzero finite projection.
+\item \(\cM\) is semifinite in the projection/type sense if every nonzero
+central projection \(z\in\cM\) majorizes a nonzero finite projection
+\(e\in\cM\).  Equivalently, there is no nonzero central projection \(z\) such
+that the central summand \(z\cM z\) is type III.
+\item \(\cM\) is type II if it is semifinite in this projection/type sense and
+has no nonzero abelian projection.
+\item \(\cM\) is type \(II_1\) if it is type II and finite, i.e. the identity
+projection of \(\cM\) is finite.
+\item \(\cM\) is type \(II_\infty\) if it is type II and has no nonzero
+central finite projection.
+\item A central summand of \(\cM\) is the corner \(z\cM z\) for a central
+projection \(z\).  It is nonzero exactly when \(z\neq0\).
+\item For the factor-level model predicates used by \texttt{MATRIX-001},
+\(\cM\) is type \(I_\alpha\) when it is type I and the identity is
+\(\alpha\)-homogeneous: there is an index set \(I\) of cardinal \(\alpha\) and
+pairwise orthogonal nonzero abelian projections \((e_i)_{i\in I}\) with
+\[
+  \bigvee_{i\in I}e_i=1,\qquad e_i\sim_{\cM} e_j\quad(i,j\in I).
+\]
+For factors this is the cardinal label distinguishing \(I_n\) and
+\(I_\infty\).
+\end{itemize}
+\source{Takesaki I, Definition V.1.17, PDF p.~316; Definition V.1.21, PDF
+p.~317; Definition V.1.33, PDF p.~322.}
+\depends{\texttt{VN-002}, \texttt{PROJ-001}, \texttt{CENTRAL-SUPPORT-001}.}
+\lean{Formalization.OperatorAlgebra.FactorTypes}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{theorem}[SemifiniteIffFaithfulSemifiniteNormalTrace, supporting ID: TRACE-001, Takesaki I Theorem V.2.15, PDF p.~337]
+A von Neumann algebra \(\cM\) is semifinite in the projection/type sense of
+\texttt{TYPE-DEF-001}, equivalently every nonzero central projection
+majorizes a nonzero finite projection, if and only if \(\cM\) admits a
+faithful semifinite normal trace.  In particular, a faithful finite normal
+trace is a faithful semifinite normal trace.
+\source{Takesaki I, Theorem V.2.15, PDF p.~337, and Theorem V.2.4, PDF
+p.~331.}
+\depends{\texttt{TRACE-001}, \texttt{TYPE-DEF-001},
+\texttt{CENTRAL-SUPPORT-001}.}
+\lean{Formalization.OperatorAlgebra.semifinite_iff_exists_fsn_trace}
+\status{blueprint_note_complete}
+\end{theorem}
+
+\begin{proof}
+First assume \(\tau\) is a faithful semifinite normal trace.  Let \(z\) be a
+nonzero central projection.  Semifiniteness applied to \(z\in\cM_+\) gives a
+nonzero \(0<y\le z\) with \(\tau(y)<+\infty\).  Choose a nonzero spectral
+projection \(p=1_{[\epsilon,\infty)}(y)\) for some \(\epsilon>0\).  The
+functional-calculus input for von Neumann algebras gives \(0\neq p\le z\) in
+the corner \(z\cM z\), and \(\tau(p)<+\infty\).  If \(p\) were infinite,
+there would be a proper subprojection \(q<p\) with \(q\sim p\).  Traciality
+gives \(\tau(q)=\tau(p)\), hence \(\tau(p-q)=0\).  Faithfulness forces
+\(p=q\), a contradiction.  Thus every nonzero central projection majorizes a
+nonzero finite projection, so \(\cM\) is semifinite in the projection/type
+sense.
+
+Conversely assume the projection/type semifiniteness condition.  Takesaki's
+central type decomposition splits \(\cM\) into type I, type \(II_1\), and
+type \(II_\infty\) central summands, with no type III summand.  On the finite
+central part, Theorem V.2.4 supplies finite normal traces whose central
+supports cover that summand.  On the properly infinite semifinite type I and
+type II parts, the usual construction writes each central piece as a direct
+sum or amplification of a finite corner and tensors a faithful finite normal
+trace on the finite corner with the standard semifinite trace on the
+amplifying \(\cB(\ell^2)\)-part.  Taking the central direct sum of these
+traces gives a normal semifinite trace on \(\cM\).  Faithfulness follows
+because the supports of the summand traces have central supremum \(1\), using
+\texttt{CENTRAL-SUPPORT-001}; if a positive element has trace zero, each
+central summand component has trace zero and hence vanishes.
+\end{proof}
+
+\begin{theorem}[FactorTypeAlternatives, ID: TYPE-ALT-001, Takesaki I Theorem V.1.19 and Corollary V.1.20, PDF pp.~316--317]
+There are unique pairwise orthogonal central projections
+\[
+  z_I,\ z_{II_1},\ z_{II_\infty},\ z_{III}\in\cZ(\cM)
+\]
+with sum \(1\) such that the corresponding central summands
+\[
+  z_I\cM z_I,\quad z_{II_1}\cM z_{II_1},\quad
+  z_{II_\infty}\cM z_{II_\infty},\quad z_{III}\cM z_{III}
+\]
+are respectively type I, type \(II_1\), type \(II_\infty\), and type III,
+omitting zero summands.  Consequently, if \(\cM\) is a factor, exactly one of
+the following holds:
+\[
+  \cM\hbox{ is type I},\qquad
+  \cM\hbox{ is type }II_1,\qquad
+  \cM\hbox{ is type }II_\infty,\qquad
+  \cM\hbox{ is type III}.
+\]
+\source{Takesaki I, Theorem V.1.19 and Corollary V.1.20, PDF pp.~316--317.}
+\depends{\texttt{TYPE-DEF-001}, \texttt{CENTRAL-SUPPORT-001}.}
+\lean{Formalization.OperatorAlgebra.factor_type_alternatives}
+\status{blueprint_note_complete}
+\end{theorem}
+
+\begin{proof}
+The proof constructs the central summands by central supports.  Let \(z_I\)
+be the supremum of the central supports of all abelian projections.  Then
+\(z_I\cM z_I\) is type I by construction, while the complement contains no
+nonzero abelian projection.  Inside \((1-z_I)\cM(1-z_I)\), let \(z_{II}\) be
+the supremum of the central supports of all finite projections.  Then
+\(z_{II}\cM z_{II}\) is type II and the complementary summand has no nonzero
+finite projection, hence is type III.  Finally split \(z_{II}\) into the
+largest central finite projection \(z_{II_1}\) and its complement
+\(z_{II_\infty}=z_{II}-z_{II_1}\).  These are central, pairwise orthogonal,
+and sum to \(1\).  Each defining maximality statement gives the asserted type
+predicate for the corresponding summand.
+
+Uniqueness follows because the properties are detected by central support:
+any type I central summand must be below \(z_I\); any finite type II central
+summand must be below \(z_{II_1}\); any properly infinite semifinite type II
+central summand must be below \(z_{II_\infty}\); and any type III central
+summand must be below \(z_{III}\).  If \(\cM\) is a factor, every central
+projection is \(0\) or \(1\), so exactly one of the four central summands is
+nonzero.  The definitions in \texttt{TYPE-DEF-001} identify that nonzero
+summand with the corresponding factor type.
+\end{proof}
+
+\subsection*{Represented-Region Vector-State Criteria}
+
+\begin{definition}[RegionVectorState, ID: REGION-VECTOR-001]
+Let \(\omega\) be a state on the quasi-local algebra \(\mathcal A_\Gamma\),
+let
+\[
+  (\cH_\omega,\pi_\omega,\Omega_\omega)
+\]
+be its GNS triple from \texttt{GNS-001}, and let
+\[
+  \cM_\Lambda(\omega)=\pi_\omega(\mathcal A_\Lambda)''
+\]
+be the represented region von Neumann algebra from \texttt{VN-001}.  The
+represented-region vector state is the functional
+\[
+  \varphi_{\omega,\Lambda}:\cM_\Lambda(\omega)\to\mathbb C,\qquad
+  \varphi_{\omega,\Lambda}(x)=
+  \langle x\Omega_\omega,\Omega_\omega\rangle .
+\]
+Well-formedness is immediate from the inclusion
+\(\cM_\Lambda(\omega)\subseteq\cB(\cH_\omega)\): every \(x\in
+\cM_\Lambda(\omega)\) acts on \(\Omega_\omega\), and the inner product is a
+complex scalar.  The GNS reconstruction formula gives
+\[
+  \varphi_{\omega,\Lambda}(\pi_\omega(a))=\omega(a),
+  \qquad a\in\mathcal A_\Lambda.
+\]
+\depends{\texttt{GNS-001}, \texttt{VN-001}.}
+\lean{Formalization.OperatorAlgebra.RegionVectorState}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{definition}[VectorFunctionalAnalyticFacts, ID: VECTOR-ANALYTIC-001, Takesaki I Section II.1 equation (7), PDF p.~81, vector-functional notation]
+The analytic facts used by the represented-region vector-state criteria are
+packaged as explicit Lean prerequisites:
+\begin{itemize}
+\item \(\operatorname{VectorFunctionalNormal}\): for every Hilbert space
+\(\cH\) and vector \(\xi\in\cH\), the rank-one vector functional
+\[
+  \theta_\xi:\cB(\cH)\to\mathbb C,\qquad
+  \theta_\xi(T)=\langle T\xi,\xi\rangle
+\]
+is a normal positive functional in the monotone-positive-net sense of
+\texttt{TRACE-001}; that is, if \((T_i)\) is a bounded increasing net in
+\(\cB(\cH)_+\) with supremum \(T\), then
+\[
+  \theta_\xi(T_i)\uparrow\theta_\xi(T).
+\]
+Its restriction to any concrete von Neumann subalgebra remains normal.
+\item \(\operatorname{PositiveSqrtBounded}\): every positive bounded
+operator \(x\in\cB(\cH)_+\) has a positive bounded square root \(x^{1/2}\)
+with \((x^{1/2})^2=x\).
+\item \(\operatorname{PositiveSqrtInVN}\): if \(x\) lies in a concrete von
+Neumann algebra \(\cM\), then \(x^{1/2}\in\cM\).  The proof of
+\texttt{REGION-VECTOR-FAITH-001} only needs the bounded square root, but the
+stronger in-algebra fact is recorded because later projection and trace
+proofs often need functional calculus inside \(\cM\).
+\end{itemize}
+This target is an explicit analytic prerequisite, not a hidden sourced
+theorem.  It may later be discharged from mathlib functional calculus and
+normal functional APIs, or replaced by exact textbook locators in a future
+source-grounding pass.
+\source{Explicit project-local analytic prerequisite.  Takesaki I, Section
+II.1, equation (7), PDF p.~81, gives the vector-functional notation; exact
+normality and square-root source locators are intentionally not claimed here.}
+\depends{\texttt{VN-002}, \texttt{TRACE-001}.}
+\lean{Formalization.OperatorAlgebra.VectorFunctionalAnalyticFacts}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proposition}[RegionVectorStateNormal, ID: REGION-VECTOR-NORMAL-001, Takesaki I Section II.1 equation (7), PDF p.~81, vector-functional notation; VECTOR-ANALYTIC-001]
+For every state \(\omega\) and region \(\Lambda\), the represented-region
+vector state \(\varphi_{\omega,\Lambda}\) is a normal positive state on
+\(\cM_\Lambda(\omega)\).
+\source{Project-local consequence of \texttt{VECTOR-ANALYTIC-001}.  Takesaki
+I, Section II.1, equation (7), PDF p.~81, fixes the vector-functional
+notation; normality is supplied explicitly by
+\texttt{VectorFunctionalNormal}.}
+\depends{\texttt{REGION-VECTOR-001}, \texttt{VECTOR-ANALYTIC-001},
+\texttt{TRACE-001}.}
+\lean{Formalization.OperatorAlgebra.regionVectorState_normal}
+\status{blueprint_note_complete}
+\end{proposition}
+
+\begin{proof}
+Linearity follows from linearity of the operator action and the inner product.
+If \(x\in\cM_\Lambda(\omega)_+\), positivity means
+\[
+  \langle x\xi,\xi\rangle\ge0,\qquad \xi\in\cH_\omega .
+\]
+Taking \(\xi=\Omega_\omega\) gives
+\[
+  \varphi_{\omega,\Lambda}(x)
+  =\langle x\Omega_\omega,\Omega_\omega\rangle\ge0.
+\]
+Since \(\Omega_\omega\) is a unit vector in the GNS construction,
+\(\varphi_{\omega,\Lambda}(1)=1\).
+
+For normality, apply the \(\operatorname{VectorFunctionalNormal}\) field of
+\texttt{VECTOR-ANALYTIC-001} to the rank-one vector functional
+\[
+  T\mapsto\langle T\Omega_\omega,\Omega_\omega\rangle
+\]
+on \(\cB(\cH_\omega)\).  Equivalently, if \((x_i)\) is a bounded increasing
+net in \(\cM_\Lambda(\omega)_+\) with supremum \(x\), then monotone
+convergence for that normal vector functional gives
+\[
+  \langle x_i\Omega_\omega,\Omega_\omega\rangle
+  \uparrow
+  \langle x\Omega_\omega,\Omega_\omega\rangle .
+\]
+Restricting this normal vector functional from \(\cB(\cH_\omega)\) to the
+von Neumann subalgebra \(\cM_\Lambda(\omega)\) gives the stated normality.
+\end{proof}
+
+\begin{definition}[RegionVectorTracePredicates, ID: REGION-VECTOR-TRACE-001, Takesaki I Theorem II.2.6 and Theorem II.3.9, PDF pp.~90, 94--95]
+For a represented region algebra \(\cM_\Lambda(\omega)\), define
+\(\operatorname{RegionVectorTracial}(\omega,\Lambda)\) to mean
+\[
+  \varphi_{\omega,\Lambda}(xy)=\varphi_{\omega,\Lambda}(yx),
+  \qquad x,y\in\cM_\Lambda(\omega).
+\]
+Define
+\(\operatorname{DenseRegionStrongStarTraceHypothesis}(\omega,\Lambda)\) to be
+the following Lean-facing predicate with explicit fields:
+\begin{itemize}
+\item \(\operatorname{denseTracial}\): for all
+\(a,b\in\mathcal A_\Lambda\),
+\[
+  \omega(ab)=\omega(ba),
+\]
+or equivalently
+\[
+  \varphi_{\omega,\Lambda}(\pi_\omega(a)\pi_\omega(b))
+  =
+  \varphi_{\omega,\Lambda}(\pi_\omega(b)\pi_\omega(a)).
+\]
+\item \(\operatorname{strongStarApprox}\): for every
+\(x\in\cM_\Lambda(\omega)\), there is a directed net
+\((a_i)_{i\in I_x}\) in \(\mathcal A_\Lambda\) and a constant
+\(C_x<+\infty\) such that
+\[
+  \|\pi_\omega(a_i)\|\le C_x
+\]
+for all \(i\), and for every vector \(\xi\in\cH_\omega\),
+\[
+  \pi_\omega(a_i)\xi\to x\xi,
+  \qquad
+  \pi_\omega(a_i)^*\xi\to x^*\xi .
+\]
+This is the bounded strongly-star approximating-net field.  In applications
+it may be supplied by a Kaplansky-density theorem derived from
+\texttt{VN-DCT-001}; in this blueprint it is an explicit hypothesis field.
+\item \(\operatorname{uniformBoundControl}\): the preceding bound may be
+chosen with \(C_x=\|x\|\) when a norm-preserving Kaplansky-density input is
+available; otherwise the predicate stores the finite constant \(C_x\) as part
+of the data.
+\item \(\operatorname{boundedMultiplicationPassage}\): if a uniformly
+bounded net \(T_i\) converges strongly to \(T\), then for every fixed bounded
+operator \(S\),
+\[
+  T_iS\to TS,\qquad ST_i\to ST
+\]
+strongly whenever the relevant products stay in \(\cB(\cH_\omega)\).  The
+same passage is available after taking adjoints when the net is one of the
+strong-star approximating nets above.
+\item \(\operatorname{vectorFunctionalPassage}\): for every uniformly bounded
+strongly convergent net \(T_i\to T\),
+\[
+  \langle T_i\Omega_\omega,\Omega_\omega\rangle
+  \to
+  \langle T\Omega_\omega,\Omega_\omega\rangle .
+\]
+\end{itemize}
+This predicate is deliberately stronger than the informal phrase
+``tracial on a dense region algebra''.  It records the topology, adjoint
+convergence, uniform bounds, and vector-functional limit passage needed for a
+Lean proof of traciality on the represented von Neumann algebra.
+\source{Takesaki I, Theorem II.2.6, PDF p.~90, for strong/weak/strong-star
+continuity on bounded operator sets; Theorem II.3.9, PDF pp.~94--95, for the
+double-commutant approximation route recorded in \texttt{VN-DCT-001}.}
+\depends{\texttt{REGION-VECTOR-001}, \texttt{TRACE-001},
+\texttt{VN-DCT-001}.}
+\lean{Formalization.OperatorAlgebra.RegionVectorTracePredicates}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proposition}[RegionVectorStateTracialFromDenseRegion, supporting ID: REGION-VECTOR-TRACE-001]
+Assume \(\operatorname{DenseRegionStrongStarTraceHypothesis}
+(\omega,\Lambda)\).  Then
+\(\operatorname{RegionVectorTracial}(\omega,\Lambda)\).
+\depends{\texttt{REGION-VECTOR-TRACE-001}, \texttt{REGION-VECTOR-NORMAL-001},
+\texttt{VN-001}, \texttt{VN-DCT-001}.}
+\lean{Formalization.OperatorAlgebra.regionVectorState_tracial_of_dense}
+\status{blueprint_note_complete}
+\end{proposition}
+
+\begin{proof}
+Let \(x,y\in\cM_\Lambda(\omega)\).  Apply the
+\(\operatorname{strongStarApprox}\) field to \(x\) and \(y\).  Thus choose
+uniformly bounded represented local nets
+\(\pi_\omega(a_i)\to x\) and \(\pi_\omega(b_j)\to y\) strongly, with
+\(\pi_\omega(a_i)^*\to x^*\) and \(\pi_\omega(b_j)^*\to y^*\) strongly as
+well.  The \(\operatorname{boundedMultiplicationPassage}\) field gives, for
+fixed \(j\),
+\[
+  \pi_\omega(a_i)\pi_\omega(b_j)\to x\pi_\omega(b_j)
+\]
+strongly, and similarly after interchanging the factors.  The
+\(\operatorname{vectorFunctionalPassage}\) field then permits passage of
+\(\varphi_{\omega,\Lambda}\) through these limits.  For represented local
+elements, the \(\operatorname{denseTracial}\) field gives
+\[
+  \varphi_{\omega,\Lambda}(\pi_\omega(a_i)\pi_\omega(b_j))
+  =\omega(a_i b_j)
+  =\omega(b_j a_i)
+  =\varphi_{\omega,\Lambda}(\pi_\omega(b_j)\pi_\omega(a_i)).
+\]
+Passing first in \(i\) and then in \(j\) gives
+\(\varphi_{\omega,\Lambda}(xy)=\varphi_{\omega,\Lambda}(yx)\).
+\end{proof}
+
+\begin{lemma}[RegionVectorStateFaithfulIffSeparating, ID: REGION-VECTOR-FAITH-001, Takesaki I Section II.1 equation (7), PDF p.~81, vector-functional notation; VECTOR-ANALYTIC-001]
+Define \(\operatorname{RegionVectorFaithful}(\omega,\Lambda)\) to mean that
+for every \(x\in\cM_\Lambda(\omega)_+\),
+\[
+  \varphi_{\omega,\Lambda}(x)=0\quad\Longrightarrow\quad x=0.
+\]
+Then \(\operatorname{RegionVectorFaithful}(\omega,\Lambda)\) holds if and
+only if \(\Omega_\omega\) is separating for \(\cM_\Lambda(\omega)\), i.e.
+\[
+  x\Omega_\omega=0,\ x\in\cM_\Lambda(\omega)
+  \quad\Longrightarrow\quad x=0.
+\]
+\source{Takesaki I, Section II.1, equation (7), PDF p.~81, for vector
+functionals; positive square roots are supplied by the explicit analytic
+prerequisite \texttt{VECTOR-ANALYTIC-001}.}
+\depends{\texttt{REGION-VECTOR-001}, \texttt{VECTOR-ANALYTIC-001},
+\texttt{TRACE-001}.}
+\lean{Formalization.OperatorAlgebra.regionVectorState_faithful_iff_separating}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+Assume first that \(\Omega_\omega\) is separating.  If \(0\le x\in
+\cM_\Lambda(\omega)\) and \(\varphi_{\omega,\Lambda}(x)=0\), let
+\(y=x^{1/2}\) be the positive square root of \(x\) supplied by
+\texttt{VECTOR-ANALYTIC-001}.
+Then
+\[
+  0=\varphi_{\omega,\Lambda}(x)
+  =\|y\Omega_\omega\|^2,
+\]
+so \(y\Omega_\omega=0\), and therefore
+\[
+  x\Omega_\omega=y(y\Omega_\omega)=0.
+\]
+Since \(x\in\cM_\Lambda(\omega)\), separatingness gives \(x=0\).  Thus the
+vector state is faithful.  This direction uses only existence of the bounded
+positive square root, not membership of \(y\) in \(\cM_\Lambda(\omega)\).
+
+Conversely assume the vector state is faithful.  If
+\(x\Omega_\omega=0\), then
+\[
+  \varphi_{\omega,\Lambda}(x^*x)=\|x\Omega_\omega\|^2=0.
+\]
+Faithfulness applied to the positive element \(x^*x\) gives \(x^*x=0\), and
+the \(C^*\)-identity gives \(x=0\).  Therefore \(\Omega_\omega\) is
+separating.
+\end{proof}
+
+\begin{corollary}[FaithfulNormalTracialStateTypeConsequences, ID: TRACE-TYPE-CRITERION-001]
+Let \(\cM\subseteq\cB(\cH)\) be a concrete von Neumann algebra.  If
+\(\varphi:\cM\to\mathbb C\) is a faithful normal tracial state, then the
+positive-cone trace
+\[
+  \tau_\varphi(x)=\varphi(x),\qquad x\in\cM_+,
+\]
+viewed as a \([0,+\infty]\)-valued map, is a faithful finite normal trace.
+Consequently \(\cM\) is finite, semifinite, and not type III.  If \(\cM\) is
+a factor, then the factor alternative reduces to the finite cases: type I or
+type \(II_1\).
+\depends{\texttt{TRACE-001}, \texttt{TYPE-DEF-001}, \texttt{TYPE-ALT-001}.}
+\lean{Formalization.OperatorAlgebra.faithfulNormalTracialState_typeConsequences}
+\status{blueprint_note_complete}
+\end{corollary}
+
+\begin{proof}
+The restriction of \(\varphi\) to \(\cM_+\) is additive and homogeneous
+because \(\varphi\) is linear and positive.  Traciality gives
+\(\tau_\varphi(x^*x)=\tau_\varphi(xx^*)\), normality is exactly the normality
+condition in \texttt{TRACE-001}, faithfulness is inherited from
+\(\varphi\), and finiteness follows from \(\tau_\varphi(1)=1\).
+
+To prove finiteness of the algebra, let \(v\in\cM\) satisfy \(v^*v=1\) and
+let \(vv^*\le1\) be its range projection.  Traciality gives
+\[
+  \tau_\varphi(vv^*)=\tau_\varphi(v^*v)=\tau_\varphi(1).
+\]
+Thus \(\tau_\varphi(1-vv^*)=0\).  Since \(1-vv^*\ge0\) and the trace is
+faithful, \(1-vv^*=0\).  Hence every isometry in \(\cM\) is unitary, so the
+identity projection is finite.  A faithful finite normal trace is semifinite:
+if \(0\neq x\in\cM_+\), take \(y=x\); boundedness gives
+\(0\le y\le\|x\|1\), hence
+\(\tau_\varphi(y)\le\|x\|\tau_\varphi(1)<+\infty\), and faithfulness gives
+\(\tau_\varphi(y)>0\).  Therefore \(\cM\) is semifinite by
+\texttt{SemifiniteIffFaithfulSemifiniteNormalTrace}.  Since \(1\) is a
+nonzero finite projection, the definition of type III as having no nonzero
+finite projection fails.  If \(\cM\) is a factor, \texttt{TYPE-ALT-001}
+leaves only type I or type \(II_1\), because type \(II_\infty\) has no
+nonzero central finite projection and type III has no nonzero finite
+projection.
+\end{proof}
+
+\begin{corollary}[RegionVectorStateTypeConsequences, ID: REGION-VECTOR-TYPE-001]
+If \(\operatorname{RegionVectorTracial}(\omega,\Lambda)\) and
+\(\operatorname{RegionVectorFaithful}(\omega,\Lambda)\), then the represented
+region algebra \(\cM_\Lambda(\omega)\) is finite, semifinite, and not type
+III.  If \(\cM_\Lambda(\omega)\) is a factor, it is type I or type \(II_1\).
+\depends{\texttt{REGION-VECTOR-NORMAL-001}, \texttt{REGION-VECTOR-TRACE-001},
+\texttt{REGION-VECTOR-FAITH-001}, \texttt{TRACE-TYPE-CRITERION-001}.}
+\lean{Formalization.OperatorAlgebra.regionVectorState_typeConsequences}
+\status{blueprint_note_complete}
+\end{corollary}
+
+\begin{proof}
+By \texttt{REGION-VECTOR-NORMAL-001}, the vector state is normal and positive.
+The two hypotheses say exactly that it is tracial and faithful.  Therefore it
+is a faithful normal tracial state on \(\cM_\Lambda(\omega)\).  Apply
+\texttt{TRACE-TYPE-CRITERION-001}.
+\end{proof}
+
+\subsection*{Matrix and Type I Model Factors}
+
+\begin{proposition}[MatrixFactors, ID: MATRIX-001, Takesaki I Proposition V.1.23, Corollary V.1.28, and Definition V.1.33, PDF pp.~318--322]
+For finite \(n\), \(M_n(\mathbb C)\) is a finite type \(I_n\) factor.  For an
+infinite-dimensional Hilbert space \(\cH\), \(\cB(\cH)\) is a type I factor,
+and its type is determined by \(\dim\cH\); in particular \(\cB(\ell^2)\) is
+the standard type \(I_\infty\) model factor.
+\source{Takesaki I, Proposition V.1.23, PDF p.~318; Corollary V.1.28, PDF
+p.~320; Definition V.1.33, PDF p.~322.}
+\depends{\texttt{TYPE-DEF-001}.}
+\lean{Formalization.OperatorAlgebra.MatrixFactors}
+\status{blueprint_note_complete}
+\end{proposition}
+
+\begin{proof}
+For \(M_n(\mathbb C)\), apply Takesaki Proposition V.1.23 with abelian center
+\(\mathbb C\), then use the homogeneous-rank definition of type \(I_n\).  For
+\(\cB(\cH)\), apply Corollary V.1.28 and Definition V.1.33.  The case
+\(\cH=\ell^2\) gives the countably infinite type I model used later.
+\end{proof}
+
+\subsection*{Lean Extraction Notes}
+
+\begin{longtable}{@{}p{0.16\linewidth}p{0.34\linewidth}p{0.40\linewidth}@{}}
+\toprule
+Target & Intended file & Notes \\
+\midrule
+\endhead
+\texttt{VN-002} &
+\texttt{Formalization/OperatorAlgebra/Factor.lean} &
+Concrete center and factor predicates for \texttt{VonNeumannAlgebra H}. \\
+\texttt{VECTOR-ANALYTIC-001} &
+\texttt{Formalization/OperatorAlgebra/VectorFunctionalAnalyticFacts.lean} &
+Explicit analytic prerequisites for vector functional normality and positive
+square roots of bounded positive operators. \\
+\texttt{PROJ-001} &
+\texttt{Formalization/OperatorAlgebra/ProjectionComparison.lean} &
+Projection-in-\(\cM\), order, central cuts, partial isometries, corners,
+finite/infinite/properly infinite predicates, and the comparability proof
+route. \\
+\texttt{CENTRAL-SUPPORT-001} &
+\texttt{Formalization/OperatorAlgebra/CentralSupport.lean} &
+Source-backed central-support and projection-lattice package: complete
+projection lattice, central supports, central cuts, orthogonal partial-isometry
+sums, centrally orthogonal finite/abelian suprema, and largest central finite
+projection.  Manifest entry present; target remains pending adversarial review
+and formalization. \\
+\texttt{TRACE-001} &
+\texttt{Formalization/OperatorAlgebra/TraceInterfaces.lean} &
+Positive cone, normal positive functionals, extended positive traces, and
+faithful finite/semifinite/normal trace predicates; the semifinite trace
+recognition theorem is a supporting theorem after \texttt{TYPE-DEF-001}. \\
+\texttt{TYPE-DEF-001}, \texttt{TYPE-ALT-001} &
+\texttt{Formalization/OperatorAlgebra/FactorTypes.lean} &
+Concrete type predicates, semifinite projection/type predicate, central
+summands, homogeneous type I labels, and the central-decomposition proof route,
+using \texttt{CENTRAL-SUPPORT-001}. \\
+\texttt{REGION-VECTOR-001},
+\texttt{REGION-VECTOR-NORMAL-001} &
+\texttt{Formalization/OperatorAlgebra/RegionVectorState.lean} &
+Vector state \(x\mapsto\langle x\Omega,\Omega\rangle\) on represented region
+von Neumann algebras and normality as a restricted vector functional. \\
+\texttt{REGION-VECTOR-TRACE-001},
+\texttt{REGION-VECTOR-FAITH-001} &
+\texttt{Formalization/OperatorAlgebra/RegionVectorCriteria.lean} &
+Traciality predicate plus explicit dense strong-star trace hypothesis, and a
+separate faithfulness predicate with faithfulness iff the GNS vector is
+separating. \\
+\texttt{TRACE-TYPE-CRITERION-001},
+\texttt{REGION-VECTOR-TYPE-001} &
+\texttt{Formalization/OperatorAlgebra/TraceTypeCriteria.lean} &
+Finite, semifinite, and type III exclusion consequences of a faithful normal
+tracial state, specialized to represented region vector states. \\
+\texttt{MATRIX-001} &
+\texttt{Formalization/OperatorAlgebra/MatrixFactors.lean} &
+Finite matrices should use mathlib matrix facts; \(\cB(\ell^2)\) may need a
+separable Hilbert-space model wrapper. \\
+\bottomrule
+\end{longtable}
+
+\begin{thebibliography}{9}
+\bibitem{TakesakiI}
+M. Takesaki, \emph{Theory of Operator Algebras I}.  Local source:
+\path{../sources/takesaki_1.pdf}.
+\end{thebibliography}
+
+\end{document}

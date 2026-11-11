@@ -1,0 +1,396 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable}
+\usepackage{hyperref}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{convention}[definition]{Convention}
+
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{\detokenize{#1}}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+\newcommand{\depends}[1]{\par\noindent\textbf{Depends on.} #1}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\Ftwo}{\mathbb F_2}
+\newcommand{\tr}{\operatorname{tr}}
+
+\begin{document}
+
+\section*{Blueprint 007: Finite Pauli Algebra and Quasi-Local Interface}
+
+\subsection*{Scope}
+
+This note promotes targets \texttt{PAULI-002} and \texttt{QL-001} from the
+master dependency blueprint to a dedicated prerequisite informal blueprint
+note.  It records the finite Pauli matrix basis, the normalized trace
+coefficient formula, and the quasi-local local-net interface needed before
+formalizing positivity, GNS data, represented region algebras, or type
+classification.
+
+This note does not introduce a new stabilizer-state positivity theorem.  It
+only fixes the finite Pauli algebra and quasi-local algebra carriers on which
+later canonical states will live.
+
+\subsection*{Conventions}
+
+\begin{convention}[Index and support conventions]
+Let \(\Gamma\) be a finite or countably infinite qubit index set.  For a finite
+subset \(F\subset \Gamma\), write
+\[
+  V_F=(F\to\Ftwo)\oplus(F\to\Ftwo).
+\]
+If \(F\subset G\), identify \(V_F\) with the subspace of \(V_G\) of labels
+that vanish on \(G\setminus F\).  The symplectic form is the finite-support
+form already recorded in \texttt{SYS-001} and \texttt{PAULI-001}.
+\source{Gottesman, \emph{Surviving as a Quantum Computer in a Classical
+World}, Chapter 3.5, Definitions 3.11 and 3.13, PDF pp.~55--56; project proof
+note
+\path{../runs/2026-06-18-stabilizer-algebra-classification/artifacts/004-internal-stabilizer-reduction-type-classification-R1.tex},
+``Region Pauli label space''.}
+\status{Convention for \texttt{PAULI-002} and \texttt{QL-001}.}
+\end{convention}
+
+\begin{convention}[Finite Pauli representatives]
+On one qubit use the matrices
+\[
+ I=\begin{pmatrix}1&0\\0&1\end{pmatrix},\qquad
+ X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+ Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+\]
+For \(v=(x,z)\in V_F\), define the finite Pauli representative
+\[
+  P_F(v)=\bigotimes_{j\in F} X^{x_j} Z^{z_j}
+  \in \bigotimes_{j\in F}M_2(\mathbb C).
+\]
+This section fixes phases by the ordered product \(X^{x_j}Z^{z_j}\).  The
+commutation relation is
+\[
+  P_F(v)P_F(w)=(-1)^{\sigma(v,w)}P_F(w)P_F(v),
+\]
+where \(\sigma\) is the binary symplectic form.  Multiplication may acquire
+the usual section-dependent sign in the label \(v+w\); later stabilizer
+coefficient rules depend only on the fixed section and the commutation form.
+\source{Gottesman, Chapter 3.5, Definitions 3.11 and 3.13, PDF pp.~55--56,
+for the binary symplectic Pauli convention; project proof note 004, Section 2,
+for the finite-support region Pauli convention.}
+\status{Phase convention for this blueprint.}
+\end{convention}
+
+\begin{definition}[FiniteLocalAlgebra, supporting ID: PAULI-002, project proof note 004, region Pauli label space and product form; standard finite matrix trace calculus]
+For a finite \(F\subset\Gamma\), define
+\[
+  \cA_F=\bigotimes_{j\in F} M_2(\mathbb C),
+\]
+with the convention \(\cA_\emptyset=\mathbb C\).  Its normalized trace is
+\[
+  \tr_F=\bigotimes_{j\in F}\tr_2,\qquad
+  \tr_2(a)=\frac{1}{2}\operatorname{Tr}(a).
+\]
+\source{Project proof note 004, ``Region Pauli label space'' and ``Product
+form after symplectic basis reduction''; standard finite matrix trace
+calculus, to be backed in Lean by mathlib matrix traces and finite tensor
+products.}
+\lean{Formalization.Stabilizer.FinitePauliAlgebra.LocalAlgebra}
+\status{Definition supporting \texttt{PAULI-002}.}
+\end{definition}
+
+\begin{lemma}[PauliBasisTraceOrthogonality, ID: PAULI-002, project proof note 004 Sections 2--4; Gottesman Chapter 3.5, PDF pp.~55--56]
+For every finite \(F\subset\Gamma\), the family
+\[
+  \{P_F(v):v\in V_F\}
+\]
+is a complex linear basis of \(\cA_F\).  It is orthonormal for the normalized
+Hilbert--Schmidt inner product
+\[
+  \langle a,b\rangle_F=\tr_F(a^*b),
+\]
+so every \(a\in\cA_F\) has the Pauli expansion
+\[
+  a=\sum_{v\in V_F}\tr_F(P_F(v)^*a)\,P_F(v).
+\]
+Equivalently, the Pauli coefficient of \(a\) at \(v\) is
+\[
+  \widehat a(v)=\tr_F(P_F(v)^*a).
+\]
+\source{Finite-dimensional Pauli calculus used in project proof note 004,
+Sections 2--4, especially the local coefficient formula and product-form
+argument; Gottesman, Chapter 3.5, PDF pp.~55--56, for Pauli labels and
+binary symplectic commutation.}
+\depends{\texttt{SYS-001}, \texttt{PAULI-001}.}
+\lean{Formalization.Stabilizer.FinitePauliAlgebra.pauliBasis}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+For one qubit, the four matrices \(I,X,Z,XZ\) are linearly independent in
+\(M_2(\mathbb C)\).  Since \(M_2(\mathbb C)\) has complex dimension \(4\), they
+form a basis.  A direct trace calculation gives
+\[
+  \tr_2(P(v)^*P(w))=\delta_{v,w}
+\]
+for \(v,w\in\Ftwo^2\).
+
+For a finite set \(F\), the tensor products of the one-site basis elements are
+indexed by \(V_F\), and their number is \(4^{|F|}\), the dimension of
+\(\bigotimes_{j\in F}M_2(\mathbb C)\).  Tensor products of one-site bases form
+a basis of the finite tensor product algebra.  The normalized trace is
+multiplicative on elementary tensors, hence
+\[
+  \tr_F(P_F(v)^*P_F(w))
+  =
+  \prod_{j\in F}\tr_2(P(v_j)^*P(w_j))
+  =
+  \delta_{v,w}.
+\]
+The coefficient formula is the usual orthonormal-basis expansion with respect
+to \(\langle a,b\rangle_F=\tr_F(a^*b)\).
+\end{proof}
+
+\begin{lemma}[TraceCoeffInclude, supporting ID: PAULI-002, project proof note 004, crossing stabilizers do not change local coefficients; finite tensor trace calculus]
+Let \(F\subset G\subset\Gamma\) be finite, and let
+\[
+  \iota_{F,G}:\cA_F\to\cA_G
+\]
+be the unital inclusion \(a\mapsto a\otimes 1_{G\setminus F}\).  If
+\(v\in V_F\), then
+\[
+  \tr_G(P_G(v)^*\iota_{F,G}(a))=\tr_F(P_F(v)^*a).
+\]
+If \(w\in V_G\) has nonzero support in \(G\setminus F\), then
+\[
+  \tr_G(P_G(w)^*\iota_{F,G}(a))=0.
+\]
+\source{Project proof note 004, ``Crossing stabilizers do not change the local
+coefficients'', for the coefficient-level locality principle; finite tensor
+trace calculus as in \texttt{PAULI-002}.}
+\depends{\texttt{PAULI-002}.}
+\lean{Formalization.Stabilizer.FinitePauliAlgebra.traceCoeff_include}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+Write \(\iota_{F,G}(a)=a\otimes 1_{G\setminus F}\).  For \(v\in V_F\), the
+Pauli representative factors as \(P_G(v)=P_F(v)\otimes 1\), so multiplicativity
+and \(\tr_{G\setminus F}(1)=1\) give the first identity.  If \(w\) has a
+nontrivial one-site Pauli factor outside \(F\), then the trace over that
+outside site is zero, and the entire tensor trace is zero.
+\end{proof}
+
+\begin{lemma}[FiniteLocalInclusionAPI, supporting ID: QL-001, project proof note 004, region Pauli label space; finite tensor trace calculus]
+Let \(F\subseteq G\subseteq K\subseteq\Gamma\) be finite.  The finite
+inclusion
+\[
+  \iota_{F,G}:\cA_F\to\cA_G,\qquad
+  a\mapsto a\otimes 1_{G\setminus F},
+\]
+is an injective unital \(*\)-homomorphism, and
+\[
+  \iota_{F,F}=\operatorname{id}_{\cA_F},\qquad
+  \iota_{G,K}\circ\iota_{F,G}=\iota_{F,K}.
+\]
+\source{Project proof note 004, ``Region Pauli label space''; finite tensor
+trace calculus as in \texttt{PAULI-002}.}
+\depends{\texttt{PAULI-002}.}
+\lean{Formalization.Stabilizer.QuasiLocal.finiteInclusionAPI}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+The map \(\iota_{F,G}\) tensors every elementary tensor in \(\cA_F\) with the
+identity over the new tensor factors \(G\setminus F\), so it preserves
+products, adjoints, scalar multiplication, and the unit.  Injectivity follows
+from the normalized partial trace over the added factors: the map
+\[
+  E_{G,F}=\operatorname{id}_{\cA_F}\otimes \tr_{G\setminus F}:\cA_G\to\cA_F
+\]
+satisfies \(E_{G,F}(\iota_{F,G}(a))=a\).  The identity and compatibility
+equations are the associativity of finite tensor products together with
+tensoring by identities.
+\end{proof}
+
+\begin{definition}[QubitLocalNetInterface, ID: QL-001, Blackadar III.3.1.1--III.3.1.3, PDF pp.~301--302]
+The Lean-facing quasi-local object used in this project is the following
+project-local local-net interface.  It packages:
+\begin{enumerate}
+\item the finite local \(C^*\)-algebras
+\[
+  \cA_F=\bigotimes_{j\in F}M_2(\mathbb C)
+\]
+for finite \(F\subseteq\Gamma\);
+\item the injective unital \(*\)-homomorphisms
+\(\iota_{F,G}:\cA_F\to\cA_G\) for \(F\subseteq G\), with
+\(\iota_{F,F}=\operatorname{id}\) and
+\(\iota_{G,K}\circ\iota_{F,G}=\iota_{F,K}\);
+\item a global unital \(C^*\)-algebra \(\cA_\Gamma\) and injective unital
+\(*\)-homomorphisms \(j_F:\cA_F\to\cA_\Gamma\) satisfying
+\[
+  j_G\circ\iota_{F,G}=j_F;
+\]
+\item the algebraic local union
+\[
+  \cA_{\Gamma}^{\mathrm{loc}}
+  =
+  \bigcup_{F\Subset\Gamma} j_F(\cA_F)
+  \subseteq \cA_\Gamma,
+\]
+which is a unital \(*\)-subalgebra whose norm closure is all of
+\(\cA_\Gamma\);
+\item for every region \(\Lambda\subseteq\Gamma\), a region \(C^*\)-subalgebra
+\[
+  \cA_\Lambda
+  =
+  \overline{\bigcup_{F\Subset\Lambda} j_F(\cA_F)}^{\|\cdot\|}
+  \leq \cA_\Gamma,
+\]
+with its inclusion into the global carrier \(\cA_\Gamma\).
+\end{enumerate}
+Thus the full \(C^*\)-inductive-limit carrier may be constructed later, but
+all Lean targets in the state, GNS, and represented-region layers use these
+named fields and not an unspecified carrier.
+\source{Project proof note 004, ``Region Pauli label space'', for the local
+quasi-local algebra as the norm closure of finite tensor products; Blackadar,
+\emph{Operator Algebras}, III.3.1.1--III.3.1.3, PDF pp.~301--302, for the
+infinite tensor product/product-state operator-algebra setting later consumed
+by GNS and product-factor targets.}
+\depends{\texttt{PAULI-002}.}
+\lean{Formalization.Stabilizer.QuasiLocal.QubitLocalNet}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proof}[Informal well-formedness check]
+Finite subsets of \(\Gamma\) are directed by union.  The finite inclusion API
+above gives a directed system of unital \(C^*\)-algebras with injective
+connecting maps.  The Blackadar/Takesaki inductive-limit construction supplies
+the global carrier \(\cA_\Gamma\), the canonical maps \(j_F\), and the density
+of the algebraic local union.  For each \(\Lambda\), the displayed closure is
+a \(C^*\)-subalgebra of \(\cA_\Gamma\) because it is the norm closure of a
+unital \(*\)-subalgebra of \(\cA_\Gamma\).  These data are exactly the fields
+listed in the interface.
+\end{proof}
+
+\begin{lemma}[RegionSubalgebraIsotony, supporting ID: QL-001, project proof note 004 Section 2; Blackadar III.3.1.1--III.3.1.3, PDF pp.~301--302]
+If \(\Lambda\subseteq\Lambda'\subseteq\Gamma\), then the region subalgebras in
+the \(\texttt{QL-001}\) interface satisfy
+\[
+  \cA_\Lambda\leq \cA_{\Lambda'}\leq \cA_\Gamma.
+\]
+Equivalently, the inclusion \(\cA_\Lambda\hookrightarrow\cA_\Gamma\) factors
+through the inclusion \(\cA_{\Lambda'}\hookrightarrow\cA_\Gamma\).
+\source{Project proof note 004, Section 2, for region-local finite support;
+Blackadar III.3.1.1--III.3.1.3, PDF pp.~301--302, for the quasi-local
+closure model.}
+\depends{\texttt{QL-001}.}
+\lean{Formalization.Stabilizer.QuasiLocal.region_isotone}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+Every finite \(F\subseteq\Lambda\) is also a finite subset of
+\(\Lambda'\).  Therefore the local generating union for \(\cA_\Lambda\) is a
+subset of the local generating union for \(\cA_{\Lambda'}\).  Taking norm
+closures inside the same global carrier preserves inclusion, giving the
+displayed isotony.
+\end{proof}
+
+\begin{lemma}[DenseLocalUnion, supporting ID: QL-001, Blackadar III.3.1.1--III.3.1.3, PDF pp.~301--302; project proof note 004 Section 2]
+The local union
+\[
+  \cA_{\Gamma}^{\mathrm{loc}}
+  =
+  \bigcup_{F\Subset\Gamma} j_F(\cA_F)
+\]
+is norm dense in the global carrier \(\cA_\Gamma\).  More generally, for a
+region \(\Lambda\), the union
+\[
+  \bigcup_{F\Subset\Lambda} j_F(\cA_F)
+\]
+is norm dense in \(\cA_\Lambda\).
+\source{Blackadar III.3.1.1--III.3.1.3, PDF pp.~301--302; project proof note
+004, Section 2.}
+\depends{\texttt{QL-001}.}
+\lean{Formalization.Stabilizer.QuasiLocal.dense_localUnion}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+Global density is a field of the \(\texttt{QL-001}\) interface and is the
+completion property of the inductive limit.  The regional statement is the
+definition of \(\cA_\Lambda\) as the norm closure of the corresponding local
+generating union inside \(\cA_\Gamma\).
+\end{proof}
+
+\begin{theorem}[CompatibleLocalStateExtension, supporting ID: QL-001, Takesaki III Definition XIV.1.3, PDF p.~105, Takesaki I Proposition I.9.12, PDF p.~59]
+Let \((\varphi_F)_{F\Subset\Gamma}\) be a family such that each
+\(\varphi_F:\cA_F\to\mathbb C\) is a positive unital linear functional and,
+whenever \(F\subseteq G\),
+\[
+  \varphi_G(\iota_{F,G}(a))=\varphi_F(a),\qquad a\in\cA_F.
+\]
+Then there is a unique state
+\[
+  \varphi:\cA_\Gamma\to\mathbb C
+\]
+such that
+\[
+  \varphi(j_F(a))=\varphi_F(a)
+\]
+for every finite \(F\subseteq\Gamma\) and \(a\in\cA_F\).  The same uniqueness
+and existence statement holds on each region algebra: if
+\(\Lambda\subseteq\Gamma\), then the compatible subfamily with
+\(F\subseteq\Lambda\) extends to a unique state
+\(\varphi_\Lambda:\cA_\Lambda\to\mathbb C\).
+\source{Takesaki III, Definition XIV.1.3, PDF p.~105, for the
+\(C^*\)-inductive-limit completion; Takesaki I, Proposition I.9.12, PDF
+p.~59, for continuity of positive functionals; Blackadar III.3.1.1--III.3.1.3,
+PDF pp.~301--302, for the quasi-local tensor-product model.}
+\depends{\texttt{QL-001}.}
+\lean{Formalization.Stabilizer.QuasiLocal.compatibleState_extension_unique}
+\status{blueprint_note_complete}
+\end{theorem}
+
+\begin{proof}
+Define \(\varphi_0\) on the algebraic local union by
+\(\varphi_0(j_F(a))=\varphi_F(a)\).  This is well defined because if the same
+local element is represented in two finite regions \(F\) and \(G\), then it is
+also represented in \(F\cup G\), and compatibility with the two inclusions into
+\(F\cup G\) gives the same scalar.  Linearity is checked after moving two
+summands into a common finite region.
+
+If \(x=b^*b\) lies in the local union, choose a finite \(F\) containing a
+representative of \(b\).  Then
+\(\varphi_0(x)=\varphi_F(b_F^*b_F)\geq0\), so \(\varphi_0\) is positive on the
+local \(*\)-algebra, and \(\varphi_0(1)=1\).  Positivity and unitality imply
+\(|\varphi_0(x)|\leq\|x\|\) on the local union by the standard positive
+functional norm estimate.  Hence \(\varphi_0\) extends uniquely by continuity
+to the norm closure, which is \(\cA_\Gamma\) by \(\texttt{DenseLocalUnion}\).
+The extension is still positive because the positive cone is norm closed and
+is still unital because the unit is local.  Any other state with the same
+finite restrictions agrees on the dense local union, hence agrees everywhere.
+The proof for a region \(\Lambda\) is identical using the dense local union
+inside \(\cA_\Lambda\).
+\end{proof}
+
+\subsection*{Lean Extraction Notes}
+
+\begin{longtable}{@{}p{0.18\linewidth}p{0.34\linewidth}p{0.38\linewidth}@{}}
+\toprule
+Target & Intended file & Notes \\
+\midrule
+\endhead
+\texttt{PAULI-002} &
+\texttt{Formalization/Stabilizer/PauliAlgebra.lean} &
+Start with finite matrices and normalized trace coefficients.  Avoid infinite
+systems until the finite basis and inclusion lemmas are stable. \\
+\texttt{QL-001} &
+\texttt{Formalization/Stabilizer/QuasiLocal.lean} &
+Use the explicit \texttt{QubitLocalNet} interface above: finite algebras,
+injective inclusions, global carrier, region subalgebras, isotony, dense local
+union, and compatible-state extension. \\
+\bottomrule
+\end{longtable}
+
+\end{document}

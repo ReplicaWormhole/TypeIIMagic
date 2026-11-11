@@ -1,0 +1,528 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[a4paper,margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Full Tracial Corners and Finite Central Fibers},
+  pdfauthor={}
+}
+
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\cB}{\mathcal B}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cZ}{\mathcal Z}
+\newcommand{\id}{\mathbf 1}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\fin}{\mathrm{fin}}
+\newcommand{\cF}{\mathcal F}
+
+\title[Full Tracial Corners]{Full Tracial Corners and Finite Central Fibers\\
+\large A mathlib-oriented formalization blueprint}
+\author{}
+\date{August 2, 2026}
+
+\begin{document}
+
+\begin{abstract}
+We isolate the operator-algebraic core of the current stabilizer-region proof.
+Let $\cM\subseteq\cB(\cH)$ be a concrete von Neumann algebra and let
+$q\in\cM$ be a full projection.  If a complex-linear functional is tracial
+on the support corner $q\cM q$ and faithful on the projections under $q$,
+then every nonzero central summand of $\cM$ contains a nonzero finite
+projection.  Consequently, every member of an explicitly given finite family
+of nonzero central projections has a canonical finite witness.  The note
+states the exact assumptions and gives the complete algebraic proof that is to
+be machine checked.  It deliberately does not claim that the stabilizer/GNS
+construction supplies those assumptions, nor does it yet bundle the central
+summand as a represented factor to state a machine-checked type-III
+conclusion; those are distinct, later formalization layers.
+\end{abstract}
+
+\maketitle
+
+\section{Scope, status, and relation to the manuscript}
+
+The current Overleaf manuscript contains the following theorem:
+\begin{center}
+\texttt{thm:finite\_projections\_exist}
+\end{center}
+For every nonzero central projection $z$ of a regional von Neumann algebra
+$\cM_\Gamma$, the central summand $z\cM_\Gamma$ contains a finite projection.
+Its stated route is a full support projection $q$ and a faithful normal
+tracial state on $q\cM_\Gamma q$.
+
+This note formalizes only the algebraic implication from those corner
+hypotheses to that conclusion.  The status of the statements in this note is
+as follows.
+\begin{enumerate}[label=\textup{(\roman*)},leftmargin=2.5em]
+  \item The definitions and proofs in Sections~\ref{sec:algebraic_data}--
+  \ref{sec:finite_fibers} are formalized as the exact abstract Lean target.
+  \item The stabilizer/GNS realization listed in
+  Section~\ref{sec:stabilizer_boundary} is not claimed here.
+  \item A Lean build can certify the abstract target, but it cannot by itself
+  certify the manuscript's stabilizer hypotheses.
+\end{enumerate}
+
+This separation is essential.  In particular, a finite set of central fibers
+does not create the support projection, establish its traciality, or establish
+fullness; it merely avoids the additional direct-integral layer needed to
+interpret arbitrary measurable fibers.
+
+\section{Algebraic data and conventions}
+\label{sec:algebraic_data}
+
+Let $\cH$ be a complex Hilbert space and let
+\begin{equation}
+  \cM\subseteq\cB(\cH)
+  \label{eq:concrete_von_neumann_algebra}
+\end{equation}
+be a concrete von Neumann algebra.  The intended Lean ambient object is
+mathlib's \texttt{VonNeumannAlgebra H}; no new notion of von Neumann algebra
+is introduced.
+
+\begin{definition}[Projection and subprojection]
+\label{def:projection_subprojection}
+A projection in $\cM$ is an operator $e\in\cM$ satisfying
+\begin{equation}
+  e^*=e,
+  \qquad
+  e^2=e.
+  \label{eq:star_projection}
+\end{equation}
+For projections $e,f$, write $e\leq f$ when
+\begin{equation}
+  ef=e,
+  \qquad
+  fe=e.
+  \label{eq:subprojection}
+\end{equation}
+This two-sided equation is the definition used by the Lean development; it
+avoids introducing an order structure before it is needed.
+\end{definition}
+
+\begin{definition}[Murray--von Neumann equivalence and finiteness]
+\label{def:mvN_finiteness}
+For projections $e,f\in\cM$, write $e\sim_{\cM}f$ if there exists
+$v\in\cM$ with
+\begin{equation}
+  v^*v=e,
+  \qquad
+  vv^*=f.
+  \label{eq:mvN_equivalence}
+\end{equation}
+A projection $e\in\cM$ is \emph{finite} if, for every projection
+$f\in\cM$,
+\begin{equation}
+  e\sim_{\cM}f,
+  \qquad
+  f\leq e
+  \quad\Longrightarrow\quad
+  f=e.
+  \label{eq:finite_projection}
+\end{equation}
+\end{definition}
+
+\begin{lemma}[A Murray--von Neumann witness is a partial isometry]
+\label{lem:mvN_witness_partial_isometry}
+Let $v\in\cB(\cH)$ and let $e$ be a projection.  If $v^*v=e$, then
+\begin{equation}
+  vv^*v=v.
+  \label{eq:mvN_witness_partial_isometry}
+\end{equation}
+Thus the standard definition \eqref{eq:mvN_equivalence} is equivalent, for
+projection endpoints, to the variant which explicitly asks that $v$ be a
+partial isometry.
+\end{lemma}
+
+\begin{proof}
+Put $w=v-ve$.  Since $e=e^*=e^2$ and $v^*v=e$,
+\begin{equation}
+  w^*w=(1-e)v^*v(1-e)=(1-e)e(1-e)=0.
+  \label{eq:partial_isometry_zero_norm}
+\end{equation}
+The $C^*$-identity in $\cB(\cH)$ implies $w=0$, hence $ve=v$.  Therefore
+$vv^*v=v(v^*v)=ve=v$.
+\end{proof}
+
+\begin{definition}[Central and full projections]
+\label{def:central_full}
+A projection $z\in\cM$ is central when
+\begin{equation}
+  az=za,
+  \qquad
+  a\in\cM.
+  \label{eq:central_projection}
+\end{equation}
+Thus the central projections are the projections in $\cZ(\cM)$.
+A projection $q\in\cM$ is \emph{full} for the present theorem when
+\begin{equation}
+  z\in\cZ(\cM),\quad z\neq0
+  \quad\Longrightarrow\quad
+  zq\neq0.
+  \label{eq:explicit_fullness}
+\end{equation}
+For a von Neumann algebra, this is equivalent to the usual condition that the
+central support of $q$ is $\id$; the explicit formulation
+\eqref{eq:explicit_fullness} is chosen because it is precisely what the proof
+uses.  Compare Blackadar, Definition III.1.1.5, as cited in the current
+manuscript's fullness discussion.
+\end{definition}
+
+\begin{definition}[Semifiniteness in projection form]
+\label{def:semifinite_projection_form}
+The algebra $\cM$ is called semifinite in the projection form used here if
+\begin{equation}
+  \forall z\in\cZ(\cM),\quad z\neq0
+  \quad\Longrightarrow\quad
+  \exists e\in\cM:
+  \ e\neq0,\ e\leq z,\ e\text{ is finite}.
+  \label{eq:semifinite_projection_form}
+\end{equation}
+This is the exact conclusion of the main theorem under formalization.  It is
+the standard projection-theoretic obstruction to a type-III summand; see the
+type definitions in Takesaki~I, Definition V.1.17, and Blackadar,
+Section III.1.4.
+\end{definition}
+
+\section{The tracial-corner hypothesis}
+\label{sec:tracial_corner}
+
+The manuscript obtains its functional by compressing a GNS vector state.  The
+abstract algebraic proof needs less than normality and less than faithfulness
+on all positive elements.  The following finite-projection test is sufficient
+and is a formal consequence of a faithful positive tracial state on $q\cM q$.
+
+\begin{assumption}[Faithful tracial projection functional]
+\label{ass:faithful_tracial_projection_functional}
+Fix a projection $q\in\cM$.  There is a complex-linear functional
+\begin{equation}
+  \tau:\cB(\cH)\longrightarrow\mathbb C
+  \label{eq:trace_functional}
+\end{equation}
+whose restriction to the corner $q\cM q$ has the following properties.  We
+represent $a\in q\cM q$ in the ambient algebra by the three conditions
+\begin{equation}
+  a\in\cM,
+  \qquad
+  qa=a=aq.
+  \label{eq:corner_element}
+\end{equation}
+Then:
+\begin{enumerate}[label=\textup{(T\arabic*)},leftmargin=3em]
+  \item for all $a,b\in\cM$ satisfying \eqref{eq:corner_element},
+  \begin{equation}
+    \tau(ab)=\tau(ba);
+    \label{eq:trace_identity}
+  \end{equation}
+  \item for every projection $r\in\cM$ with $r\leq q$,
+  \begin{equation}
+    \tau(r)=0
+    \quad\Longrightarrow\quad
+    r=0.
+    \label{eq:faithful_on_corner_projections}
+  \end{equation}
+\end{enumerate}
+\end{assumption}
+
+\begin{remark}[Why this is faithful to the manuscript]
+\label{rem:faithful_state_implies_assumption}
+If $\tau_q$ is a faithful positive tracial state on $q\cM q$, define
+$\tau(x)=\tau_q(qxq)$ on the operators relevant below.  Any projection
+$r\leq q$ lies in $q\cM q$, and positivity plus faithfulness of $\tau_q$
+gives \eqref{eq:faithful_on_corner_projections}.  The trace identity
+\eqref{eq:trace_identity} holds when both arguments satisfy
+\eqref{eq:corner_element}, because then their products are computed in
+$q\cM q$.  No tracial identity on arbitrary elements of $\cM$ is asserted or
+needed.  Thus
+Assumption~\ref{ass:faithful_tracial_projection_functional} is not a stronger
+replacement for the manuscript's corner state; it is a deliberately minimal
+interface for the finite-projection argument.
+\end{remark}
+
+\section{Finiteness below a tracial support}
+\label{sec:corner_finiteness}
+
+\begin{lemma}[Difference of nested projections]
+\label{lem:projection_difference}
+Let $f,e,q\in\cM$ be projections with $f\leq e\leq q$.  Then $e-f$ is a
+projection in $\cM$ and
+\begin{equation}
+  e-f\leq q.
+  \label{eq:difference_below_q}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The relation $f\leq e$ gives $fe=f=ef$.  Hence
+\begin{align}
+  (e-f)^2
+  &=e^2-ef-fe+f^2 \\
+  &=e-f,
+  \label{eq:difference_idempotent}
+\end{align}
+and $(e-f)^*=e-f$.  Since $e,f\in\cM$ and $\cM$ is a $*$-subalgebra,
+$e-f\in\cM$.  Transitivity of the two relations in
+\eqref{eq:subprojection} gives $fq=f=qf$, while $eq=e=qe$.  Therefore
+\begin{align}
+  (e-f)q&=eq-fq=e-f,\\
+  q(e-f)&=qe-qf=e-f,
+  \label{eq:difference_subprojection}
+\end{align}
+which is \eqref{eq:difference_below_q}.
+\end{proof}
+
+\begin{lemma}[Murray--von Neumann witnesses lie in the corner]
+\label{lem:mvN_witness_in_corner}
+Let $f,e,q\in\cM$ be projections with $f\leq e\leq q$.  If $v\in\cM$
+satisfies
+\begin{equation}
+  v^*v=e,
+  \qquad
+  vv^*=f,
+  \label{eq:corner_mvN_witness}
+\end{equation}
+then
+\begin{equation}
+  qv=v=vq,
+  \qquad
+  qv^*=v^*=v^*q.
+  \label{eq:corner_supported_witness}
+\end{equation}
+In particular, both $v$ and $v^*$ are elements of $q\cM q$ in the sense of
+\eqref{eq:corner_element}.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:mvN_witness_partial_isometry},
+$vv^*v=v$.  Hence
+\begin{align}
+  ve&=v(v^*v)=vv^*v=v,\\
+  fv&=(vv^*)v=v.
+  \label{eq:initial_final_support_witness}
+\end{align}
+Since $f\leq e\leq q$, transitivity gives $f\leq q$.  Therefore
+\begin{align}
+  qv&=q(fv)=(qf)v=fv=v,\\
+  vq&=(ve)q=v(eq)=ve=v.
+  \label{eq:corner_support_witness}
+\end{align}
+Taking adjoints gives the two identities for $v^*$ in
+\eqref{eq:corner_supported_witness}.  Membership in $\cM$ follows from
+$v\in\cM$ and $*$-closure.
+\end{proof}
+
+\begin{lemma}[Finite subprojections of a faithful tracial corner]
+\label{lem:finite_subprojection_of_tracial_corner}
+Under Assumption~\ref{ass:faithful_tracial_projection_functional}, every
+projection $e\in\cM$ with $e\leq q$ is finite in $\cM$.
+\end{lemma}
+
+\begin{proof}
+Let $f\in\cM$ be a projection with $f\leq e$ and
+$e\sim_{\cM}f$.  Choose $v\in\cM$ satisfying
+  \begin{equation}
+    v^*v=e,
+    \qquad
+  vv^*=f.
+  \label{eq:corner_equivalence_witness}
+  \end{equation}
+Lemma~\ref{lem:mvN_witness_in_corner} puts both $v^*$ and $v$ in $q\cM q$.
+By Lemma~\ref{lem:projection_difference}, $e-f$ is a projection below $q$.
+Linearity and the corner traciality axiom (T1), applied to $v^*$ and $v$, give
+\begin{equation}
+  \begin{aligned}
+    \tau(e-f)
+    &=\tau(e)-\tau(f)\\
+    &=\tau(v^*v)-\tau(vv^*)\\
+    &=0.
+  \end{aligned}
+  \label{eq:trace_difference_zero}
+\end{equation}
+Faithfulness on the projections below $q$ gives $e-f=0$, hence $e=f$.  This
+is exactly the finiteness criterion \eqref{eq:finite_projection}.
+\end{proof}
+
+\section{Fullness produces finite central summands}
+\label{sec:semifiniteness}
+
+\begin{lemma}[A central slice of the corner]
+\label{lem:central_slice}
+Let $z\in\cZ(\cM)$ be a projection and let $q\in\cM$ be a projection.
+Then $zq$ is a projection in $\cM$ and
+\begin{equation}
+  zq\leq q,
+  \qquad
+  zq\leq z.
+  \label{eq:central_slice_subprojection}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Centrality gives $zq=qz$.  Consequently,
+\begin{align}
+  (zq)^*&=q^*z^*=qz=zq,\\
+  (zq)^2&=zqzq=z^2q^2=zq.
+  \label{eq:central_slice_projection}
+\end{align}
+The two relations in \eqref{eq:central_slice_subprojection} follow by
+multiplying $zq$ on either side by $q$ and by $z$, respectively.
+\end{proof}
+
+\begin{theorem}[Full tracial corner implies projection-form semifiniteness]
+\label{thm:full_tracial_corner_semifinite}
+Let $\cM\subseteq\cB(\cH)$ be a concrete von Neumann algebra.  Let
+$q\in\cM$ be a full projection, and assume
+Assumption~\ref{ass:faithful_tracial_projection_functional}.  Then $\cM$ is
+semifinite in the sense of Definition~\ref{def:semifinite_projection_form}.
+\end{theorem}
+
+\begin{proof}
+Let $z\in\cZ(\cM)$ be a nonzero projection.  Fullness gives
+\begin{equation}
+  zq\neq0.
+  \label{eq:central_slice_nonzero}
+\end{equation}
+By Lemma~\ref{lem:central_slice}, $zq$ is a projection in $\cM$ below $q$
+and below $z$.  Lemma~\ref{lem:finite_subprojection_of_tracial_corner}
+therefore says that $zq$ is finite.  It is the nonzero finite projection
+required by \eqref{eq:semifinite_projection_form}.
+\end{proof}
+
+\section{Finite central fibers}
+\label{sec:finite_fibers}
+
+\begin{assumption}[Finite central-fiber presentation]
+\label{ass:finite_central_fibers}
+Let $I$ be a finite set and let $(z_i)_{i\in I}$ be nonzero central
+projections in $\cM$ such that
+\begin{equation}
+  z_i z_j=0\quad (i\neq j),
+  \qquad
+  \sum_{i\in I}z_i=\id.
+  \label{eq:finite_central_partition}
+\end{equation}
+The factor condition on $z_i\cM$ is not needed to produce finite projections;
+it is needed only to use the customary phrase ``fiber factor.''
+\end{assumption}
+
+\begin{corollary}[Finite central fibers carry finite projections]
+\label{cor:finite_fiber_finite_projection}
+Under the hypotheses of
+Theorem~\ref{thm:full_tracial_corner_semifinite} and
+Assumption~\ref{ass:finite_central_fibers}, each central fiber $z_i\cM$
+contains the nonzero finite projection $z_iq$.
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:full_tracial_corner_semifinite} to the nonzero central
+projection $z_i$.  Its proof identifies the finite witness as $z_iq$, which
+lies under $z_i$ by Lemma~\ref{lem:central_slice}.
+\end{proof}
+
+\begin{remark}[Type-III conclusion and the corner API]
+\label{rem:typeIII_corner_api}
+For a factor represented on the Hilbert space $z_i\cH$, a nonzero finite
+projection rules out type III by the definition of type III.  A Lean statement
+with that exact wording needs a bundled construction of the corner
+$z_i\cM$ acting on $z_i\cH$, including preservation/reflection of
+Murray--von Neumann finiteness.  The present package records the stronger
+ambient statement \eqref{eq:semifinite_projection_form} first.  The finite
+fiber corollary will be upgraded to an explicit \texttt{not\_typeIII} theorem
+only after that corner API is checked.  This is a scope boundary, not a
+mathematical weakening.
+\end{remark}
+
+\section{Boundary with the stabilizer/GNS argument}
+\label{sec:stabilizer_boundary}
+
+To apply Theorem~\ref{thm:full_tracial_corner_semifinite} to the current
+manuscript, a later formalization must construct data satisfying the following
+four obligations.
+\begin{enumerate}[label=\textup{(S\arabic*)},leftmargin=3em]
+  \item From a decreasing exhaustion of local support projections, construct
+  a strong-limit projection $q\in\cM_\Gamma$.
+  \item Prove that the compressed vector functional on
+  $q\cM_\Gamma q$ is tracial.  The manuscript uses finite-dimensional matrix
+  trace cyclicity, bounded strong continuity of multiplication, and
+  Kaplansky density.
+  \item Prove faithfulness on the corner using the dense GNS orbit generated
+  by the region and its complement.
+  \item Prove fullness by showing that a central projection $z$ with $zq=0$
+  annihilates the same dense GNS orbit and hence vanishes.
+\end{enumerate}
+
+The source locations in the current manuscript are the support-limit argument
+near Lemma~\texttt{lem:q\_exists}, traciality in
+Proposition~\texttt{prop:normal-trace}, faithfulness in
+Proposition~\texttt{prop:faithful}, fullness in
+Proposition~\texttt{prop:fullness}, and the final conclusion in
+Theorem~\texttt{thm:finite\_projections\_exist}.  The first two steps require
+operator-topological machinery beyond the abstract package in this
+investigation.
+
+\section{Lean API and source map}
+\label{sec:api_source_map}
+
+The Lean package at
+\path{formalization_finite_fibers/} exports the following public declarations:
+\begin{itemize}[label={},leftmargin=0pt,itemsep=0pt,topsep=.25em]
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{IsProjectionIn}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{IsSubprojection}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{IsMvNEquivalent}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{IsFiniteProjection}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{IsCornerElement}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{IsPartialIsometry}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{FaithfulTracialCorner}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{mvN\_witness\_in\_corner}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{central\_mul\_finite\_of\_faithful\_tracial\_corner}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{finite\_central\_fiber\_canonical\_witness}
+  \item \texttt{FiniteFiber.}\allowbreak\texttt{full\_tracial\_corner\_semifinite}
+\end{itemize}
+Its upstream mathlib bases are:
+\begin{itemize}[label={},leftmargin=0pt,itemsep=0pt,topsep=.25em]
+  \item \texttt{Mathlib.Analysis.}\allowbreak\texttt{VonNeumannAlgebra.Basic}
+  \item \texttt{Mathlib.Algebra.Star.}\allowbreak\texttt{StarProjection}
+\end{itemize}
+
+The load-bearing mathematical sources are:
+\begin{enumerate}[label=\textup{[\arabic*]},leftmargin=2.5em]
+  \item the current local manuscript, Appendix theorem
+  \texttt{thm:finite\_projections\_exist} and its immediately preceding
+  support-corner proof;
+  \item B.~Blackadar, \emph{Operator Algebras}, Definition III.1.1.5 for
+  central support, and the finite/type-III projection definitions cited by
+  the manuscript in Section III.1.4;
+  \item M.~Takesaki, \emph{Theory of Operator Algebras I}, Definition V.1.17
+  for the projection-theoretic type classification vocabulary.
+\end{enumerate}
+
+\begin{remark}[Verification status]
+\label{rem:verification_status}
+This TeX note is an informal blueprint.  Its compilation checks typesetting
+and references only.  The abstract Lean package has been checked with
+\texttt{lake build FiniteFiber}; the accompanying
+\texttt{AxiomAudit.lean} in its \texttt{tests/} directory records the public
+theorem axiom audit.  That check establishes only the named abstract
+support-corner theorem.  The stabilizer/GNS application remains separately
+auditable.
+\end{remark}
+
+\end{document}

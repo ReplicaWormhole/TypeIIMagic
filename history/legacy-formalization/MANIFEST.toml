@@ -1,0 +1,1406 @@
+# Source-backed formalization target ledger.
+
+[[blueprint_revision]]
+id = "VN-FOUNDATION-BLUEPRINT-SCOPE-2026-06-24"
+kind = "foundation_scope_record"
+scope = "agents/2026-06-24-von-neumann-foundation-blueprint-scope.md"
+source = "User-approved blueprint foundation vision: direct concrete von Neumann algebra framework, quasilocal projection-code state, GNS application, represented region algebras, double commutant theorem, decreasing projection limits, and type predicates."
+status = "recorded_for_adversarial_blueprint_review"
+review = "reviews/2026-06-24-vn-foundation-blueprint-scope-review.md"
+note = "This is not a Lean target and does not alter current blueprint target statuses. It records the standard against which the current blueprints should be adversarially reviewed before further formalization."
+
+[[blueprint_revision]]
+id = "VN-FOUNDATION-BLUEPRINT-REPAIR-ROUND1-2026-06-24"
+kind = "foundation_blueprint_repair_round"
+scope = "blueprints/000-source-ledger.tex; blueprints/007-pauli-quasilocal-algebra.tex; blueprints/008-stabilizer-local-state-foundations.tex; blueprints/010-gns-represented-region-layer.tex; blueprints/011-von-neumann-type-theory.tex; blueprints/012-infinite-product-type-calculus.tex; blueprints/013-final-stabilizer-type-classification.tex"
+source = "Repairs against reviews/2026-06-24-blueprint-foundation-adversarial-synthesis.md and the user-approved foundation scope."
+status = "repaired_pending_adversarial_review_round2"
+note = "Repair round 1 adds an explicit local-net interface, projection-defined finite/local canonical-state layer, canonical-state GNS specialization, direct commutant/double-commutant foundations, represented-region isotony and conjugacy, decreasing projection strong limits, represented-region vector-state trace/type criteria, and explicit model-factor hypotheses. The round also upgrades theorem entries toward natural-language proof bodies."
+
+[[blueprint_revision]]
+id = "VN-FOUNDATION-BLUEPRINT-REPAIR-ROUND2-2026-06-24"
+kind = "foundation_blueprint_repair_round"
+scope = "blueprints/000-source-ledger.tex; blueprints/008-stabilizer-local-state-foundations.tex; blueprints/010-gns-represented-region-layer.tex; blueprints/011-von-neumann-type-theory.tex; blueprints/012-infinite-product-type-calculus.tex; blueprints/013-final-stabilizer-type-classification.tex"
+source = "Repairs against round-2 review reports in reviews/2026-06-24-blueprint-foundation-*-round2.md."
+status = "repaired_pending_adversarial_review_round3"
+note = "Repair round 2 removes duplicate primary IDs, adds CENTRAL-SUPPORT-001, MFH-001, CPS-001, IRANK-001, CRVN-001, and MTT-001, fixes the projection/type/trace dependency order, makes dense-region traciality a precise strong-star hypothesis, records the VN-DCT approximation source basis, normalizes source locators, and synchronizes the source ledger path convention."
+
+[[blueprint_revision]]
+id = "VN-FOUNDATION-BLUEPRINT-REPAIR-ROUND3-2026-06-24"
+kind = "foundation_blueprint_repair_round"
+scope = "blueprints/000-source-ledger.tex; blueprints/007-pauli-quasilocal-algebra.tex; blueprints/011-von-neumann-type-theory.tex; blueprints/012-infinite-product-type-calculus.tex; MANIFEST.toml"
+source = "Repairs against round-3 review reports in reviews/2026-06-24-blueprint-foundation-*-round3.md."
+status = "approved_after_round4_adversarial_review"
+review = "reviews/2026-06-24-blueprint-foundation-adversarial-synthesis-round4.md"
+note = "Repair round 3 adds VECTOR-ANALYTIC-001 as an explicit project-local analytic prerequisite for vector-functional normality and positive square roots, fixes stale CENTRAL-SUPPORT-001 manifest prose, corrects the parent-relative project-note locator, and synchronizes the Blackadar III.3.1.6 locator to PDF p. 303. Round-4 source-grounding, definition/proof, and TeX/manifest reviewers approved the repaired scope; round-3 Lean-extraction and coverage reviewers had already approved the unaffected scopes."
+
+[[blueprint_revision]]
+id = "VN-FOUNDATION-BLUEPRINT-REPAIR-ROUND5-2026-06-24"
+kind = "foundation_blueprint_style_path_repair"
+scope = "blueprints/001-stabilizer-system.tex; blueprints/002-canonical-state.tex; blueprints/007-pauli-quasilocal-algebra.tex; blueprints/008-stabilizer-local-state-foundations.tex; blueprints/009-internal-stabilizer-reduction.tex; blueprints/011-von-neumann-type-theory.tex; blueprints/013-final-stabilizer-type-classification.tex"
+source = "Repairs against reviews/2026-06-24-blueprint-proof-style-completion-audit-round5.md and reviews/2026-06-24-blueprint-manifest-tex-process-audit-round5.md."
+status = "repaired_round5_checks_passed"
+process_provenance = "agents/2026-06-24-blueprint-round5-rewrite-provenance.md"
+spawned_worker = "019ef9f6-4b42-73d2-9257-fa6ecdb49ddd (Schrodinger, worker)"
+note = "Repair round 5 moves required source locators into active environment titles, fixes stale project proof-note paths in blueprints 002 and 009, and splits the TYPE-002 Blackadar locator so III.3.1.4 is PDF p. 302, III.3.1.6 is PDF p. 303, and III.3.4.2 is PDF p. 317. Manifest parse, diff-check, focused stale scans, theorem-like proof-adjacency scan, and TeX compile/log audit passed; mathematical correctness was not re-proved. Target lifecycle statuses are unchanged."
+
+[[blueprint_revision]]
+id = "TAKESAKI-STATEMENT-TRANSCRIPTS-2026-06-23"
+kind = "source_shape_update"
+scope = "blueprints/008-stabilizer-local-state-foundations.tex; blueprints/010-gns-represented-region-layer.tex; blueprints/011-von-neumann-type-theory.tex; blueprints/012-infinite-product-type-calculus.tex"
+source = "Takesaki I and III statement locators already recorded for the affected targets"
+status = "complete"
+note = "Converted Takesaki source-input paraphrase blocks into ordinary TeX definition/lemma/proposition/theorem environments with Lean-oriented names and Takesaki locators in the environment titles; target lifecycle statuses unchanged."
+
+[[blueprint_revision]]
+id = "ACTIVE-BLUEPRINT-TARGET-TITLE-STYLE-2026-06-23"
+kind = "style_normalization"
+scope = "blueprints/007-pauli-quasilocal-algebra.tex through blueprints/013-final-stabilizer-type-classification.tex; superseded notices in blueprints/003-gns-package.tex through blueprints/006-full-type-classification-dependency-plan.tex"
+source = "Project blueprint style policy in AGENTS.md and COMMUNICATION.md"
+status = "complete"
+note = "Normalized active target environment titles to start with the Lean-facing or stable formalization name, followed by ID and source locator when source-backed. Removed the fallbackfact environment in favor of ordinary remark environments. Historical drafts 003--006 are marked non-active or superseded; target lifecycle statuses unchanged."
+
+[[orchestrator_gate]]
+id = "CURRENT-BLUEPRINT-ROUNDTRIP-GATES-2026-06-24"
+kind = "aristotle_codex_loop_guardrail"
+script = "scripts/aristotle_codex_loop.py"
+prompt = "aristotle/orchestrator/codex_orchestration_prompt.md"
+protocol = "COMMUNICATION.md"
+review = "reviews/2026-06-24-orchestrator-blueprint-sync-gates-review.md"
+status = "implemented_checked"
+note = "The loop now blocks stale non-smoke packets by default, carries a gate report into Codex handoff prompts, requires round-trip blueprint/Lean sync review before target status updates or follow-up Aristotle submissions, treats BLOCKED as terminal, and routes blocked/missing-prerequisite results into an adversarial blocker auto-repair loop before advancing."
+
+[[aristotle_submission]]
+id = "GLOBAL-BLUEPRINT-SUITE-2026-06-22"
+kind = "global_project_submission"
+packet = "aristotle/packets/GLOBAL-BLUEPRINT-SUITE-2026-06-22.md"
+project = "588bebdf-9fc8-4828-a058-6874e367efa8"
+task = "ae44e282-087c-4d8e-8731-a700a97fc956"
+source = "All completed blueprint notes 001--013 plus MANIFEST.toml, PROGRESS.md, and source ledger"
+response = "aristotle/responses/GLOBAL-BLUEPRINT-SUITE-2026-06-22-response.md"
+summary = "aristotle/responses/GLOBAL-BLUEPRINT-SUITE-2026-06-22-summary.md"
+status = "partial_response_integrated_lean_checked"
+warning = "Aristotle produced a partial compiling prefix under Lean 4.28.0; the local project is now pinned to leanprover/lean4:v4.28.0 and mathlib v4.28.0."
+
+[[aristotle_packet]]
+id = "CURRENT-BLUEPRINT-SYNC-2026-06-23"
+kind = "global_project_packet"
+packet = "aristotle/packets/CURRENT-BLUEPRINT-SYNC-2026-06-23.md"
+project = "a3b43b3c-9893-4ab5-829c-2e6c6aa2aa73"
+submit_log = "aristotle/logs/2026-06-23-current-blueprint-sync-submit.log"
+failed_task = "a31d0733-3283-4b0d-ba67-aacdd88b37dc"
+retry_task = "921c7bfe-3ce2-4e0d-ad42-14bc3baa764a"
+failed_task_log = "aristotle/logs/2026-06-23-current-blueprint-sync-failed-task-show.log"
+tasks_log = "aristotle/logs/2026-06-23-current-blueprint-sync-tasks-after-failure.log"
+result_archive = "aristotle/responses/CURRENT-BLUEPRINT-SYNC-2026-06-23-result.tar.gz"
+summary = "aristotle/responses/CURRENT-BLUEPRINT-SYNC-2026-06-23-summary.md"
+source = "Active normalized blueprints 001, 002, and 007--013 plus MANIFEST.toml, PROGRESS.md, and coverage/style reviews"
+status = "retry_complete_vn003_integrated_lean_checked"
+goal = "Bring the Lean formalization into source-trace alignment with the current blueprint style and formalize the maximal compiling prefix of remaining targets."
+
+[[aristotle_packet]]
+id = "SYMP-001-GRAM-SCHMIDT-2026-06-23"
+kind = "single_target_continuation_packet"
+packet = "aristotle/packets/SYMP-001-GRAM-SCHMIDT-2026-06-23.md"
+project = "fee11fa8-de4e-48a6-9fce-917eb032543f"
+task = "4792bf3f-ea3d-4109-a579-426aa4c9221b"
+submit_log = "aristotle/logs/2026-06-23-SYMP-001-gram-schmidt-submit.log"
+list_log = "aristotle/logs/2026-06-23-SYMP-001-gram-schmidt-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-23-SYMP-001-gram-schmidt-tasks-after-submit.log"
+latest_tasks_log = "aristotle/logs/2026-06-23-SYMP-001-gram-schmidt-tasks-closeout.log"
+completed_tasks_log = "aristotle/logs/2026-06-24-SYMP-001-gram-schmidt-tasks-complete.log"
+show_log = "aristotle/logs/2026-06-24-SYMP-001-gram-schmidt-show-complete.log"
+result_archive = "aristotle/responses/SYMP-001-GRAM-SCHMIDT-2026-06-23-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-GRAM-SCHMIDT-2026-06-23-summary.md"
+response = "aristotle/responses/SYMP-001-continuation-response.md"
+review = "reviews/2026-06-24-symp001-gram-schmidt-integration-review.md"
+source = "SYMP-001 checked partial result, aristotle/responses/SYMP-001-response.md; blueprints/009-internal-stabilizer-reduction.tex"
+status = "response_integrated_lean_checked_partial_finite_case"
+goal = "Extend the checked SYMP-001 partial result toward arbitrary finite-dimensional isotropic subspaces by proving the hyperbolic-pair extension and finite adapted-basis Gram-Schmidt infrastructure."
+
+[[aristotle_packet]]
+id = "SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24"
+kind = "single_target_continuation_packet"
+packet = "aristotle/packets/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24.md"
+project = "9c4c5a0f-4173-4f5b-8323-65a5dd144534"
+task = "d0918862-45b3-40d0-9f6e-77e189b2dc2d"
+submit_log = "aristotle/logs/2026-06-24-SYMP-001-countable-assembly-submit.log"
+list_log = "aristotle/logs/2026-06-24-SYMP-001-countable-assembly-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-24-SYMP-001-countable-assembly-tasks-after-submit.log"
+completed_tasks_log = "aristotle/logs/orchestrator-20260624T184039Z-9c4c5a0f-tasks.log"
+show_log = "aristotle/logs/2026-06-24-SYMP-001-countable-assembly-show-complete.log"
+result_archive = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-response.md"
+review = "reviews/2026-06-24-symp001-countable-assembly-integration-review.md"
+source = "Current blueprints/009-internal-stabilizer-reduction.tex after SYMP-FIN-001 sync; checked partial finite result in Formalization/Stabilizer/SymplecticBasis.lean"
+status = "partial_response_integrated_lean_checked_support_targets_infinite_assembly_open"
+goal = "Extend the checked finite arbitrary-isotropic adapted-basis theorem to the countable SYMP-001 assembly, or return the strongest fully proved countable-stage lemma and exact blocker list."
+
+[[aristotle_packet]]
+id = "SYMP-INF-REC-001-2026-06-24"
+kind = "single_target_blocker_repair_packet"
+packet = "aristotle/packets/SYMP-INF-REC-001-2026-06-24.md"
+project = "81233f6c-6893-4049-8dec-318863e21da7"
+task = "1de252be-38e4-4892-b963-af4dad514346"
+submit_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-001-submit.log"
+list_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-001-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-001-tasks-after-submit.log"
+completed_tasks_log = "aristotle/logs/orchestrator-20260624T203847Z-81233f6c-tasks.log"
+result_archive = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-001-response.md"
+review = "reviews/2026-06-24-symp-inf-rec-blocker-repair-review.md"
+source = "Current blueprints/009-internal-stabilizer-reduction.tex target SYMP-INF-REC-001 after countable-assembly blocker repair; checked support lemmas in Formalization/Stabilizer/SymplecticBasisCountable.lean"
+status = "blocked_false_as_stated_response_integrated_counterexample_checked"
+goal = "Prove the infinite-dimensional countable recursive adapted symplectic assembly, including the W-residual invariant and limiting Module.Basis.mk spanning argument, or return the exact remaining missing lemmas."
+
+[[aristotle_packet]]
+id = "SYMP-CLOSED-PARTNER-001-2026-06-24"
+kind = "single_target_blocker_repair_packet"
+packet = "aristotle/packets/SYMP-CLOSED-PARTNER-001-2026-06-24.md"
+project = "0d8f3e8b-e5b6-47c2-a5c2-fe5e5cfc2cd1"
+task = "64779911-a022-4fb9-bd7a-42b99cc12d74"
+submit_log = "aristotle/logs/2026-06-24-SYMP-CLOSED-PARTNER-001-submit.log"
+list_log = "aristotle/logs/2026-06-24-SYMP-CLOSED-PARTNER-001-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-24-SYMP-CLOSED-PARTNER-001-tasks-after-submit.log"
+show_log = "aristotle/logs/2026-06-24-SYMP-CLOSED-PARTNER-001-show-complete.log"
+result_archive = "aristotle/responses/SYMP-CLOSED-PARTNER-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-CLOSED-PARTNER-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-CLOSED-PARTNER-001-response.md"
+review = "reviews/2026-06-24-symp-closed-partner-integration-review.md"
+source = "Current blueprints/009-internal-stabilizer-reduction.tex target SYMP-CLOSED-PARTNER-001 after SYMP-INF-REC-001 disproof and blocker repair review"
+status = "proved_response_integrated_lean_checked"
+goal = "Prove the closedness partner lemma used by the corrected closed-W infinite countable adapted symplectic recursion."
+
+[[aristotle_packet]]
+id = "SYMP-INF-REC-CLOSED-001-2026-06-24"
+kind = "single_target_continuation_packet"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+submit_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-CLOSED-001-submit.log"
+list_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-CLOSED-001-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-CLOSED-001-tasks-after-submit.log"
+completed_tasks_log = "aristotle/logs/2026-06-25-SYMP-INF-REC-CLOSED-001-tasks-complete.log"
+download_log = "aristotle/logs/2026-06-25-SYMP-INF-REC-CLOSED-001-download.log"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+source = "Current blueprints/009-internal-stabilizer-reduction.tex target SYMP-INF-REC-CLOSED-001 after SYMP-CLOSED-PARTNER-001 was proved and integrated"
+status = "proved_response_integrated_lean_checked"
+goal = "Prove the corrected closed-W infinite-dimensional countable adapted symplectic recursion, or return the strongest checked partial result and exact missing lemmas."
+
+[[aristotle_packet]]
+id = "PAULI-002-2026-06-25"
+kind = "single_target_prerequisite_packet"
+packet = "aristotle/packets/PAULI-002-2026-06-25.md"
+project = "84e02548-ecc4-4988-8104-4d61ba9f3fdf"
+task = "c0b7fb3f-be4c-4c7d-bd4f-4df61fe39b00"
+submit_log = "aristotle/logs/2026-06-25-PAULI-002-submit.log"
+list_log = "aristotle/logs/2026-06-25-PAULI-002-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-25-PAULI-002-tasks-after-submit.log"
+completed_tasks_log = "aristotle/logs/2026-06-25-PAULI-002-tasks-complete.log"
+download_log = "aristotle/logs/2026-06-25-PAULI-002-download.log"
+result_archive = "aristotle/responses/PAULI-002-2026-06-25-result.tar.gz"
+summary = "aristotle/responses/PAULI-002-2026-06-25-summary.md"
+response = "aristotle/responses/PAULI-002-response.md"
+review = "reviews/2026-06-25-pauli002-integration-review.md"
+source = "Current blueprints/007-pauli-quasilocal-algebra.tex target PAULI-002 after SYMP-INF-REC-CLOSED-001 was proved and integrated"
+status = "partial_response_integrated_lean_checked_trace_include_missing"
+goal = "Formalize finite Pauli matrix basis and normalized trace coefficient infrastructure, or return the strongest checked prefix and exact missing API lemmas."
+post_submit_note = "Adversarial closeout clarified the local packet's desired pauliBasis and pauli_expansion stubs to non-vacuous statements after submission."
+note = "Aristotle returned a non-vacuous checked prefix: LocalAlgebra, normalizedTrace, pauliMatrix, pauli_trace_orthogonal, pauliBasis, and pauli_expansion in Formalization/Stabilizer/FinitePauliAlgebra.lean. Round-trip sync is PARTIAL because the current blueprint also contains supporting PAULI-002 lemma TraceCoeffInclude, Lean target traceCoeff_include, which was not returned."
+
+[[aristotle_packet]]
+id = "PAULI-002-TRACE-INCLUDE-2026-06-25"
+kind = "single_target_sync_completion_packet"
+packet = "aristotle/packets/PAULI-002-TRACE-INCLUDE-2026-06-25.md"
+project = "573f8f45-0c9f-44cf-8291-d38036466997"
+task = "9ff89387-5831-424c-b24e-9e7241a0fc47"
+submit_log = "aristotle/logs/2026-06-25-PAULI-002-trace-include-submit.log"
+list_log = "aristotle/logs/2026-06-25-PAULI-002-trace-include-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-25-PAULI-002-trace-include-tasks-after-submit.log"
+latest_tasks_log = "aristotle/logs/orchestrator-20260625T051900Z-573f8f45-tasks.log"
+source = "Current blueprints/007-pauli-quasilocal-algebra.tex target PAULI-002, environment TraceCoeffInclude, after partial checked PAULI-002 basis/expansion prefix integration"
+status = "sent_to_aristotle_in_progress"
+goal = "Complete PAULI-002 round-trip sync by proving traceCoeff_include for finite local inclusion coefficients, or return exact missing API lemmas."
+
+[[aristotle_packet]]
+id = "TOY-ROUND-001"
+kind = "orchestrator_smoke_test_packet"
+packet = "aristotle/packets/TOY-ROUND-001.md"
+next_packet = "aristotle/packets/TOY-ROUND-002.md"
+project = "9632c540-1ef3-4eda-a7c9-27876a322a8e"
+task = "89bd2613-3b98-4bf2-9625-129da9817445"
+submit_log = "aristotle/logs/2026-06-24-TOY-ROUND-001-submit.log"
+list_log = "aristotle/logs/2026-06-24-TOY-ROUND-001-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-24-TOY-ROUND-001-tasks-after-submit.log"
+completed_tasks_log = "aristotle/logs/orchestrator-20260624T055059Z-9632c540-tasks.log"
+result_archive = "aristotle/responses/smoke/TOY-ROUND-001-result.tar.gz"
+summary = "aristotle/responses/smoke/TOY-ROUND-001-summary.md"
+integrated_file = "Formalization/Test/LoopToy.lean"
+review = "reviews/2026-06-24-toy-smoke-round1-review.md"
+source = "Toy Nat formalization smoke test; not part of the stabilizer formalization."
+status = "integrated_lean_checked_round_002_submitted"
+goal = "First round of a two-round Aristotle/Codex smoke test: create Formalization/Test/LoopToy.lean and prove toy_zero_add."
+
+[[aristotle_packet]]
+id = "TOY-ROUND-002"
+kind = "orchestrator_smoke_test_packet"
+packet = "aristotle/packets/TOY-ROUND-002.md"
+project = "ef49110e-d44b-4097-b552-cb9552160a17"
+task = "fe79721a-9156-4820-bb13-0cbd3ad845eb"
+list_log = "aristotle/logs/2026-06-24-TOY-ROUND-002-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-24-TOY-ROUND-002-tasks-after-submit.log"
+completed_tasks_log = "aristotle/logs/orchestrator-20260624T055846Z-ef49110e-tasks.log"
+result_archive = "aristotle/responses/smoke/TOY-ROUND-002-result.tar.gz"
+summary = "aristotle/responses/smoke/TOY-ROUND-002-summary.md"
+integrated_file = "Formalization/Test/LoopToy.lean"
+review = "reviews/2026-06-24-toy-smoke-round2-review.md"
+source = "Toy Nat formalization smoke test; not part of the stabilizer formalization."
+status = "integrated_lean_checked_smoke_complete"
+note = "Aristotle returned toy_zero_add_succ; the integrated proof uses toy_zero_add directly. No further Aristotle task was submitted."
+goal = "Second round of a two-round Aristotle/Codex smoke test: add toy_zero_add_succ using toy_zero_add."
+
+[[target]]
+id = "SRC-000"
+kind = "ledger"
+title = "Source ledger for operator-algebra and stabilizer formalization"
+tex = "blueprints/000-source-ledger.tex"
+lean = ""
+source = "Project-local source inventory plus Gottesman QECC notes, Chapter 3.5, PDF pp. 55-56"
+status = "updated"
+
+[[target]]
+id = "SYS-001"
+kind = "definition"
+title = "Algebraic stabilizer system over F2"
+tex = "blueprints/001-stabilizer-system.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/System.lean"
+source = "Gottesman QECC notes, Chapter 3.5, Definitions 3.11 and 3.13, PDF pp. 55-56; project proof note 004"
+packet = "aristotle/packets/SYS-001.md"
+aristotle_project = "28f38a4a-747c-4977-9bd4-6a5823af9f3c"
+aristotle_task = "dd7644e8-23b3-40fa-9175-173d18299dc5"
+status = "blueprint_note_complete_lake_target_built_aristotle_submitted"
+
+[[target]]
+id = "STATE-001"
+kind = "definition"
+title = "Canonical stabilizer coefficient state"
+tex = "blueprints/002-canonical-state.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/State.lean"
+source = "Project proof note 004, stabilizer-character and canonical projection-state coefficient rule; Gottesman QECC notes, Chapter 3.5, Definition 3.13, PDF p. 56"
+packet = "aristotle/packets/STATE-001.md"
+status = "blueprint_note_complete_lake_target_built_packet_ready"
+
+[[target]]
+id = "GNS-001"
+kind = "definition"
+title = "GNS package for a state"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/GNS/Package.lean"
+source = "Takesaki I, Theorem I.9.14, PDF pp. 59--61, and Definition I.9.15, PDF p. 61; mathlib GNS infrastructure"
+status = "lean_checked_partial_gns_representation_only"
+
+[[aristotle_blocker_report]]
+id = "GLOBAL-BLUEPRINT-SUITE-2026-06-22-BLOCKERS"
+project = "588bebdf-9fc8-4828-a058-6874e367efa8"
+task = "ae44e282-087c-4d8e-8731-a700a97fc956"
+response = "aristotle/responses/GLOBAL-BLUEPRINT-SUITE-2026-06-22-response.md"
+status = "recorded"
+targets = [
+  "PAULI-002",
+  "QL-001",
+  "QL-002",
+  "STATE-002",
+  "STATE-003",
+  "STATE-004",
+  "SYMP-001",
+  "SYMP-002",
+  "PROD-001",
+  "GNS-002",
+  "GNS-003",
+  "VN-003",
+  "TYPE-ALT-001",
+  "MATRIX-001",
+  "ITP-001",
+  "ITP-PURE-001",
+  "ITP-TRACE-001",
+  "TENSOR-001",
+  "TYPE-001",
+  "TYPE-002",
+]
+root_causes = "Missing finite tensor product Pauli matrix/trace API; C*-inductive limits and infinite tensor products; adapted symplectic bases over F2; full GNS cyclic vector/uniqueness; spatial conjugation of bundled von Neumann algebras; Murray-von Neumann comparability and central type decomposition; model-factor identifications."
+
+[[target]]
+id = "VN-001"
+kind = "definition"
+title = "Concrete represented region von Neumann algebra"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/RegionVN.lean"
+source = "Takesaki I, Definition II.3.2, PDF p. 92; mathlib concrete VonNeumannAlgebra and commutants; project proof note 004, Theorem 5.1"
+status = "lean_checked"
+
+[[target]]
+id = "TYPE-001"
+kind = "theorem"
+title = "First type-restriction statement for canonical stabilizer systems"
+tex = "blueprints/013-final-stabilizer-type-classification.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/TypeRestrictions.lean"
+source = "Project proof note 004, Theorem 5.1, PDF pp. 5--6; blueprints/009-internal-stabilizer-reduction.tex; blueprints/010-gns-represented-region-layer.tex; blueprints/011-von-neumann-type-theory.tex; blueprints/012-infinite-product-type-calculus.tex"
+status = "blueprint_repaired_pending_adversarial_review_lean_blocked"
+note = "Blueprint dependencies now route through CPS-001, IRANK-001, CRVN-001, MTT-001, GNS-004, GNS-003, VN-001, VN-003, TRACE-001, TYPE-DEF-001, TYPE-ALT-001, ITP-PURE-001, ITP-TRACE-001, TENSOR-001, and MFH-001 when model-factor proofs are deferred. Lean remains blocked on infrastructure from earlier Aristotle runs."
+
+[[target]]
+id = "PAULI-001"
+kind = "definition"
+title = "Pauli labels and binary symplectic commutation"
+tex = "blueprints/008-stabilizer-local-state-foundations.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/PauliAlgebra.lean"
+source = "Gottesman QECC notes, Chapter 3.5, Definitions 3.11 and 3.13, PDF pp. 55--56; project proof note 004, Section 2"
+status = "lean_checked"
+
+[[target]]
+id = "PAULI-002"
+kind = "lemma"
+title = "Finite Pauli algebra basis and normalized trace coefficients"
+tex = "blueprints/007-pauli-quasilocal-algebra.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/FinitePauliAlgebra.lean"
+lean_decl = "Formalization.Stabilizer.FinitePauliAlgebra.pauliBasis; Formalization.Stabilizer.FinitePauliAlgebra.pauli_expansion; missing Formalization.Stabilizer.FinitePauliAlgebra.traceCoeff_include"
+source = "Project proof note 004, Sections 2--3; Gottesman QECC notes, Chapter 3.5, PDF pp. 55--56"
+packet = "aristotle/packets/PAULI-002-2026-06-25.md"
+aristotle_project = "84e02548-ecc4-4988-8104-4d61ba9f3fdf"
+aristotle_task = "c0b7fb3f-be4c-4c7d-bd4f-4df61fe39b00"
+submit_log = "aristotle/logs/2026-06-25-PAULI-002-submit.log"
+list_log = "aristotle/logs/2026-06-25-PAULI-002-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-25-PAULI-002-tasks-after-submit.log"
+completed_tasks_log = "aristotle/logs/2026-06-25-PAULI-002-tasks-complete.log"
+download_log = "aristotle/logs/2026-06-25-PAULI-002-download.log"
+result_archive = "aristotle/responses/PAULI-002-2026-06-25-result.tar.gz"
+summary = "aristotle/responses/PAULI-002-2026-06-25-summary.md"
+response = "aristotle/responses/PAULI-002-response.md"
+review = "reviews/2026-06-25-pauli002-integration-review.md"
+followup_packet = "aristotle/packets/PAULI-002-TRACE-INCLUDE-2026-06-25.md"
+followup_aristotle_project = "573f8f45-0c9f-44cf-8291-d38036466997"
+followup_aristotle_task = "9ff89387-5831-424c-b24e-9e7241a0fc47"
+followup_submit_log = "aristotle/logs/2026-06-25-PAULI-002-trace-include-submit.log"
+followup_list_log = "aristotle/logs/2026-06-25-PAULI-002-trace-include-list-after-submit.log"
+followup_tasks_log = "aristotle/logs/2026-06-25-PAULI-002-trace-include-tasks-after-submit.log"
+followup_latest_tasks_log = "aristotle/logs/orchestrator-20260625T051900Z-573f8f45-tasks.log"
+status = "partial_response_integrated_lean_checked_trace_include_followup_in_progress"
+note = "Checked prefix integrated from PAULI-002: finite matrix LocalAlgebra, normalizedTrace, pauliMatrix, trace orthogonality, pauliBasis, and pauli_expansion. Round-trip sync is PARTIAL because blueprint environment TraceCoeffInclude, Lean target traceCoeff_include, remains unimplemented; follow-up packet PAULI-002-TRACE-INCLUDE-2026-06-25 is in progress to complete that omission."
+
+[[target]]
+id = "QL-001"
+kind = "definition"
+title = "Quasi-local qubit algebra or local-net abstraction"
+tex = "blueprints/007-pauli-quasilocal-algebra.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/QuasiLocal.lean"
+source = "Project proof note 004, Section 2; Blackadar III.3.1.2, PDF pp. 301--302"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "QL-002"
+kind = "definition"
+title = "Region algebras and finite-support label restriction"
+tex = "blueprints/008-stabilizer-local-state-foundations.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/RegionAlgebra.lean"
+source = "Project proof note 004, Section 2; Takesaki III, Definition XIV.1.3, PDF p. 105, and Definition XIV.1.5, PDF p. 106"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "STATE-002"
+kind = "theorem"
+title = "Finite-local canonical state positivity and consistency"
+tex = "blueprints/008-stabilizer-local-state-foundations.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/FiniteCanonicalState.lean"
+source = "blueprints/002-canonical-state.tex; blueprints/007-pauli-quasilocal-algebra.tex; project proof note 004, Sections 2 and 4; Takesaki I, Definition I.9.4, PDF p. 56"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "STATE-003"
+kind = "theorem"
+title = "Quasi-local extension of compatible finite canonical states"
+tex = "blueprints/008-stabilizer-local-state-foundations.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/QuasiLocalState.lean"
+source = "Finite-local compatibility from STATE-002; Takesaki III, Definition XIV.1.3, PDF p. 105, Definition XIV.1.5, PDF p. 106; Takesaki I, Lemma I.9.9 and Proposition I.9.12, PDF pp. 58--59"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "STATE-004"
+kind = "lemma"
+title = "Region restriction and crossing-stabilizer invisibility"
+tex = "blueprints/008-stabilizer-local-state-foundations.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/RegionRestriction.lean"
+source = "Project proof note 004, Lemma 2.4 and Section 2"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "SYMP-FIN-001"
+kind = "lemma"
+title = "Finite adapted symplectic basis for arbitrary isotropic subspaces"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting finite case for SYMP-001"
+lean = "Formalization/Stabilizer/SymplecticBasis.lean"
+source = "Project proof note 004, Lemma 3.1, finite-dimensional part, PDF pp. 3--4"
+packet = "aristotle/packets/SYMP-001-GRAM-SCHMIDT-2026-06-23.md"
+aristotle_project = "fee11fa8-de4e-48a6-9fce-917eb032543f"
+aristotle_task = "4792bf3f-ea3d-4109-a579-426aa4c9221b"
+completed_tasks_log = "aristotle/logs/2026-06-24-SYMP-001-gram-schmidt-tasks-complete.log"
+show_log = "aristotle/logs/2026-06-24-SYMP-001-gram-schmidt-show-complete.log"
+result_archive = "aristotle/responses/SYMP-001-GRAM-SCHMIDT-2026-06-23-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-GRAM-SCHMIDT-2026-06-23-summary.md"
+response = "aristotle/responses/SYMP-001-continuation-response.md"
+review = "reviews/2026-06-24-symp001-gram-schmidt-integration-review.md"
+status = "lean_checked"
+note = "A checked finite-dimensional arbitrary-isotropic adapted symplectic basis theorem, used as the finite-stage engine for the still-open countable SYMP-001 assembly."
+
+[[target]]
+id = "SYMP-COUNT-BASIS-001"
+kind = "lemma"
+title = "Countable basis for submodules of countable F2 modules"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting countable assembly lemma for SYMP-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.exists_countable_basis_submodule"
+source = "Project proof note 004, Lemma 3.1 countable-basis setup, PDF pp. 3--4; standard vector-space basis existence"
+packet = "aristotle/packets/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24.md"
+aristotle_project = "9c4c5a0f-4173-4f5b-8323-65a5dd144534"
+aristotle_task = "d0918862-45b3-40d0-9f6e-77e189b2dc2d"
+result_archive = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-response.md"
+review = "reviews/2026-06-24-symp001-countable-assembly-integration-review.md"
+status = "lean_checked"
+note = "Support theorem integrated from the countable-assembly partial response; not the full SYMP-001 infinite assembly."
+
+[[target]]
+id = "SYMP-FIN-RESTRICT-ISCOMPL-001"
+kind = "lemma"
+title = "Finite nondegenerate restriction gives orthogonal complement splitting"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting countable assembly lemma for SYMP-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.finite_restrict_isCompl"
+source = "Project proof note 004, Lemma 3.1 finite-stage hyperbolic splitting, PDF pp. 3--4"
+packet = "aristotle/packets/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24.md"
+aristotle_project = "9c4c5a0f-4173-4f5b-8323-65a5dd144534"
+aristotle_task = "d0918862-45b3-40d0-9f6e-77e189b2dc2d"
+result_archive = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-response.md"
+review = "reviews/2026-06-24-symp001-countable-assembly-integration-review.md"
+status = "lean_checked"
+note = "Mathlib's finite-dimensional ambient splitting was not sufficient; this checked local lemma works with infinite ambient V."
+
+[[target]]
+id = "SYMP-ORTH-RESTRICT-NONDEG-001"
+kind = "lemma"
+title = "Orthogonal complement restriction remains nondegenerate"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting countable assembly lemma for SYMP-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.orthogonal_restrict_nondeg"
+source = "Project proof note 004, Lemma 3.1 recursive passage to orthogonal complements, PDF pp. 3--4"
+packet = "aristotle/packets/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24.md"
+aristotle_project = "9c4c5a0f-4173-4f5b-8323-65a5dd144534"
+aristotle_task = "d0918862-45b3-40d0-9f6e-77e189b2dc2d"
+result_archive = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-response.md"
+review = "reviews/2026-06-24-symp001-countable-assembly-integration-review.md"
+status = "lean_checked"
+note = "Support theorem integrated from the countable-assembly partial response."
+
+[[target]]
+id = "SYMP-LININD-001"
+kind = "lemma"
+title = "Symplectic families are linearly independent"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting countable assembly lemma for SYMP-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.symplectic_linearIndependent_general"
+source = "Project proof note 004, Lemma 3.1 finite-support independence check, PDF pp. 3--4"
+packet = "aristotle/packets/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24.md"
+aristotle_project = "9c4c5a0f-4173-4f5b-8323-65a5dd144534"
+aristotle_task = "d0918862-45b3-40d0-9f6e-77e189b2dc2d"
+result_archive = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-response.md"
+review = "reviews/2026-06-24-symp001-countable-assembly-integration-review.md"
+status = "lean_checked"
+note = "Support theorem integrated from the countable-assembly partial response."
+
+[[target]]
+id = "SYMP-HYP-EXT-001"
+kind = "lemma"
+title = "One-step hyperbolic extension over a finite nondegenerate span"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting countable assembly lemma for SYMP-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.exists_hyperbolic_extension"
+source = "Project proof note 004, Lemma 3.1 one-step hyperbolic extension, PDF pp. 3--4"
+packet = "aristotle/packets/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24.md"
+aristotle_project = "9c4c5a0f-4173-4f5b-8323-65a5dd144534"
+aristotle_task = "d0918862-45b3-40d0-9f6e-77e189b2dc2d"
+result_archive = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-response.md"
+review = "reviews/2026-06-24-symp001-countable-assembly-integration-review.md"
+status = "lean_checked"
+note = "Support theorem integrated from the countable-assembly partial response."
+
+[[target]]
+id = "SYMP-COUNT-FIN-001"
+kind = "theorem"
+title = "Finite-dimensional adapted basis with countable index packaging"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting countable assembly theorem for SYMP-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.exists_adapted_symplectic_countable_of_finiteDimensional"
+source = "Project proof note 004, Lemma 3.1 finite-dimensional part recast with countable index, PDF pp. 3--4"
+packet = "aristotle/packets/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24.md"
+aristotle_project = "9c4c5a0f-4173-4f5b-8323-65a5dd144534"
+aristotle_task = "d0918862-45b3-40d0-9f6e-77e189b2dc2d"
+result_archive = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-response.md"
+review = "reviews/2026-06-24-symp001-countable-assembly-integration-review.md"
+status = "lean_checked"
+note = "Support theorem integrated from the countable-assembly partial response."
+
+[[target]]
+id = "SYMP-PAULI-FIN-COUNT-001"
+kind = "theorem"
+title = "Finite Pauli registers have adapted bases in countable-index output shape"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting countable assembly theorem for SYMP-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.adaptedSymplecticBasis_countableIndex_of_finite"
+source = "Project proof note 004, Lemma 3.1 finite-dimensional PauliLabel part recast with countable index, PDF pp. 3--4"
+packet = "aristotle/packets/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24.md"
+aristotle_project = "9c4c5a0f-4173-4f5b-8323-65a5dd144534"
+aristotle_task = "d0918862-45b3-40d0-9f6e-77e189b2dc2d"
+result_archive = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-response.md"
+review = "reviews/2026-06-24-symp001-countable-assembly-integration-review.md"
+status = "lean_checked"
+note = "Support theorem integrated from the countable-assembly partial response."
+
+[[target]]
+id = "SYMP-INF-REC-001"
+kind = "theorem"
+title = "Infinite-dimensional countable adapted symplectic recursion"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "next blocker subtarget for SYMP-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.exists_adapted_symplectic_countable_infinite"
+source = "Project proof note 004, Lemma 3.1 countable-dimensional recursive Gram-Schmidt construction, PDF pp. 3--4"
+packet = "aristotle/packets/SYMP-INF-REC-001-2026-06-24.md"
+aristotle_project = "81233f6c-6893-4049-8dec-318863e21da7"
+aristotle_task = "1de252be-38e4-4892-b963-af4dad514346"
+submit_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-001-submit.log"
+list_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-001-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-001-tasks-after-submit.log"
+dependencies = [
+  "SYMP-COUNT-BASIS-001",
+  "SYMP-FIN-RESTRICT-ISCOMPL-001",
+  "SYMP-ORTH-RESTRICT-NONDEG-001",
+  "SYMP-LININD-001",
+  "SYMP-HYP-EXT-001",
+]
+completed_tasks_log = "aristotle/logs/orchestrator-20260624T203847Z-81233f6c-tasks.log"
+result_archive = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-001-response.md"
+review = "reviews/2026-06-24-symp-inf-rec-blocker-repair-review.md"
+status = "blocked_false_as_stated"
+blocker = "Lean-checked obstruction: an adapted symplectic basis forces B.orthogonal (B.orthogonal W) = W, and PauliLabel Nat has an isotropic nonclosed W with no adapted basis."
+note = "Do not resubmit the unrestricted target. Use the corrected closed-W target SYMP-INF-REC-CLOSED-001 after proving its smaller dependencies."
+
+[[target]]
+id = "SYMP-SPANNING-BASIS-001"
+kind = "lemma"
+title = "Symplectic relations plus spanning give a basis"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting lemma for corrected countable assembly"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.symplectic_basis_of_spanning"
+source = "Project-local support lemma from the SYMP-INF-REC-001 blocker repair, using SYMP-LININD-001"
+packet = "aristotle/packets/SYMP-INF-REC-001-2026-06-24.md"
+aristotle_project = "81233f6c-6893-4049-8dec-318863e21da7"
+aristotle_task = "1de252be-38e4-4892-b963-af4dad514346"
+result_archive = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-001-response.md"
+review = "reviews/2026-06-24-symp-inf-rec-blocker-repair-review.md"
+status = "lean_checked"
+note = "Integrated from the blocked SYMP-INF-REC-001 response as useful support content."
+
+[[target]]
+id = "SYMP-ADAPTED-CLOSED-001"
+kind = "theorem"
+title = "Adapted symplectic basis implies B-closedness"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "obstruction theorem for unrestricted SYMP-INF-REC-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.adapted_symplectic_closed"
+source = "Project-local obstruction theorem returned by SYMP-INF-REC-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-001-2026-06-24.md"
+aristotle_project = "81233f6c-6893-4049-8dec-318863e21da7"
+aristotle_task = "1de252be-38e4-4892-b963-af4dad514346"
+result_archive = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-001-response.md"
+review = "reviews/2026-06-24-symp-inf-rec-blocker-repair-review.md"
+status = "lean_checked"
+note = "Necessary condition showing the old unrestricted target cannot hold for arbitrary isotropic W."
+
+[[target]]
+id = "SYMP-INF-CE-001"
+kind = "theorem"
+title = "Nonclosed isotropic PauliLabel Nat counterexample"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "counterexample to unrestricted SYMP-INF-REC-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.cexW_no_adapted_symplectic_basis"
+lean_decls = [
+  "Formalization.Stabilizer.cexW",
+  "Formalization.Stabilizer.symplecticBil_canonZ_left",
+  "Formalization.Stabilizer.cexW_isotropic",
+  "Formalization.Stabilizer.canonZ_zero_not_mem_cexW",
+  "Formalization.Stabilizer.canonZ_zero_mem_orthogonal_orthogonal_cexW",
+  "Formalization.Stabilizer.cexW_not_closed",
+  "Formalization.Stabilizer.cexW_no_adapted_symplectic_basis",
+]
+source = "Project-local counterexample returned by SYMP-INF-REC-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-001-2026-06-24.md"
+aristotle_project = "81233f6c-6893-4049-8dec-318863e21da7"
+aristotle_task = "1de252be-38e4-4892-b963-af4dad514346"
+result_archive = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-001-response.md"
+review = "reviews/2026-06-24-symp-inf-rec-blocker-repair-review.md"
+status = "lean_checked"
+note = "Explicit isotropic nonclosed subspace of PauliLabel Nat refuting the unrestricted countable adapted-basis target."
+
+[[target]]
+id = "SYMP-CLOSED-PARTNER-001"
+kind = "lemma"
+title = "Closed isotropic subspace supplies an orthogonal partner"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "next focused dependency for corrected closed-W countable assembly"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.closed_orthogonal_partner"
+source = "Project-local repair lemma from closedness obstruction; follows from W^{perp perp}=W over F2"
+packet = "aristotle/packets/SYMP-CLOSED-PARTNER-001-2026-06-24.md"
+aristotle_project = "0d8f3e8b-e5b6-47c2-a5c2-fe5e5cfc2cd1"
+aristotle_task = "64779911-a022-4fb9-bd7a-42b99cc12d74"
+submit_log = "aristotle/logs/2026-06-24-SYMP-CLOSED-PARTNER-001-submit.log"
+list_log = "aristotle/logs/2026-06-24-SYMP-CLOSED-PARTNER-001-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-24-SYMP-CLOSED-PARTNER-001-tasks-after-submit.log"
+show_log = "aristotle/logs/2026-06-24-SYMP-CLOSED-PARTNER-001-show-complete.log"
+result_archive = "aristotle/responses/SYMP-CLOSED-PARTNER-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-CLOSED-PARTNER-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-CLOSED-PARTNER-001-response.md"
+review = "reviews/2026-06-24-symp-closed-partner-integration-review.md"
+dependencies = [
+  "SYMP-ADAPTED-CLOSED-001",
+]
+status = "lean_checked"
+note = "Aristotle proved the closedness partner lemma with the blueprint-facing theorem shape. This unblocks the corrected closed-W recursion target."
+
+[[target]]
+id = "SYMP-SUP-HYP-NONDEG-001"
+kind = "lemma"
+title = "Adjoining a hyperbolic pair preserves nondegenerate restriction"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting lemma for SYMP-INF-REC-CLOSED-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.sup_hyperbolic_restrict_nondegenerate"
+source = "Project-local support lemma returned by SYMP-INF-REC-CLOSED-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+dependencies = [
+  "SYMP-FIN-RESTRICT-ISCOMPL-001",
+  "SYMP-ORTH-RESTRICT-NONDEG-001",
+]
+status = "lean_checked"
+note = "Mathematical support lemma added to the blueprint before marking the returned closed-W recursion synced."
+
+[[target]]
+id = "SYMP-ORTH-COMP-001"
+kind = "lemma"
+title = "Orthogonal components of a W-perp vector remain W-perp under the W split"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting lemma for SYMP-INF-REC-CLOSED-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.orthogonal_component_mem_orthogonal"
+source = "Project-local support lemma returned by SYMP-INF-REC-CLOSED-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+dependencies = [
+  "SYMP-FIN-RESTRICT-ISCOMPL-001",
+]
+status = "lean_checked"
+note = "Mathematical support lemma added to the blueprint before marking the returned closed-W recursion synced."
+
+[[target]]
+id = "SYMP-WSPLIT-PRESERVE-001"
+kind = "lemma"
+title = "The W-split invariant is preserved by an adapted hyperbolic pair"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting lemma for SYMP-INF-REC-CLOSED-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.adapted_Wsplit_preserved"
+source = "Project-local support lemma returned by SYMP-INF-REC-CLOSED-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+dependencies = [
+  "SYMP-SUP-HYP-NONDEG-001",
+  "SYMP-ORTH-COMP-001",
+]
+status = "lean_checked"
+note = "Mathematical support lemma added to the blueprint before marking the returned closed-W recursion synced."
+
+[[target]]
+id = "SYMP-PAIR-RESIDUAL-001"
+kind = "lemma"
+title = "Classify a residual into an adapted hyperbolic pair"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting lemma for SYMP-INF-REC-CLOSED-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.adapted_pair_from_residual"
+source = "Project-local support lemma returned by SYMP-INF-REC-CLOSED-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+dependencies = [
+  "SYMP-CLOSED-PARTNER-001",
+  "SYMP-SUP-HYP-NONDEG-001",
+  "SYMP-ORTH-COMP-001",
+  "SYMP-WSPLIT-PRESERVE-001",
+]
+status = "lean_checked"
+note = "Mathematical support lemma added to the blueprint before marking the returned closed-W recursion synced."
+
+[[target]]
+id = "SYMP-STEP-CLOSED-001"
+kind = "lemma"
+title = "One closed-W adapted extension step covering a target vector"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting lemma for SYMP-INF-REC-CLOSED-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.adapted_symplectic_step"
+source = "Project-local support lemma returned by SYMP-INF-REC-CLOSED-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+dependencies = [
+  "SYMP-FIN-RESTRICT-ISCOMPL-001",
+  "SYMP-PAIR-RESIDUAL-001",
+]
+status = "lean_checked"
+note = "Mathematical support lemma added to the blueprint before marking the returned closed-W recursion synced."
+
+[[target]]
+id = "SYMP-W-EQ-SPAN-001"
+kind = "lemma"
+title = "P/O adaptation invariants identify W with the P z-span"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting lemma for SYMP-INF-REC-CLOSED-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.adapted_W_eq_span"
+source = "Project-local support lemma returned by SYMP-INF-REC-CLOSED-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+dependencies = [
+  "SYMP-LININD-001",
+  "SYMP-SPANNING-BASIS-001",
+]
+status = "lean_checked"
+note = "Mathematical support lemma added to the blueprint before marking the returned closed-W recursion synced."
+
+[[target]]
+id = "SYMP-FRESH-PERP-001"
+kind = "lemma"
+title = "A finite nondegenerate span in an infinite space has nonzero orthogonal complement"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting lemma for SYMP-INF-REC-CLOSED-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.exists_nonzero_mem_orthogonal_of_infinite"
+source = "Project-local support lemma returned by SYMP-INF-REC-CLOSED-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+dependencies = [
+  "SYMP-FIN-RESTRICT-ISCOMPL-001",
+]
+status = "lean_checked"
+note = "Mathematical support lemma added to the blueprint before marking the returned closed-W recursion synced."
+
+[[target]]
+id = "SYMP-BOT-NONDEG-001"
+kind = "lemma"
+title = "The zero-submodule restriction is nondegenerate"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting lemma for SYMP-INF-REC-CLOSED-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.restrict_bot_nondegenerate"
+source = "Project-local support lemma returned by SYMP-INF-REC-CLOSED-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+status = "lean_checked"
+note = "Mathematical support lemma added to the blueprint before marking the returned closed-W recursion synced."
+
+[[target]]
+id = "SYMP-SEQUENCES-CLOSED-001"
+kind = "theorem"
+title = "Closed-W recursive sequences with symplectic and adaptation invariants"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "supporting theorem for SYMP-INF-REC-CLOSED-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.exists_adapted_symplectic_sequences"
+source = "Project-local support theorem returned by SYMP-INF-REC-CLOSED-001-2026-06-24"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+dependencies = [
+  "SYMP-BOT-NONDEG-001",
+  "SYMP-FRESH-PERP-001",
+  "SYMP-STEP-CLOSED-001",
+]
+status = "lean_checked"
+note = "Mathematical support theorem added to the blueprint before marking the returned closed-W recursion synced. The AdaptedRec structure and stability lemmas used to prove it are recorded as implementation plumbing in the integration review."
+
+[[target]]
+id = "SYMP-INF-REC-CLOSED-001"
+kind = "theorem"
+title = "Closed-W infinite-dimensional countable adapted symplectic recursion"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "corrected positive replacement for false unrestricted SYMP-INF-REC-001"
+lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+lean_decl = "Formalization.Stabilizer.exists_adapted_symplectic_countable_infinite_closed"
+source = "Project proof note 004 Lemma 3.1 repaired by adding the necessary B-closedness hypothesis exposed by SYMP-ADAPTED-CLOSED-001"
+packet = "aristotle/packets/SYMP-INF-REC-CLOSED-001-2026-06-24.md"
+aristotle_project = "7f6837ad-6ea7-4855-95f9-c02d676ae41e"
+aristotle_task = "3ae275d6-ba2a-4849-942b-6f2cb283e913"
+submit_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-CLOSED-001-submit.log"
+list_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-CLOSED-001-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-CLOSED-001-tasks-after-submit.log"
+completed_tasks_log = "aristotle/logs/2026-06-25-SYMP-INF-REC-CLOSED-001-tasks-complete.log"
+download_log = "aristotle/logs/2026-06-25-SYMP-INF-REC-CLOSED-001-download.log"
+result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+summary = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-summary.md"
+response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+dependencies = [
+  "SYMP-COUNT-BASIS-001",
+  "SYMP-FIN-RESTRICT-ISCOMPL-001",
+  "SYMP-ORTH-RESTRICT-NONDEG-001",
+  "SYMP-LININD-001",
+  "SYMP-HYP-EXT-001",
+  "SYMP-SPANNING-BASIS-001",
+  "SYMP-CLOSED-PARTNER-001",
+  "SYMP-SUP-HYP-NONDEG-001",
+  "SYMP-ORTH-COMP-001",
+  "SYMP-WSPLIT-PRESERVE-001",
+  "SYMP-PAIR-RESIDUAL-001",
+  "SYMP-STEP-CLOSED-001",
+  "SYMP-W-EQ-SPAN-001",
+  "SYMP-FRESH-PERP-001",
+  "SYMP-BOT-NONDEG-001",
+  "SYMP-SEQUENCES-CLOSED-001",
+]
+status = "lean_checked"
+note = "Corrected closed-W target is Lean-checked from Aristotle task 3ae275d6-ba2a-4849-942b-6f2cb283e913. The unrestricted arbitrary-isotropic target remains false as stated; countable downstream uses must prove B-closedness before applying this theorem."
+
+[[target]]
+id = "SYMP-001"
+kind = "lemma"
+title = "Countable symplectic basis adapted to an isotropic subspace"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/SymplecticBasis.lean"
+source = "Project proof note 004, Lemma 3.1, PDF pp. 3--4"
+packet = "aristotle/packets/SYMP-001.md"
+aristotle_project = "8672f5b3-681e-4e05-85d5-e7079c7243cc"
+aristotle_task = "dc72ec27-ad3c-471a-be35-4a2d24b3c394"
+submit_log = "aristotle/logs/2026-06-23-SYMP-001-submit.log"
+list_log = "aristotle/logs/2026-06-23-SYMP-001-list-after-submit.log"
+tasks_log = "aristotle/logs/2026-06-23-SYMP-001-tasks-after-submit.log"
+latest_tasks_log = "aristotle/logs/2026-06-23-SYMP-001-tasks-final-check.log"
+completed_tasks_log = "aristotle/logs/2026-06-23-SYMP-001-tasks-complete.log"
+result_archive = "aristotle/responses/SYMP-001-result.tar.gz"
+summary = "aristotle/responses/SYMP-001-summary.md"
+response = "aristotle/responses/SYMP-001-response.md"
+continuation_packet = "aristotle/packets/SYMP-001-GRAM-SCHMIDT-2026-06-23.md"
+continuation_project = "fee11fa8-de4e-48a6-9fce-917eb032543f"
+continuation_task = "4792bf3f-ea3d-4109-a579-426aa4c9221b"
+continuation_completed_tasks_log = "aristotle/logs/2026-06-24-SYMP-001-gram-schmidt-tasks-complete.log"
+continuation_show_log = "aristotle/logs/2026-06-24-SYMP-001-gram-schmidt-show-complete.log"
+continuation_result_archive = "aristotle/responses/SYMP-001-GRAM-SCHMIDT-2026-06-23-result.tar.gz"
+continuation_summary = "aristotle/responses/SYMP-001-GRAM-SCHMIDT-2026-06-23-summary.md"
+continuation_response = "aristotle/responses/SYMP-001-continuation-response.md"
+review = "reviews/2026-06-24-symp001-gram-schmidt-integration-review.md"
+next_packet = "aristotle/packets/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24.md"
+next_project = "9c4c5a0f-4173-4f5b-8323-65a5dd144534"
+next_task = "d0918862-45b3-40d0-9f6e-77e189b2dc2d"
+next_submit_log = "aristotle/logs/2026-06-24-SYMP-001-countable-assembly-submit.log"
+next_tasks_log = "aristotle/logs/2026-06-24-SYMP-001-countable-assembly-tasks-after-submit.log"
+countable_assembly_result_archive = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-result.tar.gz"
+countable_assembly_summary = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24-summary.md"
+countable_assembly_response = "aristotle/responses/SYMP-001-COUNTABLE-ASSEMBLY-response.md"
+countable_assembly_review = "reviews/2026-06-24-symp001-countable-assembly-integration-review.md"
+partial_lean = "Formalization/Stabilizer/SymplecticBasisCountable.lean"
+open_blocker_target = "SYMP-INF-REC-001"
+blocker_followup_packet = "aristotle/packets/SYMP-INF-REC-001-2026-06-24.md"
+blocker_followup_project = "81233f6c-6893-4049-8dec-318863e21da7"
+blocker_followup_task = "1de252be-38e4-4892-b963-af4dad514346"
+blocker_followup_tasks_log = "aristotle/logs/2026-06-24-SYMP-INF-REC-001-tasks-after-submit.log"
+blocker_followup_result_archive = "aristotle/responses/SYMP-INF-REC-001-2026-06-24-result.tar.gz"
+blocker_followup_response = "aristotle/responses/SYMP-INF-REC-001-response.md"
+closed_version_target = "SYMP-INF-REC-CLOSED-001"
+closed_version_result_archive = "aristotle/responses/SYMP-INF-REC-CLOSED-001-2026-06-24-result.tar.gz"
+closed_version_response = "aristotle/responses/SYMP-INF-REC-CLOSED-001-response.md"
+closed_version_review = "reviews/2026-06-25-symp-inf-rec-closed-integration-review.md"
+status = "lean_checked_partial_countable_support_unrestricted_infinite_statement_refuted_closed_version_checked"
+note = "Canonical-coordinate, finite arbitrary-isotropic, finite countable-index packaging, countable-basis, finite orthogonal-splitting, orthogonal-restriction nondegeneracy, symplectic-family independence, one-step hyperbolic-extension support targets, the closedness/counterexample obstruction, and the corrected closed-W countable recursion are Lean-checked. The unrestricted arbitrary countable adapted-basis theorem is false as stated; downstream countable uses must prove B-closedness and use SYMP-INF-REC-CLOSED-001."
+
+[[target]]
+id = "SYMP-002"
+kind = "lemma"
+title = "Adapted symplectic basis induces a Pauli algebra isomorphism"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/AdaptedPauliIso.lean"
+source = "Project proof note 004, Lemma 3.2, PDF p. 4; blueprints/007-pauli-quasilocal-algebra.tex"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+dependency_warning = "Do not use unrestricted SYMP-001 in the countable infinite case; require finite-dimensional input or the corrected closed-W target SYMP-INF-REC-CLOSED-001."
+
+[[target]]
+id = "PROD-001"
+kind = "proposition"
+title = "Product form after adapted symplectic basis reduction"
+tex = "blueprints/009-internal-stabilizer-reduction.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/ProductForm.lean"
+source = "Project proof note 004, Proposition 4.1, PDF pp. 4--5; blueprints/008-stabilizer-local-state-foundations.tex"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+dependency_warning = "Product-form reductions depending on countable adapted bases must prove the relevant W is B-closed or stay in the finite-dimensional checked case."
+
+[[target]]
+id = "HILB-001"
+kind = "definition"
+title = "Hilbert-space interfaces for GNS and infinite products"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/HilbertInterfaces.lean"
+source = "Takesaki I, Theorem I.9.14, PDF pp. 59--61; Takesaki III, Definition XIV.1.6 and surrounding construction, PDF pp. 106--107; mathlib Hilbert-space infrastructure"
+status = "lean_checked"
+
+[[target]]
+id = "GNS-002"
+kind = "lemma"
+title = "GNS unitary equivalence under state transport by star isomorphism"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/GNS/Equivalence.lean"
+source = "Takesaki I, Theorem I.9.14, PDF pp. 59--61; Takesaki I, Definition II.3.2, PDF p. 92"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "GNS-003"
+kind = "theorem"
+title = "Product-state GNS identification for stabilizer product forms"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/GNS/ProductState.lean"
+source = "Takesaki III, Definition XIV.1.6 and surrounding construction, PDF pp. 106--107; PROD-001"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "GNS-004"
+kind = "theorem"
+title = "GNS specialization for the canonical projection-code state"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/GNS/CanonicalProjectionCode.lean"
+source = "Takesaki I, Theorem I.9.14, PDF pp. 59--61; STATE-003 canonical projection-code state"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "VN-002"
+kind = "definition"
+title = "Centers and factor predicate for concrete von Neumann algebras"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/Factor.lean"
+source = "Takesaki I, Definition II.3.2, PDF p. 92"
+status = "lean_checked"
+
+[[target]]
+id = "VECTOR-ANALYTIC-001"
+kind = "definition_package"
+title = "Vector functional normality and positive-square-root analytic prerequisites"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/VectorFunctionalAnalyticFacts.lean"
+source = "Explicit project-local analytic prerequisite; Takesaki I, Section II.1, equation (7), PDF p. 81, fixes vector-functional notation only"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "VN-004"
+kind = "definition"
+title = "Commutant and double commutant of a concrete operator set"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/Commutant.lean"
+source = "Takesaki I, Definition II.3.2, PDF p. 92"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "VN-005"
+kind = "definition"
+title = "Generated von Neumann algebra as a double commutant"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/GeneratedVN.lean"
+source = "Takesaki I, Definition II.3.2, PDF p. 92; Theorem II.3.9, PDF pp. 94--95"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "VN-006"
+kind = "proposition"
+title = "Generated von Neumann algebra monotonicity and minimality"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/GeneratedVN.lean"
+source = "Takesaki I, Definition II.3.2, PDF p. 92; Theorem II.3.9, PDF pp. 94--95"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "VN-DCT-001"
+kind = "theorem"
+title = "Direct double-commutant closure theorem for unital star subalgebras"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/DoubleCommutant.lean"
+source = "Takesaki I, Theorem II.2.6, PDF p. 90; Lemma II.3.8 and the proof of Theorem II.3.9, PDF pp. 94--95, for the approximation/double-commutation route"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "VN-007"
+kind = "lemma"
+title = "Represented region von Neumann algebra isotony"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/RegionVN.lean"
+source = "Takesaki I, Definition II.3.2, PDF p. 92; Theorem II.3.9, PDF pp. 94--95"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "VN-008"
+kind = "lemma"
+title = "Generated von Neumann algebras under unitary conjugacy"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/RegionVNEquivalence.lean"
+source = "Takesaki I, Definition II.3.2, PDF p. 92; Theorem II.3.9, PDF pp. 94--95"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "VN-003"
+kind = "lemma"
+title = "Bicommutants and represented region algebras under unitary equivalence"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/RegionVNEquivalence.lean"
+source = "Takesaki I, Definition II.3.2, PDF p. 92; Takesaki I, Theorem II.3.9, PDF pp. 94--95; mathlib commutant infrastructure"
+status = "lean_checked"
+
+[[target]]
+id = "PROJ-LIM-001"
+kind = "theorem"
+title = "Strong limit of a decreasing sequence of projections"
+tex = "blueprints/010-gns-represented-region-layer.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/ProjectionLimits.lean"
+source = "Kadison--Ringrose I, Proposition 2.5.6 and Corollary 2.5.7, local PDF pp. 121--124; Takesaki I, Proposition V.1.1, PDF p. 310"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "PROJ-001"
+kind = "definition"
+title = "Murray-von Neumann equivalence and finite/infinite projections"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/ProjectionComparison.lean"
+source = "Takesaki I, Definition V.1.2, PDF p. 310; Theorem V.1.8, PDF p. 313; Definitions V.1.15--V.1.16, PDF p. 316"
+status = "blueprint_repaired_pending_adversarial_review_lean_prefix_checked_comparability_blocked"
+
+[[target]]
+id = "CENTRAL-SUPPORT-001"
+kind = "definition_package"
+title = "Central support and projection-lattice infrastructure"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/CentralSupport.lean"
+source = "Takesaki I, Proposition V.1.1, PDF p. 310; Lemma V.1.7, PDF p. 312; Theorem V.1.8, PDF p. 313; Lemma V.1.18 and Theorem V.1.19, PDF pp. 316--317"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "TRACE-001"
+kind = "definition"
+title = "Finite and semifinite trace interfaces needed for the classification"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/TraceInterfaces.lean"
+source = "Takesaki I, Definition V.2.1, PDF p. 329; Theorem V.2.4, PDF p. 331; Theorem V.2.15, PDF p. 337; depends on TYPE-DEF-001 for the semifinite type predicate"
+status = "blueprint_repaired_pending_adversarial_review_lean_prefix_checked_recognition_theorem_blocked"
+
+[[target]]
+id = "TYPE-DEF-001"
+kind = "definition"
+title = "Factor type predicates I_n, I_infty, II_1, II_infty, and III"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/FactorTypes.lean"
+source = "Takesaki I, Definition V.1.17, PDF p. 316; Definition V.1.21, PDF p. 317; Definition V.1.33, PDF p. 322"
+status = "blueprint_repaired_pending_adversarial_review_lean_checked"
+
+[[target]]
+id = "TYPE-ALT-001"
+kind = "theorem"
+title = "Factor type alternatives and recognition criteria"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/FactorTypes.lean"
+source = "Takesaki I, Lemma V.1.18, Theorem V.1.19, and Corollary V.1.20, PDF pp. 316--317; CENTRAL-SUPPORT-001"
+status = "blueprint_repaired_pending_adversarial_review_lean_blocked"
+
+[[target]]
+id = "MATRIX-001"
+kind = "theorem"
+title = "Finite matrix and B(l2) model factors"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/MatrixFactors.lean"
+source = "Takesaki I, Proposition V.1.23, PDF p. 318; Corollary V.1.28, PDF p. 320; Definition V.1.33, PDF p. 322; mathlib matrix and trace infrastructure"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "REGION-VECTOR-001"
+kind = "definition"
+title = "Represented-region vector state"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/RegionVectorState.lean"
+source = "GNS-001 and VN-001 project-local represented-region setup"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "REGION-VECTOR-NORMAL-001"
+kind = "proposition"
+title = "Represented-region vector state is normal"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/RegionVectorState.lean"
+source = "VECTOR-ANALYTIC-001; Takesaki I, Section II.1, equation (7), PDF p. 81, for vector-functional notation"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "REGION-VECTOR-TRACE-001"
+kind = "definition_and_proposition"
+title = "Region-vector traciality predicates and dense-region traciality criterion"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/RegionVectorTrace.lean"
+source = "DenseRegionStrongStarTraceHypothesis explicit fields; Takesaki I, Theorem II.2.6, PDF p. 90; Lemma II.3.8 and Theorem II.3.9 proof route, PDF pp. 94--95; VN-DCT-001"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "REGION-VECTOR-FAITH-001"
+kind = "lemma"
+title = "Faithfulness of the region vector state equals separatingness"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/RegionVectorState.lean"
+source = "VECTOR-ANALYTIC-001 supplies positive square roots; Takesaki I, Section II.1, equation (7), PDF p. 81, for vector-functional notation"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "TRACE-TYPE-CRITERION-001"
+kind = "corollary"
+title = "Faithful normal tracial state gives finite semifinite non-type-III consequences"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/TraceTypeCriterion.lean"
+source = "TRACE-001; TYPE-DEF-001; TYPE-ALT-001; Takesaki I trace and type locators in blueprints/011-von-neumann-type-theory.tex"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "REGION-VECTOR-TYPE-001"
+kind = "corollary"
+title = "Region-vector tracial and faithful hypotheses imply non-type-III consequences"
+tex = "blueprints/011-von-neumann-type-theory.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/RegionVectorType.lean"
+source = "REGION-VECTOR-NORMAL-001; REGION-VECTOR-TRACE-001; REGION-VECTOR-FAITH-001; TRACE-TYPE-CRITERION-001"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "ITP-001"
+kind = "theorem"
+title = "Infinite tensor product von Neumann algebra package for product states"
+tex = "blueprints/012-infinite-product-type-calculus.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/InfiniteTensorProduct.lean"
+source = "Takesaki III, Definition XIV.1.6, PDF pp. 106--107; Blackadar III.3.1.2--III.3.1.3, PDF pp. 301--302 fallback for product GNS, trace preservation, and factor preservation"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "MFH-001"
+kind = "definition_package"
+title = "Model-factor conditional hypotheses for deferred infinite-product proofs"
+tex = "blueprints/012-infinite-product-type-calculus.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/TensorTypeCalculus.ModelFactorHypotheses"
+source = "Blackadar, Operator Algebras, III.3.1.2--III.3.1.6 and III.3.4.1--III.3.4.2, PDF pp. 301--303 and 317"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "ITP-PURE-001"
+kind = "theorem"
+title = "Infinite pure-mode product is type I"
+tex = "blueprints/012-infinite-product-type-calculus.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/PureModeProduct.lean"
+source = "Takesaki III, Definition XIV.1.6, PDF pp. 106--107; Blackadar III.3.1.2, PDF pp. 301--302 fallback for infinite-product commutants; Takesaki I, Proposition V.1.23, Corollary V.1.28, and Definition V.1.33, PDF pp. 318--322"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "ITP-TRACE-001"
+kind = "theorem"
+title = "Infinite tracial defect product is the hyperfinite II_1 factor"
+tex = "blueprints/012-infinite-product-type-calculus.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/TracialDefectProduct.lean"
+source = "Takesaki III, Definition XIV.1.6, PDF pp. 106--107; Blackadar III.3.1.4, PDF p. 302, and III.3.4.1--III.3.4.2, PDF p. 317 fallback for hyperfinite II_1 identification"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "TENSOR-001"
+kind = "theorem"
+title = "Tensor-product type calculus for pure and defect model factors"
+tex = "blueprints/012-infinite-product-type-calculus.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/OperatorAlgebra/TensorTypeCalculus.lean"
+source = "Takesaki I, Proposition IV.4.13, PDF p. 231; Takesaki I factor, matrix, and trace locators in blueprints/011-von-neumann-type-theory.tex; Blackadar III.3.1.4, PDF p. 302, III.3.1.6, PDF p. 303, and III.3.4.2, PDF p. 317, fallback for R, R tensor B(H), and hyperfinite identifications; MFH-001 when model-factor proofs are deferred"
+status = "blocked_after_global_aristotle_missing_infrastructure"
+
+[[target]]
+id = "CPS-001"
+kind = "definition_package"
+title = "Projection-defined canonical-state input"
+tex = "blueprints/013-final-stabilizer-type-classification.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization.Stabilizer.RegionType.ProjectionDefinedCanonicalStateInput"
+source = "Project proof note 004, Convention 2.3, Lemma 2.4, Proposition 4.1, and Theorem 5.1, PDF pp. 2--6; STATE-002; STATE-003; STATE-004"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "IRANK-001"
+kind = "definition"
+title = "Internal fixed and defect ranks"
+tex = "blueprints/013-final-stabilizer-type-classification.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization.Stabilizer.InternalRanks"
+source = "Project proof note 004, Definition 3.3 and Theorem 5.1, PDF pp. 4--6; SYMP-001; SYMP-002; PROD-001"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "CRVN-001"
+kind = "definition"
+title = "Canonical-state represented region von Neumann algebra"
+tex = "blueprints/013-final-stabilizer-type-classification.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization.Stabilizer.RegionType.regionVN"
+source = "CPS-001; GNS-001; GNS-003; GNS-004; VN-001; VN-003; Takesaki I, Theorem I.9.14, Definition I.9.15, Definition II.3.2, and Theorem II.3.9, PDF pp. 59--61, 92, 94--95"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "MTT-001"
+kind = "definition_package"
+title = "Model trace and type input for the final stabilizer theorem"
+tex = "blueprints/013-final-stabilizer-type-classification.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization.Stabilizer.RegionType.ModelTraceTypeInput"
+source = "TRACE-001; TYPE-DEF-001; TYPE-ALT-001; ITP-PURE-001; ITP-TRACE-001; TENSOR-001; MFH-001 when model-factor proofs are deferred"
+status = "blueprint_note_complete_pending_adversarial_review"
+
+[[target]]
+id = "TYPE-002"
+kind = "corollary"
+title = "Type III exclusion for canonical stabilizer projection states"
+tex = "blueprints/013-final-stabilizer-type-classification.tex"
+blueprint_role = "prerequisite_informal_note"
+lean = "Formalization/Stabilizer/TypeRestrictions.lean"
+source = "TYPE-001; CPS-001; IRANK-001; CRVN-001; MTT-001; Project proof note 004, Theorem 5.1, PDF pp. 5--6; Takesaki I, Theorem V.1.19, Corollary V.1.20, and Definition V.1.21, PDF pp. 316--317"
+status = "blueprint_repaired_pending_adversarial_review_lean_core_semifinite_lemma_checked"

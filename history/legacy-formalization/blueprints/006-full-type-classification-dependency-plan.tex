@@ -1,0 +1,787 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{array,booktabs,longtable}
+\usepackage{hyperref}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{convention}[definition]{Convention}
+
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{\detokenize{#1}}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} #1}
+\newcommand{\depends}[1]{\par\noindent\textbf{Depends on.} #1}
+\newcommand{\backend}[1]{\par\noindent\textbf{Lean backend.} #1}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\Ftwo}{\mathbb F_2}
+
+\begin{document}
+
+\section*{Blueprint 006: Full Type-Classification Dependency Plan}
+
+\subsection*{Scope}
+
+This master blueprint supports the strengthened goal: prepare all theory
+targets needed before Lean formalization of the full canonical stabilizer
+projection-state von Neumann algebra type classification.  It is not a Lean
+file and it is not an Aristotle packet.  It is the manifest-level dependency
+plan that fixes the target IDs, the mathematical order, the expected Lean
+backend, and the source locators for the operator-algebra results consumed by
+the final theorem.
+
+\paragraph{Historical status.}
+This file is now a preserved dependency-plan ledger, not an active Aristotle
+source.  The active per-target blueprint notes are
+\path{blueprints/007-pauli-quasilocal-algebra.tex} through
+\path{blueprints/013-final-stabilizer-type-classification.tex}, whose target
+environments use the current style
+\(\texttt{LeanFacingName, ID: TARGET, source locator}\).  Do not extract new
+packets directly from this ledger until any stale target environment here has
+been normalized against the active notes.
+
+The final theorem to be formalized is the classification of the represented
+region von Neumann algebra
+\[
+  M_\Gamma(\omega)=\pi_\omega(\cA_\Gamma)''
+\]
+for canonical stabilizer projection states on finite or countably infinite
+regions.  The classification is by the internal fixed rank \(p\) and internal
+defect rank \(r\):
+\[
+\begin{array}{c|c|c}
+p<\infty & r<\infty & \hbox{finite type } I\\
+p=\infty & r<\infty & \hbox{type } I_\infty\\
+p<\infty & r=\infty & \hbox{hyperfinite type } II_1\\
+p=\infty & r=\infty & \hbox{type } II_\infty.
+\end{array}
+\]
+No type \(III\) algebra occurs in this canonical stabilizer sector.
+
+\subsection*{Conventions}
+
+\begin{convention}[Ambient conventions]
+All Hilbert spaces are complex Hilbert spaces.  A represented von Neumann
+algebra is a concrete star subalgebra of bounded operators on a Hilbert space,
+equal to its bicommutant.  Infinite regions are finite or countably infinite
+sets of qubit modes.  The Pauli label space of a region \(\Gamma\) is the
+finite-support binary symplectic vector space
+\[
+  V_\Gamma=(\Gamma\to_0\Ftwo)\times(\Gamma\to_0\Ftwo).
+\]
+The algebraic symplectic form is the standard Pauli commutation form.
+\source{Gottesman, \emph{Surviving as a Quantum Computer in a Classical World},
+Chapter 3.5, Definitions 3.11 and 3.13, PDF pp. 55--56; project proof note
+\path{runs/2026-06-18-stabilizer-algebra-classification/artifacts/004-internal-stabilizer-reduction-type-classification-R1.tex},
+Sections 2--5.}
+\status{Convention for all targets in this file.}
+\end{convention}
+
+\begin{convention}[Mathlib reliance]
+The Lean development should rely on mathlib where the coverage audit found
+usable declarations: Hilbert spaces, bounded operators, positive linear maps,
+GNS via \path{PositiveLinearMap.GNS}, concrete
+\path{VonNeumannAlgebra H}, commutants, star projections, finite matrix
+traces, \(\texttt{CStarMatrix}\), and finite Hilbert tensor products.  The
+project should not assume mathlib already contains factor/type classification,
+Murray--von Neumann comparison, semifinite trace theory, or infinite tensor
+product von Neumann algebra theory.
+\source{\path{agents/2026-06-21-mathlib-operator-algebra-coverage-audit.md}.}
+\status{Mathlib-backed foundation rule.}
+\end{convention}
+
+\subsection*{Source Map}
+
+\begin{longtable}{@{}p{0.26\linewidth}p{0.66\linewidth}@{}}
+\toprule
+Source & Locator used in this blueprint \\
+\midrule
+\endhead
+Gottesman QECC notes & Chapter 3.5, Definitions 3.11 and 3.13, PDF
+pp. 55--56, for stabilizer groups, Pauli labels, and stabilizer-state
+expectation conventions. \\
+Project proof note 004 & Sections 2--5 and Theorem 5.1 for internal
+stabilizers, crossing-stabilizer invisibility, adapted symplectic bases,
+product form, and the stabilizer-side type table. \\
+Kadison--Ringrose I & Theorem 4.5.2 and Proposition 4.5.3, PDF pp. 287--288,
+for the GNS construction and uniqueness. \\
+Kadison--Ringrose II & Definition 6.5.1, Theorem 6.5.2, Corollary 6.5.3,
+Remark 6.5.4, and Theorem 6.6.1, PDF pp. 57--63, for type decomposition,
+factor type alternatives, type \(I_n\) factors as \(B(\cH)\), and the type
+III criterion. \\
+Blackadar & III.3.1.1--III.3.1.6, PDF pp. 301--304, for incomplete infinite
+tensor products, product-state GNS representations, factor preservation,
+the tracial \(M_2\) product \(R\), and \(R\overline\otimes B(\cH)\) as a
+type \(II_\infty\) factor. \\
+Blackadar & III.3.4.1--III.3.4.2, PDF p. 317, for hyperfinite von Neumann
+algebras and infinite tensor products of finite-dimensional algebras being
+approximately finite dimensional. \\
+\bottomrule
+\end{longtable}
+
+\subsection*{Target Dependency Table}
+
+\begin{longtable}{@{}p{0.13\linewidth}p{0.29\linewidth}p{0.18\linewidth}p{0.30\linewidth}@{}}
+\toprule
+ID & Target & Backend & Main dependencies \\
+\midrule
+\endhead
+SYS-001 & Algebraic stabilizer system & done / project-local & source ledger \\
+PAULI-001 & Pauli labels and commutation & project-local, mathlib finite support & SYS-001 \\
+PAULI-002 & Finite Pauli algebra and trace basis & project-local, mathlib matrices & PAULI-001 \\
+QL-001 & Quasi-local qubit algebra/local net & project-local abstraction & PAULI-002 \\
+QL-002 & Region algebras and support restriction & project-local abstraction & QL-001 \\
+STATE-001 & Canonical coefficient rule & done / project-local & SYS-001 \\
+STATE-002 & Finite-local positivity and consistency & project-local & PAULI-002, STATE-001 \\
+STATE-003 & Quasi-local state extension & project-local, mathlib positive maps & STATE-002, QL-001 \\
+STATE-004 & Region restriction and crossing invisibility & project-local & QL-002, STATE-003 \\
+SYMP-001 & Adapted countable symplectic basis & project-local algebra & PAULI-001 \\
+SYMP-002 & Adapted basis gives Pauli algebra isomorphism & project-local & SYMP-001, QL-001 \\
+PROD-001 & Product form of the state & project-local & STATE-004, SYMP-002 \\
+HILB-001 & Infinite Hilbert-space interface & mathlib-backed plus project wrappers & STATE-003 \\
+GNS-001 & GNS package for states & mathlib-backed wrapper & HILB-001, STATE-003 \\
+GNS-002 & GNS unitary equivalence under state transport & project-local wrapper & GNS-001, SYMP-002 \\
+GNS-003 & Product-state GNS identification & project-local theorem & PROD-001, GNS-002 \\
+VN-001 & Represented region von Neumann algebra & mathlib-backed definition & GNS-001, QL-002 \\
+VN-002 & Centers and factor predicate & project-local & VN-001 \\
+VN-003 & Bicommutants under unitary equivalence & mathlib-backed plus wrappers & VN-001, GNS-002 \\
+PROJ-001 & Projection equivalence and finiteness & project-local VN theory & VN-002 \\
+TRACE-001 & Finite and semifinite traces & project-local VN theory & PROJ-001 \\
+TYPE-DEF-001 & Type \(I_n\), \(I_\infty\), \(II_1\), \(II_\infty\), \(III\) & project-local VN theory & PROJ-001, TRACE-001 \\
+MATRIX-001 & Matrix and \(B(\ell^2)\) model factors & project-local, mathlib matrices & TYPE-DEF-001 \\
+ITP-001 & Infinite tensor product VN algebra package & project-local sourced theorem & GNS-003, TYPE-DEF-001 \\
+ITP-PURE-001 & Infinite pure-mode product is type \(I\) & project-local sourced theorem & ITP-001, MATRIX-001 \\
+ITP-TRACE-001 & Infinite tracial defect product is hyperfinite \(II_1\) & project-local sourced theorem & ITP-001, MATRIX-001 \\
+TENSOR-001 & Tensor-product type calculus for the four factors & project-local sourced theorem & ITP-PURE-001, ITP-TRACE-001 \\
+TYPE-001 & Full stabilizer projection-state type classification & final project theorem & PROD-001, VN-003, TENSOR-001 \\
+TYPE-002 & Type \(III\) exclusion corollary & final project corollary & TYPE-001, TYPE-DEF-001 \\
+\bottomrule
+\end{longtable}
+
+\section{Stabilizer and Quasi-Local Algebra Layer}
+
+\begin{definition}[ID: PAULI-001]
+For a finite or countably infinite region \(\Gamma\), the Pauli label space is
+\[
+  V_\Gamma=(\Gamma\to_0\Ftwo)\times(\Gamma\to_0\Ftwo).
+\]
+For \(v=(x,z)\) and \(w=(x',z')\), define the binary symplectic commutation
+form
+\[
+  \langle v,w\rangle
+  =
+  \sum_{j\in\Gamma} x_j z'_j+\sum_{j\in\Gamma} z_j x'_j
+  \in \Ftwo,
+\]
+where both sums are finite because labels have finite support.  Two Pauli
+representatives commute exactly when this value is zero.
+\source{Gottesman, Chapter 3.5, Definitions 3.11 and 3.13, PDF pp. 55--56;
+project proof note 004, Section 2.}
+\lean{Formalization.Stabilizer.PauliLabel; Formalization.Stabilizer.symplecticForm}
+\backend{Mostly already present through SYS-001; later targets need the
+commutation theorem connecting labels to finite matrix representatives.}
+\status{Project-local blueprint target, partly implemented by SYS-001.}
+\end{definition}
+
+\begin{lemma}[ID: PAULI-002]
+For every finite \(F\subset \Gamma\), the Pauli representatives indexed by
+\(V_F\) form a linear basis of the matrix algebra
+\[
+  \cA_F\cong \bigotimes_{j\in F} M_2(\mathbb C).
+\]
+With the normalized finite trace \(\operatorname{tr}_F\), the Pauli basis is
+orthogonal and the coefficient of a local observable \(a\in\cA_F\) at a label
+\(v\in V_F\) is \(\operatorname{tr}_F(P_v^*a)\).
+\source{Finite-dimensional Pauli calculus internal to project proof note 004,
+Sections 2 and 3; Gottesman, Chapter 3.5, PDF pp. 55--56, for Pauli label
+conventions.}
+\lean{Formalization.Stabilizer.FinitePauliAlgebra}
+\backend{Use mathlib finite matrices, \(\texttt{CStarMatrix}\), matrix trace,
+and tensor/Kronecker trace facts where possible.}
+\status{Planned project-local blueprint target.}
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+For a single qubit, \(I,X,Z,XZ\) are four linearly independent \(2\times2\)
+matrices and hence a basis of \(M_2(\mathbb C)\).  Tensor products over a
+finite set \(F\) give \(4^{|F|}\) linearly independent matrices, matching the
+dimension of \(\bigotimes_{j\in F}M_2(\mathbb C)\).  Orthogonality follows
+from the one-site normalized trace identities and multiplicativity of the
+finite tensor trace.
+\end{proof}
+
+\begin{definition}[ID: QL-001]
+The qubit quasi-local algebra over \(\Gamma\) is the norm closure of the
+directed union of finite local algebras:
+\[
+  \cA_\Gamma=\overline{\bigcup_{F\Subset\Gamma}\cA_F}.
+\]
+For a Lean-first development, this may initially be represented as a local-net
+abstraction consisting of finite algebras \(\cA_F\), inclusion maps
+\(\cA_F\to\cA_G\) for \(F\subset G\), and a universal state/restriction
+interface sufficient for GNS and region algebras.
+\source{Project proof note 004, Section 2; Blackadar, general C*-tensor
+product background around III.3.1.2, PDF pp. 301--302, for infinite products
+as represented closures.}
+\lean{Formalization.Stabilizer.QuasiLocalAlgebra}
+\backend{Project-local abstraction; use mathlib C*-algebra classes after the
+algebra carrier is chosen.}
+\status{Planned project-local blueprint target.}
+\end{definition}
+
+\begin{definition}[ID: QL-002]
+For a region \(\Lambda\subseteq\Gamma\), the region algebra
+\(\cA_\Lambda\subseteq\cA_\Gamma\) is the C*-subalgebra generated by finite
+local algebras supported in finite \(F\subset\Lambda\).  Its finite-support
+Pauli labels are exactly \(V_\Lambda\subseteq V_\Gamma\).
+\source{Project proof note 004, Section 2.}
+\lean{Formalization.Stabilizer.RegionAlgebra}
+\backend{Project-local abstraction, later connected to mathlib subalgebras.}
+\status{Planned project-local blueprint target.}
+\end{definition}
+
+\section{Canonical States}
+
+\begin{theorem}[ID: STATE-002]
+Let \(W\subset V_\Gamma\) be an isotropic stabilizer subspace and let
+\(\chi:W\to\{\pm1\}\) be a stabilizer character.  For each finite
+\(F\Subset\Gamma\), the coefficient rule
+\[
+  \omega_F(P_v)=
+  \begin{cases}
+    \chi(v), & v\in W\cap V_F,\\
+    0, & v\notin W\cap V_F
+  \end{cases}
+\]
+defines a positive unital linear functional on \(\cA_F\).  These functionals
+are compatible with finite inclusions.
+\source{STATE-001 coefficient rule in \path{blueprints/002-canonical-state.tex};
+project proof note 004, Sections 2 and 4, especially the product-form
+argument after adapted symplectic reduction.}
+\lean{Formalization.Stabilizer.FiniteCanonicalState}
+\backend{Project-local proof using PAULI-002, SYMP-001 for finite \(F\), and
+mathlib positive linear maps if the finite algebra is represented as a
+C*-algebra.}
+\status{Planned project-local blueprint target.}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Restrict \(W\cap V_F\) to the finite symplectic space \(V_F\) and choose an
+adapted finite symplectic basis.  The coefficient rule becomes a product of
+one-site pure \(Z\)-eigenstates on fixed modes and normalized traces on
+unfixed modes.  Each one-site factor is a positive unital functional; finite
+tensor products of states are states.  Compatibility follows because
+restricting from \(G\) to \(F\subset G\) drops tensor factors and leaves the
+same Pauli coefficients on labels supported in \(F\).
+\end{proof}
+
+\begin{theorem}[ID: STATE-003]
+The compatible family \((\omega_F)_{F\Subset\Gamma}\) of STATE-002 extends
+uniquely to a state \(\omega\) on the quasi-local algebra \(\cA_\Gamma\), or
+to the chosen local-net state interface.
+\source{Standard C*-inductive-limit state extension principle; for this
+project the required compatibility is reduced to the finite-local statement in
+STATE-002.  Exact textbook locator still needs page-level extraction before an
+Aristotle packet is sent.}
+\lean{Formalization.Stabilizer.QuasiLocalCanonicalState}
+\backend{Project-local if the quasi-local algebra is abstracted; otherwise use
+mathlib positive linear maps and completion/extension lemmas where available.}
+\status{Planned project-local blueprint target; source locator needs refinement.}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Define \(\omega\) on the algebraic union by choosing any finite support
+containing the observable and applying the corresponding \(\omega_F\).
+Compatibility makes this well-defined.  Positivity and norm one hold on every
+finite local algebra, hence on the algebraic union.  Continuity extends the
+functional uniquely to the norm closure.
+\end{proof}
+
+\begin{lemma}[ID: STATE-004]
+Let \(S'\) be a consistent stabilizer extension and let \(\Lambda\) be a
+region.  The restriction of the canonical state to \(\cA_\Lambda\) has
+nonzero Pauli coefficient at a label \(v\in V_\Lambda\) exactly when
+\[
+  v\in W'\cap V_\Lambda.
+\]
+Crossing stabilizers affect the restricted state only through products whose
+total label lies in \(V_\Lambda\).
+\source{Project proof note 004, Lemma 2.4 and Section 2 proof, lines around
+the ``Crossing stabilizers'' argument.}
+\lean{Formalization.Stabilizer.restrictedCoefficient_eq_internal}
+\backend{Project-local theorem over coefficient states.}
+\status{Planned project-local blueprint target.}
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+The global coefficient rule says that \(\omega(P_v)\) is nonzero exactly for
+\(v\in W'\).  Since \(P_v\) is supported in \(\Lambda\), the label also lies in
+\(V_\Lambda\).  Thus nonzero coefficients are indexed precisely by
+\(W'\cap V_\Lambda\).  Stabilizers with support crossing the boundary cannot
+contribute unless their product has a label supported entirely in \(\Lambda\).
+\end{proof}
+
+\section{Symplectic Normal Form and Product State}
+
+\begin{lemma}[ID: SYMP-001]
+Let \(V_\Lambda\) be finite or countable dimensional over \(\Ftwo\), with its
+nondegenerate symplectic form, and let \(W\subset V_\Lambda\) be isotropic.
+There is a symplectic basis \(\{z_i,x_i:i\in I\}\), with \(I\) finite or
+countable, and a subset \(P\subset I\), such that
+\[
+  W=\operatorname{span}_{\Ftwo}\{z_i:i\in P\}.
+\]
+\source{Project proof note 004, Lemma 3.1.}
+\lean{Formalization.Stabilizer.adaptedSymplecticBasis}
+\backend{Project-local algebra over \(\texttt{ZMod 2}\).}
+\status{Planned project-local blueprint target.}
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+Choose a basis of \(W\).  Pair each chosen \(z_i\) with an \(x_i\) by
+nondegeneracy, correcting against previously chosen pairs by the usual
+finite-stage symplectic Gram--Schmidt procedure.  In the countable case,
+iterate over an enumeration.  The span of the chosen hyperbolic pairs has a
+symplectic orthogonal complement; choose a countable symplectic basis there
+and take the union.
+\end{proof}
+
+\begin{lemma}[ID: SYMP-002]
+An adapted symplectic basis of \(V_\Lambda\) induces a \(*\)-isomorphism from
+the formal qubit quasi-local algebra on the basis index set \(I\) to
+\(\cA_\Lambda\), sending formal Pauli labels
+\(\sum_{i\in F}(a_i z_i+b_i x_i)\) to the corresponding Pauli operator in
+\(\cA_\Lambda\), up to the fixed phase convention.
+\source{Project proof note 004, Lemma 3.2.}
+\lean{Formalization.Stabilizer.adaptedPauliIso}
+\backend{Project-local theorem using finite Pauli algebra universality and
+inductive-limit compatibility.}
+\status{Planned project-local blueprint target.}
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+On every finite subset of basis modes the adapted basis is a finite
+symplectic basis, so the finite Pauli relations give a unique finite matrix
+algebra isomorphism.  These finite isomorphisms are compatible under inclusion
+because the phase and generator conventions are fixed.  Passing to the
+quasi-local closure gives the required \(*\)-isomorphism.
+\end{proof}
+
+\begin{proposition}[ID: PROD-001]
+After transporting the restricted canonical state along the isomorphism of
+SYMP-002, the state on the formal qubit algebra over \(I\) is
+\[
+  \bigotimes_{i\in P}\omega_{Z,+}
+  \otimes
+  \bigotimes_{i\in I\setminus P}\operatorname{tr}_2,
+\]
+with \(\omega_{Z,+}\) replaced by the corresponding \(Z_i=\pm1\) eigenstate
+for a nontrivial stabilizer character.
+\source{Project proof note 004, Proposition 4.1.}
+\lean{Formalization.Stabilizer.productFormCanonicalState}
+\backend{Project-local theorem over Pauli coefficients.}
+\status{Planned project-local blueprint target.}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+In adapted coordinates, \(v=\sum_{i\in F}(a_i z_i+b_i x_i)\) lies in \(W\)
+exactly when all \(b_i=0\) and \(a_i=0\) for \(i\notin P\).  These are exactly
+the one-site Pauli coefficients of a pure \(Z\)-eigenstate on \(P\) and the
+normalized trace on \(I\setminus P\).  Since Pauli coefficients of finite
+tensor products multiply, the local state has the displayed product form.
+\end{proof}
+
+\section{Hilbert and GNS Layer}
+
+\begin{definition}[ID: HILB-001]
+The Hilbert spaces used in the final proof are:
+\begin{enumerate}
+\item the GNS Hilbert space \(\cH_\omega\) of a quasi-local state;
+\item finite tensor products \(\bigotimes_{i\in F}\mathbb C^2\);
+\item the incomplete infinite tensor product
+\(\bigotimes_i(\cH_i,\xi_i)\) when importing standard product-factor
+identifications;
+\item \(\ell^2\) or any fixed separable infinite-dimensional Hilbert space
+for type \(I_\infty\) factors.
+\end{enumerate}
+\source{Mathlib Hilbert-space infrastructure from the coverage audit;
+Blackadar III.3.1.1, PDF p. 301, for incomplete infinite tensor products.}
+\lean{Formalization.OperatorAlgebra.HilbertInterfaces}
+\backend{Mathlib-backed for Hilbert spaces and finite tensor products;
+project-local wrappers for incomplete infinite tensor products.}
+\status{Planned interface target.}
+\end{definition}
+
+\begin{theorem}[ID: GNS-001]
+For a state \(\omega\) on a unital C*-algebra \(A\), there are a Hilbert
+space \(\cH_\omega\), a unital \(*\)-representation
+\[
+  \pi_\omega:A\to B(\cH_\omega),
+\]
+and a cyclic unit vector \(\Omega_\omega\) such that
+\[
+  \omega(a)=\langle \pi_\omega(a)\Omega_\omega,\Omega_\omega\rangle.
+\]
+The triple is unique up to unitary equivalence among cyclic triples inducing
+\(\omega\).
+\source{Kadison--Ringrose I, Theorem 4.5.2 and Proposition 4.5.3, PDF
+pp. 287--288; mathlib
+\path{Mathlib.Analysis.CStarAlgebra.GelfandNaimarkSegal}.}
+\lean{Formalization.GNS.GNSPackage}
+\backend{Mathlib-backed through \path{PositiveLinearMap.GNS} and
+\path{PositiveLinearMap.gnsStarAlgHom}, with project-local wrappers for
+the cyclic vector and reconstruction formula if needed.}
+\status{Existing blueprint target; source locator now fixed.}
+\end{theorem}
+
+\begin{lemma}[ID: GNS-002]
+Let \(\alpha:A\to B\) be a unital \(*\)-isomorphism and let
+\(\varphi\) be a state on \(B\).  The GNS representation of
+\(\varphi\circ\alpha\) is unitarily equivalent to the pullback of the GNS
+representation of \(\varphi\) along \(\alpha\).  Under this unitary, generated
+von Neumann algebras are conjugate.
+\source{Kadison--Ringrose I, Proposition 4.5.3, PDF pp. 287--288, applied to
+the two cyclic triples.}
+\lean{Formalization.GNS.gnsUnitaryOfStateIso}
+\backend{Project-local wrapper around GNS uniqueness.}
+\status{Planned project-local blueprint target.}
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+The GNS triple of \(\varphi\) composed with \(\alpha\) is a cyclic triple for
+\(\varphi\circ\alpha\).  By GNS uniqueness, there is a unitary intertwiner
+from the canonical GNS triple of \(\varphi\circ\alpha\) to this pulled-back
+triple.  Intertwining on the represented C*-algebra passes to bicommutants by
+unitary conjugation.
+\end{proof}
+
+\begin{theorem}[ID: GNS-003]
+For the product state in PROD-001, the GNS representation is the incomplete
+tensor product of the one-site GNS representations, and the represented
+von Neumann algebra is the infinite tensor product generated by the one-site
+represented algebras with respect to the GNS cyclic vectors.
+\source{Blackadar III.3.1.1--III.3.1.3, PDF pp. 301--302.}
+\lean{Formalization.GNS.productStateGNS}
+\backend{Project-local sourced theorem; mathlib does not currently provide
+infinite Hilbert tensor products.}
+\status{Planned project-local blueprint target.}
+\end{theorem}
+
+\section{Concrete Von Neumann Algebra Layer}
+
+\begin{definition}[ID: VN-001]
+Given a state \(\omega\) on \(\cA_\Gamma\), its GNS representation
+\(\pi_\omega\), and a region \(\Lambda\subseteq\Gamma\), the represented
+region von Neumann algebra is
+\[
+  M_\Lambda(\omega)=\pi_\omega(\cA_\Lambda)''\subset B(\cH_\omega).
+\]
+\source{Project proof note 004, Theorem 5.1 statement; mathlib
+\path{Mathlib.Analysis.VonNeumannAlgebra.Basic} for concrete
+\path{VonNeumannAlgebra H} and commutants.}
+\lean{Formalization.OperatorAlgebra.RegionVNPackage}
+\backend{Mathlib-backed definition plus project-local packaging from a
+subalgebra image to its bicommutant.}
+\status{Existing blueprint target.}
+\end{definition}
+
+\begin{definition}[ID: VN-002]
+For a concrete von Neumann algebra \(M\subset B(\cH)\), define its center by
+\[
+  Z(M)=M\cap M'
+\]
+and say that \(M\) is a factor when \(Z(M)=\mathbb C1\).  Equivalently, every
+central element of \(M\) is scalar.
+\source{Standard von Neumann algebra definition; KR II uses factors in
+Corollary 6.5.3, PDF pp. 59--60.  Exact center-definition page locator should
+be extracted before packet submission.}
+\lean{Formalization.OperatorAlgebra.IsFactor}
+\backend{Project-local; mathlib audit found no high-level factor predicate.}
+\status{Planned project-local blueprint target; source locator needs refinement.}
+\end{definition}
+
+\begin{lemma}[ID: VN-003]
+If two represented region algebras are related by unitary conjugation of their
+GNS representations, then their bicommutants are also unitarily conjugate and
+therefore have the same factor/type classification.
+\source{Mathlib concrete commutant infrastructure; GNS uniqueness source KR I,
+Proposition 4.5.3, PDF pp. 287--288.}
+\lean{Formalization.OperatorAlgebra.unitaryConj_regionVN}
+\backend{Mathlib-backed commutant manipulation plus project-local wrapper.}
+\status{Planned project-local blueprint target.}
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+If \(U\pi(a)U^*=\rho(\alpha(a))\) on the represented C*-algebra, then
+conjugation by \(U\) sends the commutant of \(\pi(A)\) to the commutant of
+\(\rho(\alpha(A))\).  Applying the same identity to commutants gives the
+double-commutant statement.  Type predicates are defined in terms of
+projections, traces, and centers, all preserved by unitary conjugation.
+\end{proof}
+
+\begin{definition}[ID: PROJ-001]
+For projections \(p,q\in M\), define Murray--von Neumann equivalence
+\(p\sim q\) when there exists a partial isometry \(v\in M\) with
+\[
+  v^*v=p,\qquad vv^*=q.
+\]
+A projection \(p\) is finite when no proper subprojection of \(p\) is
+equivalent to \(p\), infinite otherwise, and properly infinite when it splits
+into two orthogonal subprojections each equivalent to \(p\).
+\source{KR II, Chapter 6 comparison theory and Definition 6.5.1, PDF
+pp. 57--59, where type definitions are stated in terms of abelian, finite,
+and properly infinite projections.  Exact earlier projection-comparison
+definition locators still need extraction.}
+\lean{Formalization.OperatorAlgebra.ProjectionComparison}
+\backend{Project-local; mathlib audit found no Murray--von Neumann API.}
+\status{Planned project-local blueprint target; source locator needs refinement.}
+\end{definition}
+
+\begin{definition}[ID: TRACE-001]
+A trace on a von Neumann algebra \(M\) is a positive linear functional or
+weight \(\tau\) satisfying \(\tau(x^*x)=\tau(xx^*)\) on its domain.  The
+classification proof needs only the following scoped instances: normalized
+finite matrix traces, the tracial product state on the hyperfinite \(II_1\)
+factor, and the semifinite tensor trace on \(B(\ell^2)\overline\otimes R\).
+\source{Blackadar III.3.1.2--III.3.1.6, PDF pp. 301--304, for product traces
+and the \(II_\infty\) model; KR II, Corollary 6.5.3 and Remark 6.5.4, PDF
+pp. 59--60, for finite/properly infinite factor distinctions.}
+\lean{Formalization.OperatorAlgebra.TraceInterfaces}
+\backend{Project-local scoped substitute, not a full normal-weight library
+unless later Lean work requires it.}
+\status{Planned project-local blueprint target.}
+\end{definition}
+
+\begin{definition}[ID: TYPE-DEF-001]
+For factors, define the type predicates used by the final theorem as follows.
+A factor is type \(I_n\) when its identity is the sum of \(n\) equivalent
+minimal projections; type \(I_\infty\) when it is type \(I\) with infinite
+identity; type \(II_1\) when it has no minimal projections and the identity is
+finite; type \(II_\infty\) when it has no minimal projections and the identity
+is infinite but the algebra has nonzero finite projections; and type \(III\)
+when it has no nonzero finite projections.
+\source{KR II, Definition 6.5.1, Theorem 6.5.2, Corollary 6.5.3, and Remark
+6.5.4, PDF pp. 57--60.}
+\lean{Formalization.OperatorAlgebra.FactorTypes}
+\backend{Project-local; mathlib audit found no type-classification API.}
+\status{Planned project-local blueprint target.}
+\end{definition}
+
+\begin{theorem}[ID: TYPE-ALT-001]
+Every factor has exactly one of the type alternatives needed here:
+\[
+  I_n,\quad I_\infty,\quad II_1,\quad II_\infty,\quad III.
+\]
+For the final theorem, it suffices to prove uniqueness and recognition for the
+model factors appearing in MATRIX-001, ITP-PURE-001, ITP-TRACE-001, and
+TENSOR-001.
+\source{KR II, Corollary 6.5.3, PDF pp. 59--60.}
+\lean{Formalization.OperatorAlgebra.factor_type_alternatives}
+\backend{Project-local theorem, possibly scoped to model factors first.}
+\status{Planned project-local blueprint target.}
+\end{theorem}
+
+\section{Model Factors and Tensor Type Calculus}
+
+\begin{theorem}[ID: MATRIX-001]
+Finite matrix algebras \(M_n(\mathbb C)\) are type \(I_n\) factors with their
+normalized traces.  \(B(\ell^2)\), or \(B(\cH)\) for a separable
+infinite-dimensional Hilbert space \(\cH\), is a type \(I_\infty\) factor.
+\source{KR II, Theorem 6.6.1, PDF pp. 62--63, identifying type \(I_n\)
+factors with \(B(\cH)\) for \(\dim\cH=n\); mathlib matrix and trace
+infrastructure from the coverage audit.}
+\lean{Formalization.OperatorAlgebra.MatrixFactors}
+\backend{Project-local theorem using mathlib finite matrices and bounded
+operators.}
+\status{Planned project-local blueprint target.}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The center of \(M_n(\mathbb C)\) is scalar by elementary matrix-unit
+calculus, so it is a factor.  Rank-one matrix units give minimal projections,
+and the identity is the sum of \(n\) equivalent minimal projections.  For
+\(B(\ell^2)\), rank-one projections are minimal and the identity is a countably
+infinite sum of equivalent rank-one projections, giving type \(I_\infty\).
+\end{proof}
+
+\begin{theorem}[ID: ITP-001]
+Let \((M_i,\varphi_i)\) be finite-dimensional von Neumann algebras with normal
+states indexed by a countable set.  Their infinite tensor product in the GNS
+representation of the product state is a von Neumann algebra on the incomplete
+tensor-product Hilbert space.  If all \(M_i\) are factors, the infinite tensor
+product is a factor.  If all \(\varphi_i\) are traces, the product state is a
+trace.
+\source{Blackadar III.3.1.1--III.3.1.3, PDF pp. 301--302.}
+\lean{Formalization.OperatorAlgebra.InfiniteTensorProductFactors}
+\backend{Project-local sourced theorem; not expected from mathlib currently.}
+\status{Planned project-local blueprint target.}
+\end{theorem}
+
+\begin{theorem}[ID: ITP-PURE-001]
+The infinite tensor product of one-site pure \(Z\)-eigenstate representations
+of \(M_2(\mathbb C)\), over a countably infinite set of fixed modes, generates
+\[
+  B\!\left(\bigotimes_i^\Omega \mathbb C^2\right),
+\]
+a type \(I_\infty\) factor.  Over finitely many fixed modes \(p\), the algebra
+is \(M_{2^p}(\mathbb C)\), a finite type \(I\) factor.
+\source{Blackadar III.3.1.1--III.3.1.3, PDF pp. 301--302, for incomplete
+tensor products and factor preservation; KR II, Theorem 6.6.1, PDF pp. 62--63,
+for type \(I\) factors as \(B(\cH)\).}
+\lean{Formalization.OperatorAlgebra.PureModeProductFactor}
+\backend{Project-local sourced theorem.}
+\status{Planned project-local blueprint target.}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+A pure one-site state gives the defining representation on a one-site Hilbert
+space with cyclic vector.  The represented algebra on each finite block is the
+full bounded algebra of that finite tensor product.  The infinite incomplete
+tensor product is separable and infinite dimensional for countably infinitely
+many nontrivial factors.  The generated algebra is therefore \(B(\cH)\), hence
+type \(I_\infty\); the finite case is the finite matrix algebra.
+\end{proof}
+
+\begin{theorem}[ID: ITP-TRACE-001]
+The infinite tracial tensor product
+\[
+  \overline{\bigotimes}_{i\in\mathbb N}(M_2(\mathbb C),\operatorname{tr}_2)
+\]
+is the hyperfinite type \(II_1\) factor \(R\).  For finitely many defect modes
+\(r\), the tracial product algebra is \(M_{2^r}(\mathbb C)\).
+\source{Blackadar III.3.1.4, PDF p. 302, for the tracial \(M_2\) product as
+the \(II_1\) factor \(R\); Blackadar III.3.4.1--III.3.4.2, PDF p. 317, for
+hyperfinite and infinite tensor products of finite-dimensional algebras.}
+\lean{Formalization.OperatorAlgebra.TracialDefectProductFactor}
+\backend{Project-local sourced theorem.}
+\status{Planned project-local blueprint target.}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The finite case is a finite matrix tensor product with normalized trace.  In
+the countably infinite case, Blackadar's infinite tensor product construction
+with tracial one-site states gives a factor, and the distinguished product
+state is a trace.  The increasing finite matrix tensor subalgebras have
+weakly dense union, so the factor is hyperfinite.  The standard example is
+the hyperfinite \(II_1\) factor \(R\).
+\end{proof}
+
+\begin{theorem}[ID: TENSOR-001]
+The tensor products of the pure-mode and defect-mode model factors have the
+following types:
+\[
+\begin{array}{c|c|c}
+\hbox{pure factor} & \hbox{defect factor} & \hbox{tensor type}\\
+\hline
+M_{2^p} & M_{2^r} & I_{2^{p+r}}\\
+B(\ell^2) & M_{2^r} & I_\infty\\
+M_{2^p} & R & II_1\\
+B(\ell^2) & R & II_\infty.
+\end{array}
+\]
+\source{Blackadar III.3.1.6, PDF p. 302, for \(R\overline\otimes B(\cH)\)
+as a type \(II_\infty\) factor; KR II, Corollary 6.5.3 and Theorem 6.6.1,
+PDF pp. 59--63, for type recognition.}
+\lean{Formalization.OperatorAlgebra.TensorProductTypeCalculus}
+\backend{Project-local sourced theorem; can initially be scoped exactly to
+these four model products.}
+\status{Planned project-local blueprint target.}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Tensoring a factor with a finite matrix algebra amplifies multiplicity but
+does not change the finite/properly infinite or minimal-projection structure
+except for the finite type \(I\) dimension.  \(B(\ell^2)\overline\otimes
+M_n\cong B(\ell^2)\), giving type \(I_\infty\).  \(M_n\overline\otimes R\)
+is again a finite hyperfinite \(II_1\) factor with normalized trace.  Finally,
+\(B(\ell^2)\overline\otimes R\) is the standard \(II_\infty\) amplification
+of \(R\).
+\end{proof}
+
+\section{Final Classification Targets}
+
+\begin{theorem}[ID: TYPE-001]
+Let \(\Lambda\) be finite or countably infinite and let \(S'\) be a consistent
+stabilizer extension with canonical projection state \(\omega_{S'}\).  Let
+\[
+  W'_\Lambda=W'\cap V_\Lambda.
+\]
+Choose an adapted symplectic basis from SYMP-001, and define
+\[
+  p=\dim_{\Ftwo}W'_\Lambda,\qquad r=|I\setminus P|.
+\]
+Then the represented region von Neumann algebra
+\[
+  M_\Lambda(S')=\pi_{\omega_{S'}}(\cA_\Lambda)''
+\]
+has type:
+\[
+\begin{array}{c|c|c}
+p<\infty & r<\infty & \hbox{finite type } I\\
+p=\infty & r<\infty & \hbox{type } I_\infty\\
+p<\infty & r=\infty & \hbox{hyperfinite type } II_1\\
+p=\infty & r=\infty & \hbox{type } II_\infty.
+\end{array}
+\]
+\source{Project proof note 004, Theorem 5.1; operator-algebra backend sources
+listed in the Source Map above.}
+\lean{Formalization.Stabilizer.RegionType}
+\backend{Final project theorem after all preceding targets.}
+\status{Existing target TYPE-001; master dependency plan complete, proof
+blueprint still to be expanded into a dedicated final note.}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+By STATE-004, the restricted state sees only the internal stabilizer space
+\(W'_\Lambda\).  By SYMP-001 and SYMP-002, after a Pauli algebra isomorphism
+the internal stabilizers are exactly the \(Z_i\)-fixed modes for \(i\in P\).
+By PROD-001, the transported state is the product of pure one-site states on
+\(P\) and tracial one-site states on \(I\setminus P\).  By GNS-002,
+VN-003, and GNS-003, the represented region von Neumann algebra is unitarily
+equivalent to the tensor product of the pure-mode factor and the defect-mode
+factor.  ITP-PURE-001 identifies the pure-mode factor as finite type \(I\) if
+\(p<\infty\) and type \(I_\infty\) if \(p=\infty\).  ITP-TRACE-001 identifies
+the defect factor as finite matrix if \(r<\infty\) and hyperfinite \(II_1\) if
+\(r=\infty\).  TENSOR-001 gives exactly the four displayed cases.
+\end{proof}
+
+\begin{corollary}[ID: TYPE-002]
+No canonical stabilizer projection state in the countable internal-stabilizer
+classification produces a type \(III\) represented region von Neumann algebra.
+\source{Project proof note 004, Theorem 5.1 and its final sentence; KR II,
+Corollary 6.5.3, PDF pp. 59--60, for the factor type \(III\) criterion.}
+\lean{Formalization.Stabilizer.noTypeIII_region}
+\backend{Final project corollary.}
+\status{Planned project-local blueprint target.}
+\end{corollary}
+
+\begin{proof}[Proof sketch]
+TYPE-001 identifies every represented region algebra in this sector as one of
+finite type \(I\), type \(I_\infty\), hyperfinite \(II_1\), or \(II_\infty\).
+By TYPE-DEF-001 and TYPE-ALT-001, type \(III\) factors are precisely the
+remaining case with no nonzero finite projections.  Each model factor in the
+four rows has nonzero finite projections or a finite/semi-finite trace as
+recorded in MATRIX-001, ITP-TRACE-001, and TENSOR-001.  Therefore type \(III\)
+does not occur.
+\end{proof}
+
+\subsection*{Completion Criterion}
+
+The strengthened blueprint goal is complete when every target in the
+dependency table has either:
+\begin{enumerate}
+\item a dedicated \texttt{blueprints/*.tex} note with source locator,
+definition/theorem statement, assumptions, proof sketch or proof, and intended
+Lean name; or
+\item a section in this master blueprint that is explicitly accepted as the
+informal source of truth for that target.
+\end{enumerate}
+Before any new Lean declaration is introduced, the relevant target must be
+moved from ``planned'' to ``blueprint note complete'' in \texttt{MANIFEST.toml}.
+
+\end{document}

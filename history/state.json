@@ -1,0 +1,885 @@
+{
+  "notification_state": {
+    "last_telegram_alert": "None:Supervisor error: Aristotle tasks failed; see history/logs/20260811T070800Z-79a50549-tasks.log"
+  },
+  "projects": {
+    "finite_fiber": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260806T181243Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T180625Z-finite_fiber-f17e2043-codex-final.md",
+          "packet": "lean/finite_fibers/aristotle_tasks/FF15-finite-region-full-pauli-multiplication.md",
+          "project_id": "ea65520b-e894-4868-8d69-851fde31b30e",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T170922Z-finite_fiber-FF15-finite-region-full-pauli-multiplication-submit.log",
+          "submitted_at": "20260806T170923Z",
+          "task_id": "f17e2043-2bd3-431a-a76d-8967c9802ef8"
+        },
+        {
+          "closed_at": "20260806T183905Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T183321Z-finite_fiber-a1684489-codex-final.md",
+          "packet": "lean/finite_fibers/aristotle_tasks/FF16-full-pauli-support-locality.md",
+          "project_id": "fdc7bd0f-a895-4152-8aa0-8e690ae22154",
+          "queue_index": 1,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T181245Z-finite_fiber-FF16-full-pauli-support-locality-submit.log",
+          "submitted_at": "20260806T181246Z",
+          "task_id": "a1684489-8deb-4f62-8f5a-a592570dd778"
+        },
+        {
+          "closed_at": "20260806T192502Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T191928Z-finite_fiber-44158f6b-codex-final.md",
+          "packet": "lean/finite_fibers/aristotle_tasks/FF17-full-pauli-stabilizer-density.md",
+          "project_id": "a8623a7e-5752-4e4d-9667-d3c741247c1f",
+          "queue_index": 2,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T183907Z-finite_fiber-FF17-full-pauli-stabilizer-density-submit.log",
+          "submitted_at": "20260806T183908Z",
+          "task_id": "44158f6b-4673-4e26-9871-9fc7717c0353"
+        },
+        {
+          "closed_at": "20260806T204037Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T203540Z-finite_fiber-70f0b085-codex-final.md",
+          "packet": "lean/finite_fibers/aristotle_tasks/FF18-full-pauli-directed-local-system.md",
+          "project_id": "5fa4450b-d7be-40a2-be81-93d0605fab47",
+          "queue_index": 3,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T192504Z-finite_fiber-FF18-full-pauli-directed-local-system-submit.log",
+          "submitted_at": "20260806T192505Z",
+          "task_id": "70f0b085-8ab2-4fd0-bd0e-f930b3bdae52"
+        },
+        {
+          "closed_at": "20260806T212349Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T211800Z-finite_fiber-c024cdf3-codex-final.md",
+          "packet": "lean/finite_fibers/aristotle_tasks/FF19-quasilocal-state-gns-interface.md",
+          "project_id": "269479d4-b0f7-45a7-9500-a3220a0a9798",
+          "queue_index": 4,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T204038Z-finite_fiber-FF19-quasilocal-state-gns-interface-submit.log",
+          "submitted_at": "20260806T204039Z",
+          "task_id": "c024cdf3-1bf8-439f-85f3-825e012a8af4"
+        },
+        {
+          "closed_at": "20260806T214735Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T214404Z-finite_fiber-9b1d8332-codex-final.md",
+          "packet": "lean/finite_fibers/aristotle_tasks/FF20-stabilizer-support-corner-instantiation.md",
+          "project_id": "b0b53374-0964-4fa5-a74d-4b624e2de8c0",
+          "queue_index": 5,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T212350Z-finite_fiber-FF20-stabilizer-support-corner-instantiation-submit.log",
+          "submitted_at": "20260806T212352Z",
+          "task_id": "9b1d8332-6eaa-43ca-a8fd-573b508c6597"
+        },
+        {
+          "closed_at": "20260806T222833Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T222424Z-finite_fiber-e3674c81-codex-final.md",
+          "packet": "lean/finite_fibers/aristotle_tasks/FF21-finite-range-support-corner-construction.md",
+          "project_id": "8d4d635f-7209-4900-a87f-5dce300f1127",
+          "queue_index": 6,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T214737Z-finite_fiber-FF21-finite-range-support-corner-construction-submit.log",
+          "submitted_at": "20260806T214737Z",
+          "task_id": "e3674c81-d1cb-4fcb-b8fb-a16053e05d76"
+        },
+        {
+          "closed_at": "20260807T001511Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T001032Z-finite_fiber-5b3348cb-codex-final.md",
+          "packet": "lean/finite_fibers/aristotle_tasks/FF22-finite-range-tracial-corner-fullness.md",
+          "project_id": "fefba8df-be2a-4f11-9784-1e3dbf15e35c",
+          "queue_index": 7,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T222835Z-finite_fiber-FF22-finite-range-tracial-corner-fullness-submit.log",
+          "submitted_at": "20260806T222836Z",
+          "task_id": "5b3348cb-4bec-468f-b382-a5383848de2a"
+        },
+        {
+          "closed_at": "20260807T004051Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T003544Z-finite_fiber-da7ae099-codex-final.md",
+          "packet": "lean/finite_fibers/aristotle_tasks/FF23-no-type-three-central-summands.md",
+          "project_id": "e98ad167-4f89-456c-a1e9-cb1fe2924720",
+          "queue_index": 8,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T001513Z-finite_fiber-FF23-no-type-three-central-summands-submit.log",
+          "submitted_at": "20260807T001513Z",
+          "task_id": "da7ae099-601d-45ab-9144-3aff6b76c5a7"
+        }
+      ],
+      "halted": false,
+      "next_index": 9
+    },
+    "stabilizer_hyperfinite": {
+      "active": {
+        "packet": "lean/stabilizer/aristotle_tasks/P41-product-factor-classification-boundary.md",
+        "project_id": "038c6170-0a7a-4b39-95fa-7d264a72a439",
+        "queue_index": 4,
+        "submit_log": "history/logs/20260806T210750Z-stabilizer_hyperfinite-P41-product-factor-classification-boundary-submit.log",
+        "submitted_at": "20260806T210751Z",
+        "task_id": "54f294d2-7d6f-4617-afa6-33509987654f"
+      },
+      "closeout": {
+        "exit_code": 0,
+        "final": "history/logs/20260806T213357Z-stabilizer_hyperfinite-54f294d2-codex-final.md",
+        "finished_at": "20260806T213718Z",
+        "json": "history/logs/20260806T213357Z-stabilizer_hyperfinite-54f294d2-codex.jsonl",
+        "prompt": "history/logs/20260806T213357Z-stabilizer_hyperfinite-54f294d2-prompt.md",
+        "started_at": "20260806T213357Z",
+        "status": "COMPLETE",
+        "task_id": "54f294d2-7d6f-4617-afa6-33509987654f"
+      },
+      "completed": [
+        {
+          "closed_at": "20260806T181811Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T181247Z-stabilizer_hyperfinite-bc90659a-codex-final.md",
+          "packet": "lean/stabilizer/aristotle_tasks/P37-algebraic-limit-operator-representation.md",
+          "project_id": "9d0fc268-fb0f-4e00-827f-c6b5d7e4ca17",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T170927Z-stabilizer_hyperfinite-P37-algebraic-limit-operator-representation-submit.log",
+          "submitted_at": "20260806T170928Z",
+          "task_id": "bc90659a-6636-43c6-bd4e-5694a268ad2a"
+        },
+        {
+          "closed_at": "20260806T185306Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T184917Z-stabilizer_hyperfinite-15cd2dcc-codex-final.md",
+          "packet": "lean/stabilizer/aristotle_tasks/P38-concrete-quasilocal-cstar-model.md",
+          "project_id": "09be9e9d-c47c-4920-8acb-7c287f958fbe",
+          "queue_index": 1,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T181812Z-stabilizer_hyperfinite-P38-concrete-quasilocal-cstar-model-submit.log",
+          "submitted_at": "20260806T181813Z",
+          "task_id": "15cd2dcc-57a9-41d6-b198-a01b1bf3a872"
+        },
+        {
+          "closed_at": "20260806T194327Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T194017Z-stabilizer_hyperfinite-dbe0fca4-codex-final.md",
+          "packet": "lean/stabilizer/aristotle_tasks/P39-state-preserving-gns-model.md",
+          "project_id": "8008973a-911a-45a6-9482-5d67445ab187",
+          "queue_index": 2,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T185308Z-stabilizer_hyperfinite-P39-state-preserving-gns-model-submit.log",
+          "submitted_at": "20260806T185309Z",
+          "task_id": "dbe0fca4-1fdb-4e6e-8d48-9b8986a71827"
+        },
+        {
+          "closed_at": "20260806T210744Z",
+          "decision": "advance",
+          "final": "history/logs/20260806T210047Z-stabilizer_hyperfinite-dfc68529-codex-final.md",
+          "packet": "lean/stabilizer/aristotle_tasks/P40-bicommutant-normal-transport.md",
+          "project_id": "d2fd0517-42fc-4697-9b2d-65d7ebf25686",
+          "queue_index": 3,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260806T194330Z-stabilizer_hyperfinite-P40-bicommutant-normal-transport-submit.log",
+          "submitted_at": "20260806T194330Z",
+          "task_id": "dfc68529-92c4-4c4c-919e-271b5c6f9f65"
+        }
+      ],
+      "halt_reason": "Codex closeout failed or lacked machine-readable acceptance; prompt=history/logs/20260806T213357Z-stabilizer_hyperfinite-54f294d2-prompt.md final=history/logs/20260806T213357Z-stabilizer_hyperfinite-54f294d2-codex-final.md",
+      "halted": true,
+      "next_index": 5,
+      "retired": true,
+      "retired_reason": "Historical P37--P41 lane preserved after P41 was integrated as a partial result; superseded by the dependency-gated P47--P61 two-lane plan on 2026-08-07."
+    },
+    "stabilizer_two_lane_p47": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T101644Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T101346Z-stabilizer_two_lane_p47-51855055-codex-final.md",
+          "package_id": "P47",
+          "packet": "lean/stabilizer/aristotle_tasks/P47-center-finite-projection-core.md",
+          "project_id": "49ee106f-8577-4492-99e9-f0fed9e53069",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T093326Z-stabilizer_two_lane_p47-P47-center-finite-projection-core-submit.log",
+          "submitted_at": "20260807T093328Z",
+          "task_id": "51855055-543c-447d-84aa-1fabba7f918b"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p48": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T102050Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T101645Z-stabilizer_two_lane_p48-eb6f0455-codex-final.md",
+          "package_id": "P48",
+          "packet": "lean/stabilizer/aristotle_tasks/P48-general-lattice-projection-tower.md",
+          "project_id": "050a4ee9-fbc4-4ffd-a7cd-54742e73004b",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T093331Z-stabilizer_two_lane_p48-P48-general-lattice-projection-tower-submit.log",
+          "submitted_at": "20260807T093332Z",
+          "task_id": "eb6f0455-37d3-4897-94fe-3a43c0425b0e"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p49": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T133252Z",
+          "decision": "advance",
+          "final": "lean/stabilizer/reviews/P49-finite-corner-trace-recovery.md",
+          "package_id": "P49",
+          "packet": "lean/stabilizer/aristotle_tasks/P49-finite-corner-trace.md",
+          "project_id": "68c9b7b3-a677-447b-8b4d-861a8ae9f7e8",
+          "queue_index": 0,
+          "recovered_from": "history/logs/20260807T113137Z-stabilizer_two_lane_p49-77f02cc4-codex-final.md",
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T102052Z-stabilizer_two_lane_p49-P49-finite-corner-trace-submit.log",
+          "submitted_at": "20260807T102053Z",
+          "task_id": "77f02cc4-2096-4f34-a09d-47c9a693c2d6"
+        }
+      ],
+      "halted": false,
+      "last_telegram_alert": "P49:Codex closeout failed or lacked machine-readable acceptance; prompt=history/logs/20260807T113137Z-stabilizer_two_lane_p49-77f02cc4-prompt.md final=history/logs/20260807T113137Z-stabilizer_two_lane_p49-77f02cc4-codex-final.md",
+      "next_index": 1,
+      "rejected_closeouts": [
+        {
+          "codex_reported_decision": "halt",
+          "exit_code": 0,
+          "final": "history/logs/20260807T113137Z-stabilizer_two_lane_p49-77f02cc4-codex-final.md",
+          "finished_at": "20260807T113555Z",
+          "halt_reason": "Codex closeout failed or lacked machine-readable acceptance; provenance locator omitted main.tex:1133-1191",
+          "json": "history/logs/20260807T113137Z-stabilizer_two_lane_p49-77f02cc4-codex.jsonl",
+          "prompt": "history/logs/20260807T113137Z-stabilizer_two_lane_p49-77f02cc4-prompt.md",
+          "review": "lean/stabilizer/reviews/P49-finite-corner-trace-closeout.md",
+          "started_at": "20260807T113137Z",
+          "status": "COMPLETE",
+          "task_id": "77f02cc4-2096-4f34-a09d-47c9a693c2d6"
+        }
+      ]
+    },
+    "stabilizer_two_lane_p49a": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T111533Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T111136Z-stabilizer_two_lane_p49a-26971f64-codex-final.md",
+          "package_id": "P49A",
+          "packet": "lean/stabilizer/aristotle_tasks/P49A-strong-operator-closed-von-neumann.md",
+          "project_id": "2eeeccd5-63f7-418b-8847-349d341d4ce5",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T105055Z-stabilizer_two_lane_p49a-P49A-strong-operator-closed-von-neumann-submit.log",
+          "submitted_at": "20260807T105056Z",
+          "task_id": "26971f64-ff4e-4cdc-9cad-17d20954d10d"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p49b": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T120551Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T120155Z-stabilizer_two_lane_p49b-542eee4f-codex-final.md",
+          "package_id": "P49B",
+          "packet": "lean/stabilizer/aristotle_tasks/P49B-von-neumann-bicommutant-theorem.md",
+          "project_id": "eff7c737-ecb5-4359-b480-6c22e5d2b6c7",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T111553Z-stabilizer_two_lane_p49b-P49B-von-neumann-bicommutant-theorem-submit.log",
+          "submitted_at": "20260807T111554Z",
+          "task_id": "542eee4f-550b-43ef-858a-78f8d0f8c4ef"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p49c": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T133006Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T132558Z-stabilizer_two_lane_p49c-ad5956ce-codex-final.md",
+          "package_id": "P49C",
+          "packet": "lean/stabilizer/aristotle_tasks/P49C-kaplansky-density.md",
+          "project_id": "1c98cc8a-1bf4-46a0-8e76-7eba59ccee4d",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T120552Z-stabilizer_two_lane_p49c-P49C-kaplansky-density-submit.log",
+          "submitted_at": "20260807T120553Z",
+          "task_id": "ad5956ce-8c9c-4d6c-b5ed-02ce7c742d18"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p50": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T060255Z",
+          "decision": "advance",
+          "final": "lean/stabilizer/reviews/P50-normal-faithful-corner-trace-recovery.md",
+          "package_id": "P50",
+          "packet": "lean/stabilizer/aristotle_tasks/P50-normal-faithful-corner-trace.md",
+          "project_id": "d5eadb4d-3341-4f40-9129-85989734737e",
+          "queue_index": 0,
+          "recovered_from": "history/logs/20260807T224729Z-stabilizer_two_lane_p50-292ec9c3-codex-final.md",
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T213441Z-stabilizer_two_lane_p50-P50-normal-faithful-corner-trace-submit.log",
+          "submitted_at": "20260807T213441Z",
+          "task_id": "292ec9c3-b24f-40ea-958e-835d0bae4379"
+        }
+      ],
+      "halted": false,
+      "last_telegram_alert": "P50:Codex closeout failed or lacked machine-readable acceptance; prompt=history/logs/20260807T224729Z-stabilizer_two_lane_p50-292ec9c3-prompt.md final=history/logs/20260807T224729Z-stabilizer_two_lane_p50-292ec9c3-codex-final.md",
+      "next_index": 1,
+      "rejected_closeouts": [
+        {
+          "codex_reported_decision": "halt",
+          "exit_code": 0,
+          "final": "history/logs/20260807T141506Z-stabilizer_two_lane_p50-9d427b3d-codex-final.md",
+          "finished_at": "20260807T141904Z",
+          "halt_reason": "P50 exposed C-star traciality as an assumption instead of deriving it from P49; its source locator also omitted main.tex:1265-1314",
+          "json": "history/logs/20260807T141506Z-stabilizer_two_lane_p50-9d427b3d-codex.jsonl",
+          "preserved_at": "20260807T213318Z",
+          "project_id": "4eae2e12-9dfa-41fa-8a15-5fd161329eba",
+          "prompt": "history/logs/20260807T141506Z-stabilizer_two_lane_p50-9d427b3d-prompt.md",
+          "review": "lean/stabilizer/reviews/P50-normal-faithful-corner-trace-closeout.md",
+          "started_at": "20260807T141506Z",
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T133439Z-stabilizer_two_lane_p50-P50-normal-faithful-corner-trace-submit.log",
+          "submitted_at": "20260807T133441Z",
+          "task_id": "9d427b3d-c367-4a33-913f-4dbf6a38aa34"
+        },
+        {
+          "codex_reported_decision": "halt",
+          "exit_code": 0,
+          "final": "history/logs/20260807T224729Z-stabilizer_two_lane_p50-292ec9c3-codex-final.md",
+          "finished_at": "20260807T224950Z",
+          "halt_reason": "Closeout reused the first P50 package-level archive instead of retry task 292ec9c3; the actual retry was recovered separately and its WOT normality encoding was corrected locally",
+          "json": "history/logs/20260807T224729Z-stabilizer_two_lane_p50-292ec9c3-codex.jsonl",
+          "preserved_at": "20260808T060255Z",
+          "project_id": "d5eadb4d-3341-4f40-9129-85989734737e",
+          "prompt": "history/logs/20260807T224729Z-stabilizer_two_lane_p50-292ec9c3-prompt.md",
+          "review": "lean/stabilizer/reviews/P50-normal-faithful-corner-trace-closeout-rerun.md",
+          "started_at": "20260807T224729Z",
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T213441Z-stabilizer_two_lane_p50-P50-normal-faithful-corner-trace-submit.log",
+          "submitted_at": "20260807T213441Z",
+          "task_id": "292ec9c3-b24f-40ea-958e-835d0bae4379"
+        }
+      ]
+    },
+    "stabilizer_two_lane_p50u": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T100248Z",
+          "decision": "advance",
+          "final": "history/logs/20260808T095831Z-stabilizer_two_lane_p50u-43682f4c-codex-final.md",
+          "package_id": "P50U",
+          "packet": "lean/stabilizer/aristotle_tasks/P50U-ultraweak-normality-bridge.md",
+          "project_id": "665c01eb-791a-48a7-9d07-d791a2d707ff",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260808T094315Z-stabilizer_two_lane_p50u-P50U-ultraweak-normality-bridge-submit.log",
+          "submitted_at": "20260808T094315Z",
+          "task_id": "43682f4c-5814-4751-a89a-5da497915cc1"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p51": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T094113Z",
+          "decision": "advance",
+          "final": "lean/stabilizer/reviews/P51-full-finite-corner-central-exclusion-recovery.md",
+          "package_id": "P51",
+          "packet": "lean/stabilizer/aristotle_tasks/P51-full-finite-corner-central-exclusion.md",
+          "project_id": "10f2fe5c-876e-432f-aeb1-1f964d623e73",
+          "queue_index": 0,
+          "recovered_from": "history/logs/20260808T063637Z-stabilizer_two_lane_p51-f7631f0b-codex-final.md",
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260808T060622Z-stabilizer_two_lane_p51-P51-full-finite-corner-central-exclusion-submit.log",
+          "submitted_at": "20260808T060630Z",
+          "task_id": "f7631f0b-1a3e-4192-9a2d-ecfe3f8c4419"
+        }
+      ],
+      "halted": false,
+      "last_telegram_alert": "P51:Codex closeout failed or lacked machine-readable acceptance; prompt=history/logs/20260808T063637Z-stabilizer_two_lane_p51-f7631f0b-prompt.md final=history/logs/20260808T063637Z-stabilizer_two_lane_p51-f7631f0b-codex-final.md",
+      "next_index": 1,
+      "rejected_closeouts": [
+        {
+          "codex_reported_decision": "halt",
+          "exit_code": 0,
+          "final": "history/logs/20260808T063637Z-stabilizer_two_lane_p51-f7631f0b-codex-final.md",
+          "finished_at": "20260808T064001Z",
+          "halt_reason": "Packet source basis omitted main.tex:1418-1450, which contains the finite-corner argument",
+          "json": "history/logs/20260808T063637Z-stabilizer_two_lane_p51-f7631f0b-codex.jsonl",
+          "prompt": "history/logs/20260808T063637Z-stabilizer_two_lane_p51-f7631f0b-prompt.md",
+          "review": "lean/stabilizer/reviews/P51-full-finite-corner-central-exclusion-closeout.md",
+          "started_at": "20260808T063637Z",
+          "status": "COMPLETE",
+          "task_id": "f7631f0b-1a3e-4192-9a2d-ecfe3f8c4419"
+        }
+      ]
+    },
+    "stabilizer_two_lane_p52": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T102359Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T102054Z-stabilizer_two_lane_p52-4c191796-codex-final.md",
+          "package_id": "P52",
+          "packet": "lean/stabilizer/aristotle_tasks/P52-coherent-local-hyperbolic-coordinates.md",
+          "project_id": "bf7dcfe1-ede4-41c0-bed1-ccf92caa52da",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T093335Z-stabilizer_two_lane_p52-P52-coherent-local-hyperbolic-coordinates-submit.log",
+          "submitted_at": "20260807T093336Z",
+          "task_id": "4c191796-3bda-41a9-adb7-2453624762fa"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p53": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T121048Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T120554Z-stabilizer_two_lane_p53-11e84c2b-codex-final.md",
+          "package_id": "P53",
+          "packet": "lean/stabilizer/aristotle_tasks/P53-local-hyperbolic-algebraic-alpha.md",
+          "project_id": "93b20f90-f8ad-4070-89f6-1ac594539c6d",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T102401Z-stabilizer_two_lane_p53-P53-local-hyperbolic-algebraic-alpha-submit.log",
+          "submitted_at": "20260807T102402Z",
+          "task_id": "11e84c2b-b0a0-420f-ac80-d38a8a5695bb"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p54": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T105857Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T105100Z-stabilizer_two_lane_p54-5d753dc2-codex-final.md",
+          "package_id": "P54",
+          "packet": "lean/stabilizer/aristotle_tasks/P54-uhf-reference-representation.md",
+          "project_id": "f306d576-d655-4fc7-a1ff-553a60d4287f",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T093339Z-stabilizer_two_lane_p54-P54-uhf-reference-representation-submit.log",
+          "submitted_at": "20260807T093341Z",
+          "task_id": "5d753dc2-3d6a-4b24-96a8-82af541fb8cb"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p55": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T143641Z",
+          "decision": "halt",
+          "final": "lean/stabilizer/reviews/P55-regional-concrete-cstar-alpha-out-of-budget.md",
+          "package_id": "P55",
+          "packet": "lean/stabilizer/aristotle_tasks/P55-regional-concrete-cstar-alpha.md",
+          "project_id": "92aaf8f8-6c75-45df-8d27-87acbebd50c1",
+          "queue_index": 0,
+          "status": "OUT_OF_BUDGET",
+          "submit_log": "history/logs/20260807T121050Z-stabilizer_two_lane_p55-P55-regional-concrete-cstar-alpha-submit.log",
+          "submitted_at": "20260807T121051Z",
+          "task_id": "70b8f491-af33-4d58-adfa-b1ce7f9d6927"
+        }
+      ],
+      "halt_reason": "OUT_OF_BUDGET with no candidate; superseded by P55A-P55D",
+      "halted": true,
+      "next_index": 1,
+      "retired": true
+    },
+    "stabilizer_two_lane_p55a": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T161837Z",
+          "decision": "advance",
+          "final": "history/logs/20260808T161410Z-stabilizer_two_lane_p55a-2e89017e-codex-final.md",
+          "package_id": "P55A",
+          "packet": "lean/stabilizer/aristotle_tasks/P55A-local-hyperbolic-finite-stage-uhf-bridge.md",
+          "project_id": "1ac3c887-56fd-4c60-ab12-6a7f4c63c69d",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260808T144947Z-stabilizer_two_lane_p55a-P55A-local-hyperbolic-finite-stage-uhf-bridge-submit.log",
+          "submitted_at": "20260808T144948Z",
+          "task_id": "2e89017e-ccab-47c2-bd66-ca42164fd972"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p55b": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T174908Z",
+          "decision": "advance",
+          "final": "history/logs/20260808T174501Z-stabilizer_two_lane_p55b-5b40a5f6-codex-final.md",
+          "package_id": "P55B",
+          "packet": "lean/stabilizer/aristotle_tasks/P55B-local-hyperbolic-source-uhf-bridge.md",
+          "project_id": "809ad1ae-ee1b-4e92-8870-045764478c2b",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260808T161839Z-stabilizer_two_lane_p55b-P55B-local-hyperbolic-source-uhf-bridge-submit.log",
+          "submitted_at": "20260808T161839Z",
+          "task_id": "5b40a5f6-d59a-4281-b6db-b103e3692cfd"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p55c": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T184128Z",
+          "decision": "advance",
+          "final": "history/logs/20260808T183527Z-stabilizer_two_lane_p55c-7706fefb-codex-final.md",
+          "package_id": "P55C",
+          "packet": "lean/stabilizer/aristotle_tasks/P55C-local-hyperbolic-concrete-representations.md",
+          "project_id": "c0959aa3-42e4-405d-a61c-e126ef6c06cc",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260808T174910Z-stabilizer_two_lane_p55c-P55C-local-hyperbolic-concrete-representations-submit.log",
+          "submitted_at": "20260808T174910Z",
+          "task_id": "7706fefb-a5b1-4939-a2d1-049e37cb3ddf"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p55d": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T192255Z",
+          "decision": "advance",
+          "final": "history/logs/20260808T191656Z-stabilizer_two_lane_p55d-e08192b8-codex-final.md",
+          "package_id": "P55D",
+          "packet": "lean/stabilizer/aristotle_tasks/P55D-regional-concrete-cstar-alpha.md",
+          "project_id": "b0d05732-f4b7-4aff-99ea-80f7395b52f7",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260808T184130Z-stabilizer_two_lane_p55d-P55D-regional-concrete-cstar-alpha-submit.log",
+          "submitted_at": "20260808T184131Z",
+          "task_id": "e08192b8-5b45-48dc-8689-7e60d34af21c"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p56": {
+      "active": {
+        "package_id": "P56",
+        "packet": "lean/stabilizer/aristotle_tasks/P56-regional-product-state-identity.md",
+        "project_id": "137c05f7-94d3-40fd-9002-828051520679",
+        "queue_index": 0,
+        "submit_log": "history/logs/20260808T192302Z-stabilizer_two_lane_p56-P56-regional-product-state-identity-submit.log",
+        "submitted_at": "20260808T192303Z",
+        "task_id": "4b9085b9-015c-4c03-915b-46aa98784ff6"
+      },
+      "closeout": {
+        "exit_code": 0,
+        "final": "history/logs/20260808T204343Z-stabilizer_two_lane_p56-4b9085b9-codex-final.md",
+        "finished_at": "20260808T204800Z",
+        "json": "history/logs/20260808T204343Z-stabilizer_two_lane_p56-4b9085b9-codex.jsonl",
+        "prompt": "history/logs/20260808T204343Z-stabilizer_two_lane_p56-4b9085b9-prompt.md",
+        "started_at": "20260808T204343Z",
+        "status": "COMPLETE",
+        "task_id": "4b9085b9-015c-4c03-915b-46aa98784ff6"
+      },
+      "completed": [],
+      "halt_reason": "Codex closeout failed or lacked machine-readable acceptance; prompt=history/logs/20260808T204343Z-stabilizer_two_lane_p56-4b9085b9-prompt.md final=history/logs/20260808T204343Z-stabilizer_two_lane_p56-4b9085b9-codex-final.md",
+      "halted": true,
+      "last_telegram_alert": "P56:Codex closeout failed or lacked machine-readable acceptance; prompt=history/logs/20260808T204343Z-stabilizer_two_lane_p56-4b9085b9-prompt.md final=history/logs/20260808T204343Z-stabilizer_two_lane_p56-4b9085b9-codex-final.md",
+      "next_index": 1,
+      "retired": true,
+      "retired_reason": "P56 is an integrated partial artifact: it lacks an unconditional C-star norm/positivity proof and is superseded by P56R."
+    },
+    "stabilizer_two_lane_p56r": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260810T081320Z",
+          "decision": "advance",
+          "final": "history/logs/20260810T080510Z-stabilizer_two_lane_p56r-91db2acf-codex-final.md",
+          "package_id": "P56R",
+          "packet": "lean/stabilizer/aristotle_tasks/P56R-regional-cstar-product-state.md",
+          "project_id": "026bfc92-1158-49a3-9049-ca7588e54dbb",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260810T062912Z-stabilizer_two_lane_p56r-P56R-regional-cstar-product-state-submit.log",
+          "submitted_at": "20260810T062914Z",
+          "task_id": "91db2acf-a167-41cd-bebd-ef882f843c64"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p57": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260810T094653Z",
+          "decision": "advance",
+          "final": "history/logs/20260810T093919Z-stabilizer_two_lane_p57-36471af9-codex-final.md",
+          "package_id": "P57",
+          "packet": "lean/stabilizer/aristotle_tasks/P57-product-gns-tensor-factorization.md",
+          "project_id": "a7accfb8-a010-406d-a481-daebd0955b85",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260810T081324Z-stabilizer_two_lane_p57-P57-product-gns-tensor-factorization-submit.log",
+          "submitted_at": "20260810T081325Z",
+          "task_id": "36471af9-1931-4a1d-abb2-b06cdea11960"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p57a": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260810T065923Z",
+          "decision": "advance",
+          "final": "history/logs/20260810T065423Z-stabilizer_two_lane_p57a-563e769a-codex-final.md",
+          "package_id": "P57A",
+          "packet": "lean/stabilizer/aristotle_tasks/P57A-vacuum-restricted-itp-core.md",
+          "project_id": "205100d0-cf2c-4e7b-87ad-3043e8cc038b",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260810T062916Z-stabilizer_two_lane_p57a-P57A-vacuum-restricted-itp-core-submit.log",
+          "submitted_at": "20260810T062917Z",
+          "task_id": "563e769a-0e9b-4395-9895-e03c81c26851"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p57b": {
+      "active": null,
+      "closeout": {
+        "exit_code": 0,
+        "final": "history/logs/20260810T204027Z-stabilizer_two_lane_p57b-83a7dea8-codex-final.md",
+        "finished_at": "20260810T204322Z",
+        "json": "history/logs/20260810T204027Z-stabilizer_two_lane_p57b-83a7dea8-codex.jsonl",
+        "prompt": "history/logs/20260810T204027Z-stabilizer_two_lane_p57b-83a7dea8-prompt.md",
+        "started_at": "20260810T204027Z",
+        "status": "COMPLETE",
+        "task_id": "83a7dea8-2fe0-4e91-91b2-3e31f5573828"
+      },
+      "completed": [
+        {
+          "closed_at": "20260810T204322Z",
+          "decision": "advance",
+          "final": "history/logs/20260810T204027Z-stabilizer_two_lane_p57b-83a7dea8-codex-final.md",
+          "manual_repair": "The reviewed P57B closeout explicitly accepted the package; only AUTOPILOT_DECISION: advance was omitted from the final marker.",
+          "package_id": "P57B",
+          "packet": "lean/stabilizer/aristotle_tasks/P57B-vacuum-itp-completion.md",
+          "project_id": "a929306b-cac0-485f-881e-b35370b94e7e",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260810T201012Z-stabilizer_two_lane_p57b-P57B-vacuum-itp-completion-submit.log",
+          "submitted_at": "20260810T201013Z",
+          "task_id": "83a7dea8-2fe0-4e91-91b2-3e31f5573828"
+        }
+      ],
+      "halted": false,
+      "last_telegram_alert": "P57B:Codex closeout failed or lacked machine-readable acceptance; prompt=history/logs/20260810T204027Z-stabilizer_two_lane_p57b-83a7dea8-prompt.md final=history/logs/20260810T204027Z-stabilizer_two_lane_p57b-83a7dea8-codex-final.md",
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p57c": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260811T090653Z",
+          "decision": "halt",
+          "final": "history/logs/20260811T085811Z-stabilizer_two_lane_p57c-07e097eb-codex-final.md",
+          "package_id": "P57C",
+          "packet": "lean/stabilizer/aristotle_tasks/P57C-pure-gns-type-one-factor.md",
+          "project_id": "79a50549-7ae1-4e6e-840d-f0bb13d4d72b",
+          "queue_index": 0,
+          "status": "OUT_OF_BUDGET",
+          "submit_log": "history/logs/20260811T052111Z-stabilizer_two_lane_p57c-P57C-pure-gns-type-one-factor-submit.log",
+          "submitted_at": "20260811T052112Z",
+          "task_id": "07e097eb-c3c0-418b-878b-ab4a45460a2b"
+        }
+      ],
+      "halt_reason": "Codex recorded a genuine partial/blocked result; final=history/logs/20260811T085811Z-stabilizer_two_lane_p57c-07e097eb-codex-final.md",
+      "halted": true,
+      "last_telegram_alert": "P57C:Codex recorded a genuine partial/blocked result; final=history/logs/20260811T085811Z-stabilizer_two_lane_p57c-07e097eb-codex-final.md",
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p58": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260807T121520Z",
+          "decision": "advance",
+          "final": "history/logs/20260807T121052Z-stabilizer_two_lane_p58-ed55ef94-codex-final.md",
+          "package_id": "P58",
+          "packet": "lean/stabilizer/aristotle_tasks/P58-mixed-uhf-hyperfinite-factor.md",
+          "project_id": "ac6dc5ea-f8fe-480a-8134-e698a59d8c02",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260807T105900Z-stabilizer_two_lane_p58-P58-mixed-uhf-hyperfinite-factor-submit.log",
+          "submitted_at": "20260807T105900Z",
+          "task_id": "ed55ef94-0313-4123-9cc0-b00ffdb465aa"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p59": {
+      "active": {
+        "package_id": "P59",
+        "packet": "lean/stabilizer/aristotle_tasks/P59-local-hyperbolic-factor-trace-theorem.md",
+        "project_id": "a12190c2-2946-47a1-bd6e-70967d842a6a",
+        "queue_index": 0,
+        "submit_log": "history/logs/20260810T094655Z-stabilizer_two_lane_p59-P59-local-hyperbolic-factor-trace-theorem-submit.log",
+        "submitted_at": "20260810T094656Z",
+        "task_id": "9efd5c22-3151-45d8-b77b-bffb99f36d8e"
+      },
+      "closeout": {
+        "exit_code": 0,
+        "final": "history/logs/20260810T132357Z-stabilizer_two_lane_p59-9efd5c22-codex-final.md",
+        "finished_at": "20260810T133628Z",
+        "json": "history/logs/20260810T132357Z-stabilizer_two_lane_p59-9efd5c22-codex.jsonl",
+        "prompt": "history/logs/20260810T132357Z-stabilizer_two_lane_p59-9efd5c22-prompt.md",
+        "started_at": "20260810T132357Z",
+        "status": "COMPLETE",
+        "task_id": "9efd5c22-3151-45d8-b77b-bffb99f36d8e"
+      },
+      "completed": [],
+      "halt_reason": "Codex closeout failed or lacked machine-readable acceptance; prompt=history/logs/20260810T132357Z-stabilizer_two_lane_p59-9efd5c22-prompt.md final=history/logs/20260810T132357Z-stabilizer_two_lane_p59-9efd5c22-codex-final.md",
+      "halted": true,
+      "last_telegram_alert": "P59:Codex closeout failed or lacked machine-readable acceptance; prompt=history/logs/20260810T132357Z-stabilizer_two_lane_p59-9efd5c22-prompt.md final=history/logs/20260810T132357Z-stabilizer_two_lane_p59-9efd5c22-codex-final.md",
+      "next_index": 1,
+      "retired": true,
+      "retired_reason": "P59 is an audited partial artifact: it never constructs the P57-to-P58/local-model bridges and uses local-normality premise bundles. It is superseded by P59A, P57B, P57C, P59B, P59R, and P59T."
+    },
+    "stabilizer_two_lane_p59a": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260810T214057Z",
+          "decision": "advance",
+          "final": "history/logs/20260810T213100Z-stabilizer_two_lane_p59a-f17ae380-codex-final.md",
+          "package_id": "P59A",
+          "packet": "lean/stabilizer/aristotle_tasks/P59A-concrete-pure-mixed-product-data.md",
+          "project_id": "a130d169-dda1-4622-9b53-9f74022a8bc3",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260810T201009Z-stabilizer_two_lane_p59a-P59A-concrete-pure-mixed-product-data-submit.log",
+          "submitted_at": "20260810T201010Z",
+          "task_id": "f17ae380-7cbe-4e16-8ea3-94d98cb8ef47"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p59b": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260810T232740Z",
+          "decision": "halt",
+          "final": "history/logs/20260810T232204Z-stabilizer_two_lane_p59b-bb6c00a3-codex-final.md",
+          "package_id": "P59B",
+          "packet": "lean/stabilizer/aristotle_tasks/P59B-mixed-gns-uhf-bridge.md",
+          "project_id": "60d29fa6-bd0a-49ce-8437-9a3c95f068db",
+          "queue_index": 0,
+          "status": "OUT_OF_BUDGET",
+          "submit_log": "history/logs/20260810T214100Z-stabilizer_two_lane_p59b-P59B-mixed-gns-uhf-bridge-submit.log",
+          "submitted_at": "20260810T214101Z",
+          "task_id": "bb6c00a3-3adb-4e9c-80b2-47f7787be42c"
+        }
+      ],
+      "halt_reason": "Codex recorded a genuine partial/blocked result; final=history/logs/20260810T232204Z-stabilizer_two_lane_p59b-bb6c00a3-codex-final.md",
+      "halted": true,
+      "last_telegram_alert": "P59B:Codex recorded a genuine partial/blocked result; final=history/logs/20260810T232204Z-stabilizer_two_lane_p59b-bb6c00a3-codex-final.md",
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p60": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T155946Z",
+          "decision": "halt",
+          "final": "history/logs/20260808T155530Z-stabilizer_two_lane_p60-fdc0344a-codex-final.md",
+          "package_id": "P60",
+          "packet": "lean/stabilizer/aristotle_tasks/P60-full-corner-semifinite-weight.md",
+          "project_id": "94c2fd67-5c9c-43d3-99f2-ea72f1e117f5",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260808T144950Z-stabilizer_two_lane_p60-P60-full-corner-semifinite-weight-submit.log",
+          "submitted_at": "20260808T144951Z",
+          "task_id": "fdc0344a-7842-4955-9d04-462bf24af4da"
+        }
+      ],
+      "halt_reason": "Codex recorded a genuine partial/blocked result; final=history/logs/20260808T155530Z-stabilizer_two_lane_p60-fdc0344a-codex-final.md",
+      "halted": true,
+      "last_telegram_alert": "P60:Codex recorded a genuine partial/blocked result; final=history/logs/20260808T155530Z-stabilizer_two_lane_p60-fdc0344a-codex-final.md",
+      "next_index": 1
+    },
+    "stabilizer_two_lane_p60r": {
+      "active": null,
+      "completed": [
+        {
+          "closed_at": "20260808T164848Z",
+          "decision": "advance",
+          "final": "history/logs/20260808T164427Z-stabilizer_two_lane_p60r-9cf226e6-codex-final.md",
+          "package_id": "P60R",
+          "packet": "lean/stabilizer/aristotle_tasks/P60R-full-corner-standard-semifiniteness-repair.md",
+          "project_id": "ae5ca7f3-7888-4720-92cd-020e2366b081",
+          "queue_index": 0,
+          "status": "COMPLETE",
+          "submit_log": "history/logs/20260808T160912Z-stabilizer_two_lane_p60r-P60R-full-corner-standard-semifiniteness-repair-submit.log",
+          "submitted_at": "20260808T160913Z",
+          "task_id": "9cf226e6-e758-4671-af7e-ad76379c01ad"
+        }
+      ],
+      "halted": false,
+      "next_index": 1
+    }
+  }
+}

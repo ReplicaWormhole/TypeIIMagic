@@ -1,0 +1,12 @@
+.typeiimagic/
+**/.lake/
+**/__pycache__/
+*.pyc
+*.lock
+*.tmp
+.env
+.env.*
+**/aristotle_responses/
+!history/**/aristotle_responses/
+
+.ruff_cache/

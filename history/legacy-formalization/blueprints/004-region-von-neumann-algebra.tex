@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+\newtheorem{definition}{Definition}
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{#1}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+
+\begin{document}
+
+\section*{Blueprint 004: Represented Region von Neumann Algebra}
+
+\paragraph{Superseded note.}
+This historical draft is superseded by
+\texttt{blueprints/010-gns-represented-region-layer.tex}.  It is preserved
+only as provenance for the earlier draft and should not be used as an active
+Aristotle source.
+
+\begin{definition}[RegionVNPackage, superseded ID: VN-001]
+Let \((H_\omega,\pi_\omega,\Omega_\omega)\) be the GNS representation of a
+state \(\omega\) on a quasi-local algebra \(A\).  For a region \(\Gamma\), let
+\(A_\Gamma\subset A\) be the region subalgebra.  The represented region von
+Neumann algebra is
+\[
+  M_\Gamma(\omega) := \pi_\omega(A_\Gamma)'' \subset B(H_\omega),
+\]
+the bicommutant of the represented region algebra.
+\source{Concrete von Neumann algebra by bicommutant; mathlib
+\texttt{Mathlib.Analysis.VonNeumannAlgebra.Basic}, especially
+\texttt{VonNeumannAlgebra}, \texttt{VonNeumannAlgebra.commutant}, and
+\texttt{VonNeumannAlgebra.commutant\_commutant}.  Project proof note
+\texttt{runs/2026-06-18-stabilizer-algebra-classification/artifacts/004-internal-stabilizer-reduction-type-classification-R1.tex},
+Theorem 5.1, uses this region algebra.}
+\lean{Formalization.OperatorAlgebra.RegionVNPackage}
+\status{blueprint_draft_source_locator_fixed}
+\end{definition}
+
+\end{document}

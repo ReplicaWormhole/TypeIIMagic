@@ -1,0 +1,280 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,array}
+\usepackage{hyperref,xurl}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{remark}[definition]{Remark}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cR}{\mathcal R}
+\newcommand{\cB}{\mathcal B}
+
+\begin{document}
+\sloppy
+
+\noindent\textbf{Status (2026-08-05).} This blueprint is superseded for
+manuscript-facing work by \texttt{SOURCE-CONTRACT.md}. Its gLU, refinement,
+and layer-coherence terminology was imported from unrelated historical context
+and must not be treated as a claim or hypothesis of the manuscript
+\texttt{main.tex}. It is retained only as legacy exploratory infrastructure.
+
+\section*{Blueprint 002: Parallel Lean formalization of the corrected stabilizer-region theorem}
+
+\subsection*{Purpose and non-negotiable correction}
+
+This is an execution contract for the standalone Lean project
+\texttt{stabilizer\_hyperfinite\_formalization}; it is not an edit to the
+Overleaf checkout.  Blueprint~001 records the mathematical audit and the
+already checked algebraic results.  The present document turns the remaining
+work into independently reviewable Lean packages suitable for separate
+Aristotle runs.
+
+The original source target is Theorem \texttt{thm:short\_range\_algebra} in
+\texttt{writing/overleaf\_prl\_stabilizer\_region\_algebras/main.tex},
+lines 1740--1752, with proof discussion at lines 1891--1995.  That proof does
+not supply a coherent infinite Pauli map, its phase calibration, a
+C\(^*\)-extension, or a normal comparison of the local and global GNS
+representations.  None of these may be represented by a Lean axiom or silently
+assumed by a remote proof-search run.
+
+There is also a necessary trace correction.  If the pure-coordinate sector is
+infinite, the type-I factor is \(\cB(\mathcal K)\) for infinite-dimensional
+\(\mathcal K\), and it has no tracial \emph{state}.  The desired product is
+then semifinite (type \(II_\infty\) in the infinite-mixed-coordinate case),
+not tracially finite.  A tracial state is a target only when the pure sector is
+finite.
+
+\subsection*{Definitions that every package uses}
+
+\begin{definition}[Finite-coordinate regional witness]
+Let \(\cA_n\) be a directed system of finite regional star algebras, with
+structure maps \(\iota_{n,m}:\cA_n\to\cA_m\) for \(n\leq m\).  A
+finite-coordinate regional witness consists of the following data.
+\begin{enumerate}
+\item For each \(n\), a finite source-word basis \(b_n:V_n\to\cA_n\), a
+  predicate \(S_n:V_n\to\{\mathrm{false},\mathrm{true}\}\) declaring whether
+  that word is a regional stabilizer, a star-algebra equivalence
+  \(e_n:\cA_n\to Q_n\) to the concrete iterated one-qubit algebra \(Q_n\),
+  and a target finite-qubit Pauli label
+  \(\ell_n:V_n\to (\mathbb F_2^2)^n\).  A separate finite-dimensional
+  equivalence may identify \(Q_n\) with \(M_{2^n}(\mathbb C)\); it is not
+  part of this witness.
+\item Source label embeddings \(s_{n,m}:V_n\to V_m\), compatible with the
+  regional inclusions, and the ordinary identity-qubit embeddings of the
+  target finite-qubit algebras.
+\item A phase \(\chi_n:V_n\to\mathbb C\) such that
+\begin{equation}
+ e_n(b_n(v))=\chi_n(v)P_{\ell_n(v)},
+ \qquad
+ \chi_m(s_{n,m}v)=\chi_n(v),
+ \qquad
+ \ell_m(s_{n,m}v)=\operatorname{inc}_{n,m}(\ell_n(v)).
+\end{equation}
+\item A Boolean pure-coordinate pattern \(p:\mathbb N\to\{\mathrm{false},
+\mathrm{true}\}\), and the exact finite-stage membership equivalence
+\begin{equation}
+  P_{\ell_n(v)}\text{ has selected-Z support for }p
+  \quad\Longleftrightarrow\quad
+  S_n(v)=\mathrm{true}.
+  \label{eq:stage_membership}
+\end{equation}
+\end{enumerate}
+The Lean project already expresses these four clauses as the hypotheses of
+\texttt{exists\_stabilizerState\_of\_coherentPhaseQubitStages} and, in the
+adapted-coordinate formulation, of
+\texttt{exists\_stabilizerState\_of\_adaptedCoordinateStages}.
+\end{definition}
+
+\begin{definition}[Layer-coherent short-range certificate]
+A layer-coherent short-range certificate is a finite-coordinate regional
+witness obtained from the actual gLU/refinement construction, not merely
+postulated.  It must provide finite coordinate exhaustions \(J_n\), finite
+support of every coordinate pair, compatibility of the coordinate changes as
+\(J_n\subseteq J_m\), and a Pauli multiplier/involution correction calibrated
+to the signed stabilizer character.  In particular, an adapted Hamel basis by
+itself is not this certificate: it fixes commutators but not the Pauli
+multiplier, signs, or exhaustion coherence.
+\end{definition}
+
+\begin{definition}[Corrected product state]
+For a witness with pure pattern \(p\), assign the \(\lvert0\rangle\) vector
+state to coordinates with \(p(i)=\mathrm{true}\), and the normalized
+one-qubit trace to coordinates with \(p(i)=\mathrm{false}\).  At finite stage
+\(n\) this is
+\begin{equation}
+ \rho_n=\bigotimes_{i<n,\,p(i)}\lvert0\rangle\langle0\rvert
+ \otimes
+ \bigotimes_{i<n,\,\neg p(i)}\frac{1}{2}1.
+ \label{eq:pure_mixed_state}
+\end{equation}
+Its value on a Pauli word is \(1\) precisely for selected-Z support, and is
+zero otherwise.  The phase in the finite-coordinate witness changes the
+nonzero expectation to \(\chi_n(v)\).
+\end{definition}
+
+\subsection*{Target theorems and exact stopping boundary}
+
+\begin{theorem}[SR-ALG-001: algebraic stabilizer expectation]
+From a finite-coordinate regional witness, there exists an algebraic state
+\(\omega\) on the directed algebraic regional limit such that, for every
+finite-stage source word,
+\begin{equation}
+ \omega\bigl([b_n(v)]\bigr)=
+ \begin{cases}
+   \chi_n(v),& b_n(v)\text{ is a regional stabilizer word},\\
+   0,&\text{otherwise}.
+ \end{cases}
+ \label{eq:regional_expectation}
+\end{equation}
+This is already checked conditionally in
+\texttt{Formalization/CoherentPhaseQubitState.lean}.  The missing theorem is
+the construction of its witness from actual gLU/refinement data.
+\end{theorem}
+
+\begin{theorem}[SR-ALG-002: algebraic finite-pure factorization and trace]
+Suppose the pure coordinate sector is represented by a nonempty finite type-I
+factor \(M_p(\mathbb C)\), and suppose the regional word system satisfies the
+explicit finite-support multiplier and involution equations.  Then there are
+a star-algebra equivalence and an algebraic tracial state
+\begin{equation}
+ e:\cA\overset{\simeq_*}{\longrightarrow}
+ M_p(\mathbb C)\otimes\cA_{\mathrm{UHF}}^{\mathrm{alg}},
+ \qquad
+ \tau:\cA\to\mathbb C,
+\end{equation}
+with
+\begin{equation}
+ \tau\bigl(e^{-1}(a\otimes u)\bigr)
+ =\operatorname{tr}_p(a)\,\tau_{\mathrm{UHF}}(u).
+ \label{eq:algebraic_trace_factorization}
+\end{equation}
+This is the checked theorem
+\texttt{exists\_coordinateQuadraticPhase\_finitePureQubitUHFTrace}.  It is
+not a normal von Neumann-algebra statement.
+\end{theorem}
+
+\begin{theorem}[SR-CSTAR-001: conditional C\(^*\)-extension]
+Let the two algebras in SR-ALG-002 be supplied with complex C\(^*\)-algebra
+structures, and let \(e\) be a complex star-algebra equivalence between them.
+Then \(e\) and \(e^{-1}\) are isometric and continuous.  Consequently the
+pullback of any continuous linear functional is continuous.  This is already
+checked in \texttt{Formalization/CStarEquivExtension.lean}.
+\end{theorem}
+
+\begin{theorem}[SR-VN-001: corrected analytic conclusion, conditional]
+Assume, in addition, that the algebraic coordinate equivalence extends to the
+regional quasi-local C\(^*\)-algebra and that the restricted global GNS
+representation is quasi-equivalent to the GNS representation of
+\eqref{eq:pure_mixed_state}.  Then the generated regional von Neumann algebra
+is normally isomorphic to
+\begin{equation}
+ \cB(\mathcal K_P)\,\bar\otimes\,\cR_C,
+ \label{eq:regional_von_neumann_target}
+\end{equation}
+where \(\mathcal K_P\) is the incomplete tensor product of pure coordinates
+and \(\cR_C\) is a finite matrix factor for finite mixed set \(C\), or the
+hyperfinite \(II_1\) factor for infinite \(C\).  If \(P\) is finite, the
+pullback of the product trace is a faithful normal tracial state.  If \(P\)
+is infinite, the corresponding product trace is faithful, normal, and
+semifinite, but is not a state.
+\end{theorem}
+
+\begin{remark}[Why SR-VN-001 is not an Aristotle proof-search job yet]
+The pinned Mathlib provides neither the requisite von Neumann tensor-product,
+normality/quasi-equivalence, nor hyperfinite-factor-classification API.  More
+importantly, the manuscript has not proved the two added analytic assumptions.
+SR-VN-001 is therefore a mathematical target and source-audit obligation, not
+a Lean theorem to submit with hidden axioms.
+\end{remark}
+
+\subsection*{Parallel package map}
+
+Each remote run receives an immutable snapshot of the standalone project and
+is permitted to create or modify only its named module under
+\texttt{AristotleCandidates/}.  A result is accepted only if it compiles
+locally without \texttt{sorry}, \texttt{admit}, or added axioms.  No task may
+modify the Overleaf repository.
+
+\begin{center}
+\small
+\begin{tabular}{p{0.12\linewidth}p{0.25\linewidth}p{0.47\linewidth}}
+\toprule
+Package & Owned Lean file & Precise deliverable \\
+\midrule
+P1 & \texttt{RegionalWitness.lean} & Bundle the existing
+finite-stage coherence hypotheses into one transparent structure and prove a
+wrapper of SR-ALG-001 by invoking the checked theorem.  Do not weaken any
+coherence or membership clause. \\
+P2 & \texttt{FinitePureFactor.lean} & Specialize the
+existing finite-pure/UHF product theorem to the declared finite pure sector,
+with the elementary-tensor formula \eqref{eq:algebraic_trace_factorization}.
+Keep the conclusion algebraic. \\
+P3 & \texttt{CStarTransport.lean} & Package SR-CSTAR-001
+for the regional witness interface, proving only automatic isometry,
+continuity, and continuous-state transport after C\(^*\)-models are supplied.
+It must not construct a C\(^*\)-completion by assumption. \\
+P4 & \texttt{FiniteModelSanity.lean} & Formalize a
+finite-coordinate model check: the selected-Z product state has the stated
+Pauli expectation, and it is tracial exactly in the all-mixed case.  Reuse the
+existing finite-qubit lemmas; this is a testable finite analogue, not GNS
+classification. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+P1--P4 are independent and can be submitted in parallel.  They deliberately
+overlap only in imports of already checked files; their output paths are
+disjoint.  They do not by themselves close the main theorem, but they create a
+stable formal interface into which genuine gLU/refinement data can later be
+inserted.
+
+\subsection*{Deferred, evidence-gated packages}
+
+\begin{enumerate}
+\item \textbf{G1: actual gLU/refinement realization.}  Start only after we
+  have an explicit layer sequence, its action on finite Pauli words, the
+  finite coordinate exhaustions, and the signed stabilizer character.  Its
+  required conclusion is exactly the witness of Definition~1, especially
+  \eqref{eq:stage_membership}.  Presently this data is absent from the
+  manuscript.
+\item \textbf{G2: C\(^*\)-completion.}  Start only after fixing the intended
+  regional C\(^*\)-norm and proving that the algebraic word map preserves it.
+  P3 is intentionally not a substitute for this construction.
+\item \textbf{G3: normal GNS and factor classification.}  This requires a
+  genuine Mathlib infrastructure project, or a separately verified external
+  formalization library, before attempting \eqref{eq:regional_von_neumann_target}.
+  Aristotle may be used to explore a narrow upstream API question, but not to
+  assert the result without a formal API and mathematical hypotheses.
+\end{enumerate}
+
+\subsection*{Submission and review protocol}
+
+\begin{enumerate}
+\item Build the baseline standalone project and record its clean axiom audit.
+\item Submit P1--P4 separately with a prompt that names its sole owned file,
+  all prerequisite imports, and the prohibition on \texttt{sorry},
+  \texttt{admit}, and new axioms.
+\item Keep the returned project identifiers and download each result into a
+  distinct temporary directory.  Never unpack remote output over the working
+  project.
+\item Inspect the diff against the baseline, run the owned-module build, then
+  the full \texttt{lake build}, and audit declarations with \texttt{\#print
+  axioms}.  Merge only reviewed files that pass all checks.
+\item Update Blueprint~001 and the progress record only after the local Lean
+  verification and a mathematical review agree on the scope.
+\end{enumerate}
+
+\subsection*{Sources and existing checked interfaces}
+
+The source locators are the Overleaf file and line ranges stated at the start
+of this blueprint.  The formal interfaces used here are
+\path{Formalization/CoherentPhaseQubitState.lean},
+\path{Formalization/CoordinateQuadraticPhaseTrace.lean},
+\path{Formalization/FinitePureMixedQubitState.lean}, and
+\path{Formalization/CStarEquivExtension.lean}.  Their exact theorem names
+are stated above so that Aristotle jobs can be narrowly prompted and their
+output can be independently checked.
+
+\end{document}

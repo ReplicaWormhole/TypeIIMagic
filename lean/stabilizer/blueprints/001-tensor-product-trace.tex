@@ -1,0 +1,898 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{remark}[definition]{Remark}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cR}{\mathcal R}
+\newcommand{\cB}{\mathcal B}
+
+\begin{document}
+
+\section*{Blueprint 001: Tensor-product transport of traces}
+
+\subsection*{Scope and correction}
+
+The intended source statement is that a regional von Neumann algebra is
+isomorphic to a tensor product of a type-I factor and a hyperfinite type
+\(II_1\) factor.  Its original proof assumes rather than proves a compatible
+infinite-coordinate map, product-state factorization, and transport to the
+weak closures.  This blueprint therefore has two layers.  The first is a
+complete algebraic theorem proved in Lean.  The second is the analytic model
+identification, recorded with its necessary hypotheses but not represented by
+an axiom in Lean.
+
+\begin{definition}[Unital tracial functional, formal target TPT-001]
+For a unital complex star algebra \(A\), a functional \(\tau:A\to\mathbb C\)
+is unital and tracial when
+\begin{equation*}
+  \tau(1)=1,
+  \qquad
+  \tau(xy)=\tau(yx)\quad (x,y\in A).
+\end{equation*}
+It is algebraically positive when for every \(x\in A\),
+\begin{equation*}
+  \tau(x^*x)=r\in\mathbb R_{\geq0}\subset\mathbb C.
+\end{equation*}
+An \emph{algebraic tracial state} is a unital, algebraically positive,
+tracial functional.  On a C\(^*\)-algebra this is the usual state condition,
+except that normality is a separate topological property.
+\end{definition}
+
+\begin{theorem}[TraceTransportAlongStarIsomorphism, formal target TPT-002]
+Let \(\Phi:A\to B\) be a unital \(*\)-isomorphism of unital complex star
+algebras.  If \(\tau_B:B\to\mathbb C\) is an algebraic tracial state, then
+\begin{equation*}
+  \tau_A:=\tau_B\circ\Phi
+\end{equation*}
+is an algebraic tracial state on \(A\).
+\end{theorem}
+
+\begin{proof}
+Since \(\Phi\) is unital,
+\(\tau_A(1)=\tau_B(\Phi(1))=\tau_B(1)=1\).  Since \(\Phi\) is
+multiplicative,
+\begin{equation*}
+ \tau_A(xy)=\tau_B(\Phi(x)\Phi(y))
+ =\tau_B(\Phi(y)\Phi(x))=\tau_A(yx).
+\end{equation*}
+Finally,
+\begin{equation*}
+  \tau_A(x^*x)=\tau_B\bigl(\Phi(x)^*\Phi(x)\bigr)\in\mathbb R_{\geq0},
+\end{equation*}
+because \(\Phi\) preserves multiplication and the involution.  Lean checks
+all three clauses of this algebraic statement.  Applying the same result to
+\(\Phi^{-1}\) proves the converse: algebraic traciality is reflected as well
+as preserved by a star-algebra equivalence.
+\end{proof}
+
+\begin{proposition}[FiniteMatrixNormalizedTrace, formal target FMT-001]
+For a nonempty finite index set \(I\), the functional
+\begin{equation*}
+  \operatorname{tr}_I(a)
+  :=\frac{1}{|I|}\operatorname{Tr}(a),
+  \qquad a\in M_I(\mathbb C),
+\end{equation*}
+is an algebraic tracial state.
+\end{proposition}
+
+\begin{proof}
+The matrix trace of the identity is \(|I|\), so the normalization gives
+\(\operatorname{tr}_I(1)=1\).  Cyclicity follows from
+\(\operatorname{Tr}(ab)=\operatorname{Tr}(ba)\).  For positivity, the Lean
+proof computes
+\begin{equation*}
+  \operatorname{Tr}(a^*a)=\sum_{i,j\in I}\lvert a_{ji}\rvert^2\geq0.
+\end{equation*}
+Thus the Lean theorem
+\texttt{normalizedMatrixTrace\_isAlgebraicTracialState} proves that the
+concrete normalized matrix trace is an algebraic tracial state.
+\end{proof}
+
+\begin{proposition}[FiniteSupportCornerTrace, formal target FSC-001]
+Let \(q\cA q\) be a finite support corner and assume an explicit unital
+\(*\)-isomorphism
+\begin{equation*}
+  e:q\cA q\longrightarrow M_I(\mathbb C)
+\end{equation*}
+for a nonempty finite set \(I\).  Then
+\begin{equation*}
+  \tau_q:=\operatorname{tr}_I\circ e
+\end{equation*}
+is an algebraic tracial state on \(q\cA q\).
+\end{proposition}
+
+\begin{proof}
+Apply Theorem TPT-002 to the normalized matrix trace from Proposition
+FMT-001.  The Lean theorem
+\texttt{finiteCornerTrace\_isAlgebraicTracialState}
+checks this transport.  Identifying an actual stabilizer support corner with a
+full matrix factor, and proving that its state equals this normalized trace,
+remain separate stabilizer-theoretic obligations.
+\end{proof}
+
+\begin{proposition}[FiniteTensorProductTrace, formal target FTT-001]
+For nonempty finite index sets \(P\) and \(R\), let
+\begin{equation*}
+  M_P(\mathbb C)\otimes_{\mathrm{alg}}M_R(\mathbb C)
+  \cong M_{P\times R}(\mathbb C)
+\end{equation*}
+be the Kronecker \(*\)-isomorphism.  Pulling the normalized trace on
+\(M_{P\times R}(\mathbb C)\) back along this isomorphism gives an algebraic
+tracial state \(\operatorname{tr}_{P\otimes R}\), and for elementary tensors,
+\begin{equation*}
+  \operatorname{tr}_{P\otimes R}(a\otimes b)
+  =\operatorname{tr}_P(a)\operatorname{tr}_R(b).
+\end{equation*}
+\end{proposition}
+
+\begin{proof}
+The Kronecker map preserves multiplication and the involution.  The target
+matrix trace is an algebraic tracial state by Proposition FMT-001, so
+Theorem TPT-002 transports it to the algebraic tensor product.  On elementary
+tensors, the identity follows from
+\begin{equation*}
+  \operatorname{Tr}(a\otimes b)=\operatorname{Tr}(a)\operatorname{Tr}(b)
+\end{equation*}
+and \(|P\times R|=|P||R|\).  The Lean theorem
+\texttt{finiteTensorTrace\_tmul} verifies this formula using mathlib's
+Kronecker star-algebra equivalence and trace calculation.
+Its checked append-left and append-right lemmas prove compatibility of
+normalized traces with adjoining a finite factor by tensoring with the
+identity.
+\end{proof}
+
+\begin{proposition}[Finite type-I amplification, formal target FAM-001]
+Let \(R\) be a unital complex star algebra with algebraic tracial state
+\(\tau_R\), and let \(I\) be a nonempty finite index set.  The normalized
+diagonal functional on the matrix amplification is
+\begin{equation*}
+  \tau_{I,R}(a):=\frac{1}{|I|}\sum_{i\in I}\tau_R(a_{ii}),
+  \qquad a\in M_I(R).
+\end{equation*}
+It is an algebraic tracial state.  Consequently, if a region algebra \(A\)
+is supplied with an explicit complex \(*\)-isomorphism
+\begin{equation*}
+  e:A\longrightarrow M_I(R),
+\end{equation*}
+then \(\tau_{I,R}\circ e\) is an algebraic tracial state on \(A\).
+\end{proposition}
+
+\begin{proof}
+Unitality follows by evaluating the diagonal of the identity.  For cyclicity,
+expand both diagonal traces as a double finite sum and use cyclicity of
+\(\tau_R\) term by term, then exchange the two finite sums.  For positivity,
+the Lean proof establishes
+\begin{equation*}
+  \sum_i \tau_R\bigl((a^*a)_{ii}\bigr)
+  =\sum_{i,j}\tau_R(a_{ji}^*a_{ji}),
+\end{equation*}
+which is a finite sum of nonnegative real numbers after applying positivity of
+\(\tau_R\).  The Lean theorem
+\texttt{normalizedMatrixTraceOver} amplification result checks these steps;
+the corresponding induced-trace result checks the final transport through
+\(e\).  In the intended factor model,
+\(M_I(R)\) is the algebraic finite type-I amplification of the tracial
+factor; identifying it with an analytic von Neumann tensor product remains a
+separate completion theorem.
+\end{proof}
+
+\begin{proposition}[Canonical finite type-I tensor identification, formal target TMT-001]
+\label{prop:canonical_matrix_tensor}
+Let $R$ be a unital complex star algebra whose complex scalar action
+commutes with the involution, and let $I$ be finite.  There is a canonical
+complex star-algebra isomorphism
+\begin{equation*}
+  M_I(\mathbb C)\otimes_{\mathrm{alg}}R
+  \cong M_I(R).
+\end{equation*}
+If $\tau_R$ is an algebraic tracial state and $I$ is nonempty, the
+pullback of the normalized diagonal trace on $M_I(R)$ is an algebraic
+tracial state.  For $a\in M_I(\mathbb C)$ and $r\in R$, it obeys
+\begin{equation*}
+  \tau_{I\otimes R}(a\otimes r)=\operatorname{tr}_I(a)\tau_R(r).
+\end{equation*}
+\end{proposition}
+
+\begin{proof}
+The Lean map first exchanges the two tensor factors and then uses mathlib's
+canonical matrix--tensor algebra equivalence.  Its involution preservation is
+proved entrywise, including the use of the central complex scalar action in
+$R$.  The proof of the displayed trace identity expands the normalized
+diagonal trace and uses cyclicity of $\tau_R$ to commute $r$ past each
+complex scalar.  The checked map is
+\texttt{matrixTensorStarAlgEquiv}; the state and elementary-tensor trace
+theorems are verified in the same \texttt{TensorMatrixEquiv} module.
+\end{proof}
+
+\begin{proposition}[Concrete algebraic dyadic trace system, formal target DTT-001]
+\label{prop:concrete_dyadic_trace}
+Put $A_0=\mathbb C$ and recursively define
+\begin{equation*}
+  A_{n+1}=M_2(A_n),
+  \qquad
+  \iota_n(a)=\operatorname{diag}(a,a).
+\end{equation*}
+The preceding canonical finite type-I identification interprets this as the
+usual operation $a\mapsto 1_2\otimes a$.  Define
+\begin{equation*}
+  \tau_0(z)=z,
+  \qquad
+  \tau_{n+1}(b)=\frac12\sum_{i=0}^1\tau_n(b_{ii}).
+\end{equation*}
+Then every $\tau_n$ is an algebraic tracial state and, for every iterated
+inclusion $\iota_{n,m}:A_n\to A_m$,
+\begin{equation*}
+  \tau_m\bigl(\iota_{n,m}(a)\bigr)=\tau_n(a).
+\end{equation*}
+Consequently the algebraic directed limit
+$\mathcal U_{\mathrm{alg}}:=\varinjlim_n A_n$ has a canonical algebraic tracial
+state whose composition with the canonical map from $A_n$ is $\tau_n$.
+\end{proposition}
+
+\begin{proof}
+The base trace is the identity on \(\mathbb C\), whose value on a star-square
+is the complex norm-square.  The successor trace is the finite matrix
+amplification from Proposition FAM-001.  The diagonal embedding contributes
+the same coefficient algebra element to both diagonal entries, so its
+normalized trace is unchanged.  Lean then proves compatibility for all
+iterated inclusions by induction and applies Theorem AIT-002 to the resulting
+directed system.  The checked endpoint is
+\texttt{qubitUHFTrace\_isAlgebraicTracialState}, with
+\texttt{qubitUHFTrace\_of} recording its finite-stage formula.  This is
+not yet the norm-completed UHF C$^*$-algebra or the weak closure giving the
+hyperfinite type $II_1$ factor.  The finite stages now also carry explicit
+ordered Pauli-word star systems and Pauli-word bases.  Lean verifies that the
+identity-qubit embeddings preserve their words, basis vectors, and both
+multiplier functions under coherent label maps.
+\end{proof}
+
+\begin{proposition}[Finite pure factor times the concrete tracial product,
+formal target FPU-001]
+\label{prop:finite_pure_qubit_product}
+Let $I$ be a nonempty finite set and let
+$\mathcal U_{\mathrm{alg}}$ be the algebraic dyadic direct limit from
+Proposition DTT-001, equipped with its checked trace
+$\tau_{\mathcal U}$.  Then
+\begin{equation*}
+  M_I(\mathbb C)\otimes_{\mathrm{alg}}\mathcal U_{\mathrm{alg}}
+\end{equation*}
+carries an algebraic tracial state $\tau_{I,\mathcal U}$ satisfying
+\begin{equation*}
+  \tau_{I,\mathcal U}(a\otimes u)
+  =\operatorname{tr}_I(a)\tau_{\mathcal U}(u).
+\end{equation*}
+\end{proposition}
+
+\begin{proof}
+This is the concrete instantiation of Proposition TMT-001 with
+$R=\mathcal U_{\mathrm{alg}}$.  The preceding direct-limit
+star-module theorem supplies the scalar--involution compatibility needed by
+that tensor construction.  Lean checks the resulting state and
+elementary-tensor formula in the finite-pure-product module.  It remains an
+algebraic product; it does not assert a normal trace on a von Neumann tensor
+product.
+\end{proof}
+
+\begin{proposition}[Finite pure/mixed coordinate product, formal target PMS-001]
+\label{prop:finite_pure_mixed_coordinate_product}
+Fix a sequence $p:\mathbb N\to\{0,1\}$.  On the finite qubit tower, define
+$\Omega_{p,0}$ to be the scalar state and, after adjoining one qubit on the
+left, define
+\begin{equation*}
+  \Omega_{p,n+1}(a\otimes x)=
+  \begin{cases}
+    \langle 0|a|0\rangle\,\Omega_{p,n}(x),&p(n)=1,\\
+    \operatorname{tr}_2(a)\,\Omega_{p,n}(x),&p(n)=0.
+  \end{cases}
+\end{equation*}
+Here the displayed tensor notation is transported through the canonical
+matrix--tensor star equivalence.  Then every $\Omega_{p,n}$ is an algebraic
+state, the family is compatible with identity-qubit embeddings, and it induces
+an algebraic state on the algebraic qubit direct limit.  When $p=0$, this
+state is the normalized algebraic UHF trace.
+\end{proposition}
+
+\begin{proof}
+For a pure new coordinate, positivity is the finite sum of the coefficient
+state values on the entries of the first column of a matrix star-square.  For a
+mixed coordinate, it is the normalized matrix amplification of the coefficient
+state.  Both functionals evaluate a scalar identity-qubit embedding as the
+coefficient state, which proves compatibility by induction.  Lean checks these
+claims and the direct-limit state in
+\texttt{QubitMatrixState.lean} and
+\texttt{FinitePureMixedQubitState.lean}.  A pure vector state is not claimed
+to be tracial; only the all-mixed specialization is the tracial UHF state.  On
+an ordered Pauli word, the state is one precisely when every pure coordinate
+has zero X exponent and every mixed coordinate has zero X/Z label; it is zero
+otherwise.  Lean separately verifies the expected obstruction already for one
+pure qubit, and now for a pure coordinate at an arbitrary finite or
+direct-limit stage: its vector state is not cyclic, and therefore is not
+tracial.  In fact, Lean proves that the algebraic UHF product state is tracial
+if and only if every coordinate is mixed, in which case it is the normalized
+algebraic UHF trace.
+\end{proof}
+
+\begin{proposition}[Coherent phase-corrected coordinate states, formal target
+CPS-001]
+\label{prop:coherent_phase_coordinate_state}
+Let $(A_n,\alpha_{n,m})$ be a directed system of complex star algebras, and
+let $b_n:V_n\to A_n$ be a complex linear basis at every finite stage.  Suppose
+there are star-algebra equivalences
+\begin{equation*}
+  e_n:A_n\longrightarrow \mathcal U_n
+\end{equation*}
+to the finite qubit stages, label maps $t_n:V_n\to\mathbb F_2^{2n}$, and
+complex phases $\lambda_n:V_n\to\mathbb C$ such that
+\begin{equation*}
+  e_n(b_n(v))=\lambda_n(v)W_n(t_n(v)).
+\end{equation*}
+If the source basis embeddings, phases, and labels commute with every
+enlargement of the finite stage, then the $e_n$ commute with the source and
+target connecting maps on every element of $A_n$.  They therefore induce a
+star-algebra equivalence from the algebraic source limit to the algebraic
+qubit-UHF limit.  Hence, for every pure/mixed coordinate pattern $p$, the
+qubit product state pulls back to an algebraic direct-limit state $\omega_p$
+satisfying
+\begin{equation*}
+  \omega_p(\iota_n(b_n(v)))
+  =\lambda_n(v)\,\mathbf 1_{\mathrm{sel}(p,n)}(t_n(v)),
+\end{equation*}
+where the indicator is one exactly when pure coordinates have zero X exponent
+and mixed coordinates have the identity Pauli label.  When every coordinate is
+mixed, this construction pulls the algebraic UHF trace back to an algebraic
+tracial state on the source limit.  More generally, its pure/mixed pullback is
+algebraically tracial if and only if every coordinate is mixed.
+\end{proposition}
+
+\begin{proof}
+The two routes around the finite-stage square are complex-linear maps out of
+$A_n$.  They agree on the basis $b_n(V_n)$ by the three stated coherence
+conditions, hence agree everywhere by basis extensionality.  The compatible
+finite-stage equivalences then pull the checked qubit product-state family
+back to the algebraic source limit.  Evaluating a basis word first uses its
+phase-corrected Pauli image, then the finite Pauli-word selection rule from
+Proposition~\ref{prop:finite_pure_mixed_coordinate_product}.  Lean checks the
+basis-extensionality step in \texttt{CoherentBasisEquiv.lean} and the stated
+state construction and formula in \texttt{CoherentPhaseQubitState.lean}.
+The exact recursive-to-coordinate identification is checked in
+\texttt{FiniteQubitPauliSelection.lean}; it is the selected-Z condition used
+in the displayed formula.
+With the additional finite-stage hypothesis that these selected target labels
+are exactly the actual source stabilizer basis words,
+\texttt{CoherentPhaseQubitState.lean} derives the same formula with the
+indicator of the actual stabilizer predicate.  Thus the only remaining input
+at this point is the regional membership identification itself.
+This proposition does not construct the regional bases, phases, or coherent
+label maps; it makes those finite geometric conditions the exact remaining
+input.
+\end{proof}
+
+\begin{proposition}[Pauli-word phase-compatibility criterion, formal target
+PCC-001]
+\label{prop:pauli_cocycle_compatibility}
+Let $p_V(v)$ and $p_W(w)$ be two Pauli-word conventions, with multiplication
+and involution phases defined by
+\begin{align*}
+  p_V(v)p_V(v')&=m_V(v,v')p_V(v+v'),
+  &p_V(v)^*&=s_V(v)p_V(-v),\\
+  p_W(w)p_W(w')&=m_W(w,w')p_W(w+w'),
+  &p_W(w)^*&=s_W(w)p_W(-w).
+\end{align*}
+For an additive coordinate map $T:V\to W$ and a phase function
+$\lambda:V\to\mathbb C$, the phase-corrected assignment
+\begin{equation*}
+  p_V(v)\longmapsto \lambda(v)p_W(Tv)
+\end{equation*}
+respects both displayed word relations provided
+\begin{align*}
+  \lambda(v)\lambda(v')m_W(Tv,Tv')
+    &=m_V(v,v')\lambda(v+v'),\\
+  \overline{\lambda(v)}s_W(Tv)
+    &=s_V(v)\lambda(-v).
+\end{align*}
+\end{proposition}
+
+\begin{proof}
+Expand the product of the two target words using the target multiplication
+relation.  The first phase equation changes its scalar coefficient to the
+source coefficient multiplying the corrected word at $v+v'$.  Similarly,
+take the star of the corrected word, use the target star relation, and apply
+the second phase equation.  Lean verifies these two word-level calculations
+in \texttt{PauliCocycleCompatibility.lean}.  The proposition does not claim
+that symplecticity yields $\lambda$, nor does it extend the assignment to a
+star-algebra equivalence: those require respectively a phase-correction
+construction and a Pauli-word presentation or linear-independence theorem.
+\end{proof}
+
+\begin{proposition}[Algebraic direct-limit transport, formal target ALC-001]
+\label{prop:algebraic_direct_limit_transport}
+Let $(A_i,\alpha_{ij})$ and $(B_i,\beta_{ij})$ be directed systems of complex
+star algebras.  If complex star-algebra homomorphisms
+$\phi_i:A_i\to B_i$ obey
+\begin{equation*}
+  \phi_j\circ\alpha_{ij}=\beta_{ij}\circ\phi_i
+  \qquad (i\leq j),
+\end{equation*}
+then they induce a complex star-algebra homomorphism
+\begin{equation*}
+  \varinjlim_i A_i\longrightarrow\varinjlim_i B_i.
+\end{equation*}
+If every $\phi_i$ is a star-algebra equivalence, the induced map is a
+star-algebra equivalence.
+\end{proposition}
+
+\begin{proof}
+The map sends the class of a stage element $a\in A_i$ to the class of
+$\phi_i(a)\in B_i$.  The displayed compatibility makes this independent of
+the representative.  Addition, multiplication, scalar action, and the star
+can all be computed at one common stage.  For the equivalence assertion,
+apply the same construction to the compatible inverses and verify the two
+composites on stage representatives.  Lean verifies both claims in
+\texttt{AlgebraicLimitStarHom.lean}.  This is algebraic only: a C$^*$-map
+requires the additional proof that the finite-stage maps are isometric and
+compatible with the chosen norm completions.
+\end{proof}
+
+\begin{proposition}[C-star continuity of a supplied coordinate equivalence,
+formal target CSE-001]
+Let $A$ and $B$ be complex C$^*$-algebras, and let
+\begin{equation*}
+  e:A\longrightarrow B
+\end{equation*}
+be a complex star-algebra equivalence.  Then $e$ is an isometry and is
+continuous with continuous inverse.  Moreover, if a complex-linear functional
+$\tau:B\to\mathbb C$ is continuous, then so is its pullback
+\begin{equation*}
+  \tau\circ e:A\longrightarrow\mathbb C.
+\end{equation*}
+\end{proposition}
+
+\begin{proof}
+For a complex star-algebra equivalence, norm contractivity applies to $e$ and
+$e^{-1}$, giving equality of norms.  Thus both maps are continuous.  The
+final assertion is closure of continuous maps under composition.  Lean checks
+these statements in \texttt{CStarEquivExtension.lean}.  This proposition is
+conditional on actual C$^*$-algebra structures: it does not construct the
+norms or completions of the algebraic regional and coordinate limits.
+\end{proof}
+
+\begin{proposition}[Extension from a Pauli-word basis, formal target WBE-001]
+\label{prop:word_basis_extension}
+Let $A$ and $B$ be complex algebras, let $(p_i)_{i\in I}$ be a complex linear
+basis of $A$, and let $L:A\to B$ be complex linear.  If
+\begin{equation*}
+  L(p_i p_j)=L(p_i)L(p_j)
+  \qquad (i,j\in I),
+\end{equation*}
+then $L(xy)=L(x)L(y)$ for all $x,y\in A$.  If moreover $L(1)=1$, it is a
+complex algebra homomorphism.  If $A$ and $B$ are star algebras,
+\begin{equation*}
+  L(p_i^*)=L(p_i)^*
+  \qquad (i\in I),
+\end{equation*}
+then $L(x^*)=L(x)^*$ for every $x\in A$.  Consequently, if $L$ is bijective,
+it is a complex star-algebra equivalence.
+\end{proposition}
+
+\begin{proof}
+For fixed $y$, both maps
+\begin{equation*}
+  x\longmapsto L(xy),
+  \qquad
+  x\longmapsto L(x)L(y)
+\end{equation*}
+are complex linear.  It is therefore enough to compare them on each $p_i$.
+For fixed $i$, the same argument in the $y$ variable reduces that comparison
+to the assumed equality on $(p_i,p_j)$.  The Lean theorem
+\texttt{LinearMap.map\_mul\_of\_basis} formalizes this twofold basis
+argument, and \texttt{algHomOfBasis} adds the unitality clause.  This result
+also treats the star condition: the set of $x$ satisfying
+$L(x^*)=L(x)^*$ is a complex submodule, because both sides are
+conjugate-linear in $x$, and it contains the basis.  The checked definition
+\texttt{starAlgEquivOfBasis} combines the unital multiplicativity theorem,
+this star argument, and bijectivity into a star-algebra equivalence.
+\end{proof}
+
+\begin{proposition}[Explicit phase correction (formal target QPR-001)]
+\label{prop:explicit_pauli_phase_correction}
+Let $T:V\to W$ be an isomorphism of $\mathbb F_2$-vector spaces preserving
+the alternating commutator forms.  Suppose the two Pauli-word conventions
+have multipliers
+\begin{equation*}
+  m_V(v,v')=(-1)^{B_V(v,v')},
+  \qquad
+  m_W(w,w')=(-1)^{B_W(w,w')},
+\end{equation*}
+where $B_V$ and $B_W$ are $\mathbb F_2$-bilinear and their symmetrizations are
+the respective commutator forms, and suppose the involution conventions are
+$s_V(v)=(-1)^{B_V(v,v)}$ and
+$s_W(w)=(-1)^{B_W(w,w)}$.  Choose an ordered basis $(e_i)_{i\in I}$ of $V$.
+Then a phase function $\lambda:V\to\{1,i,-1,-i\}$ satisfying
+Proposition~\ref{prop:pauli_cocycle_compatibility} exists.
+\end{proposition}
+
+\begin{proof}
+Put
+\begin{equation*}
+  D(v,v')=B_V(v,v')+B_W(Tv,Tv')\in\mathbb F_2.
+\end{equation*}
+The symplectic assumption says that $D$ is symmetric.  Write a vector as the
+finite sum $v=\sum_i a_i e_i$, with $a_i\in\mathbb F_2$, and define
+\begin{equation*}
+  q(v)=\sum_i a_iD(e_i,e_i)
+       +2\sum_{i<j}a_i a_jD(e_i,e_j)\pmod 4.
+\end{equation*}
+Here each $\mathbb F_2$ coefficient is represented by $0$ or $1$ before the
+sum is read in $\mathbb Z/4\mathbb Z$.  Both sums are finite, even when $I$ is
+infinite.  Expanding the two sums over $\mathbb F_2$ gives
+\begin{equation*}
+  q(v+v')=q(v)+q(v')+2D(v,v')\pmod 4.
+\end{equation*}
+Set $\lambda(v)=i^{q(v)}$.  This identity gives
+\begin{equation*}
+  \lambda(v)\lambda(v')m_W(Tv,Tv')
+  =m_V(v,v')\lambda(v+v'),
+\end{equation*}
+which is the multiplication equation.  Also $q(v)$ modulo $2$ is
+$D(v,v)$, because the second sum has coefficient $2$.  The stated involution
+conventions, this parity identity, and $-v=v$ give
+\begin{equation*}
+  \overline{\lambda(v)}s_W(Tv)
+  =s_V(v)\lambda(v)=s_V(v)\lambda(-v),
+\end{equation*}
+which is the star equation in
+Proposition~\ref{prop:pauli_cocycle_compatibility}.  The Lean module
+\texttt{QuadraticPhaseRefinement.lean} formalizes both implications from the
+polarization and diagonal identities to the respective compatibility
+equations.  Thus
+$p_V(v)\mapsto\lambda(v)p_W(Tv)$ respects the prescribed multiplication and
+star relations on Pauli-word generators.  The finite-support formula for $q$
+is now defined in Lean and checked on zero, singleton, and two-coordinate
+words, together with the recurrence obtained by adjoining a largest support
+coordinate.  The associated finite double-sum discrepancy pairing is checked
+to be additive in both arguments and symmetric when $D$ is symmetric; the
+global polarization and diagonal identities are now formalized.  Once the
+actual source and target Pauli exponents are identified with this pairing and
+a phase-corrected word-basis linear equivalence is supplied, the checked
+definition \texttt{coordinateQuadraticPhaseStarAlgEquivOfBasis} produces a
+star-algebra equivalence between the source and target word algebras.  When
+the target is the concrete finite-pure matrix algebra tensored with the
+algebraic qubit-UHF direct limit, the checked theorem
+\texttt{exists\_coordinateQuadraticPhase\_finitePureQubitUHFTrace} also pulls
+the product trace back along this equivalence and proves its elementary-tensor
+formula.  This remains an algebraic statement; the C$^*$ and von Neumann
+extensions are not part of the theorem.
+\end{proof}
+
+\begin{proposition}[Calibration by the stabilizer character, formal target SCC-001]
+\label{prop:stabilizer_character_calibration}
+Let $W\subset V$ be the label subspace of the stabilizer group, and let
+$P(v)P(w)=\sigma(v,w)P(v+w)$ be a fixed Pauli section.  The actual stabilizer
+operators have the form
+\begin{equation*}
+  S(v)=\chi(v)P(v)\qquad (v\in W),
+\end{equation*}
+where their group law is equivalent to
+\begin{equation*}
+  \chi(v)\chi(w)\sigma(v,w)=\chi(v+w)
+  \qquad (v,w\in W).
+\end{equation*}
+Let $V_{\mathrm{coord}}$ be the coordinate-label space.  Suppose
+$T:V_{\mathrm{coord}}\to V$ is the adapted symplectic coordinate isomorphism
+and $\lambda_0:V_{\mathrm{coord}}\to U(1)$ is a phase correction from
+Proposition~\ref{prop:explicit_pauli_phase_correction}.  Then there is a
+phase correction $\lambda:V_{\mathrm{coord}}\to U(1)$, obtained from
+$\lambda_0$ by a character calibration, such that
+\begin{equation*}
+  \lambda(0,b)P(T(0,b))=S(T(0,b))
+  \qquad\text{for every coordinate }(0,b)\in T^{-1}(W).
+\end{equation*}
+\end{proposition}
+
+\begin{proof}
+The quotient
+\begin{equation*}
+  \eta(v):=\chi(Tv)\lambda_0(v)^{-1}\qquad (v\in T^{-1}W)
+\end{equation*}
+is an ordinary character of the $\mathbb F_2$-vector space $T^{-1}W$:
+the two cocycle relations cancel.  A character of a subspace extends to the
+ambient vector space after extending a basis of the subspace to a basis of
+$V_{\mathrm{coord}}$.  Multiply $\lambda_0$ by such an extension of $\eta$.  Ordinary
+characters of an $\mathbb F_2$-vector space take values in $\{1,-1\}$, so they
+preserve the multiplier and star compatibility equations, while
+the displayed equality holds by construction.  Thus the corrected coordinate
+$Z$-words are the actual stabilizers, not merely phase-ambiguous Pauli labels.
+The quotient-cancellation, subspace-extension, finite-field involution, and
+both Pauli-word compatibility-preservation steps are formalized in
+\texttt{StabilizerCharacterCalibration.lean}.  The initial finite-support
+quadratic phase correction is now formalized; its identification with the
+actual regional Pauli convention remains a separate task.
+\end{proof}
+
+\begin{proposition}[Adapted-coordinate stabilizer membership, formal target
+ASC-001]
+\label{prop:adapted_coordinate_stabilizer_membership}
+Let $V$ have a Hamel basis $\{z_i,x_i:i\in I\}$ over $\mathbb F_2$, let
+$P\subseteq I$, and put
+\begin{equation*}
+  W_P=\operatorname{span}_{\mathbb F_2}\{z_i:i\in P\}.
+\end{equation*}
+Write a finite coordinate word as
+\begin{equation*}
+  v=\sum_{i\in I} a_i x_i+\sum_{i\in I}b_i z_i.
+\end{equation*}
+Then
+\begin{equation*}
+  v\in W_P
+  \quad\Longleftrightarrow\quad
+  a_i=0\ \text{for every }i,\qquad
+  b_i=0\ \text{for every }i\notin P.
+\end{equation*}
+\end{proposition}
+
+\begin{proof}
+The coordinate equivalence identifies the selected-Z span with the finitely
+supported functions on the subset $\{\mathrm{inl}(i):i\in P\}$ of the
+disjoint X/Z coordinate index.  Membership is therefore precisely support
+containment in that subset, which is equivalent to the displayed pointwise
+conditions.  Lean proves both the equality with the selected-Z span and the
+membership equivalence in \texttt{AdaptedStabilizerSubspace.lean}.  This
+settles the linear selection criterion required in the density-matrix step.
+
+\texttt{FiniteQubitPauliSelection.lean} now maps the recursive finite-qubit
+labels into this finitely supported Z/X coordinate space and proves that its
+pure/mixed selection predicate is precisely the displayed membership condition.
+Identifying the concrete regional stabilizer subspace with this selected
+coordinate span and matching its Pauli phases remain separate hypotheses.
+\end{proof}
+
+\begin{theorem}[AlgebraicInductiveLimitTrace, formal target AIT-001]
+Let \((A_i,\alpha_{ij})\) be a directed system of unital complex algebras
+with unital algebra homomorphisms.  Suppose each \(A_i\) carries a unital
+cyclic linear functional \(\tau_i\), and that
+\begin{equation*}
+  \tau_j\bigl(\alpha_{ij}(a)\bigr)=\tau_i(a)
+  \qquad (i\leq j, a\in A_i).
+\end{equation*}
+Then the algebraic direct limit carries a unique induced complex-linear
+functional \(\tau_{\mathrm{alg}}\) with
+\begin{equation*}
+  \tau_{\mathrm{alg}}\circ\iota_i=\tau_i,
+\end{equation*}
+and \(\tau_{\mathrm{alg}}\) is unital and cyclic.
+\end{theorem}
+
+\begin{proof}
+The compatibility equation makes the assignment
+\(\iota_i(a)\mapsto\tau_i(a)\) independent of the representative in the
+quotient defining the directed algebraic limit.  If two limit elements are
+represented at one common stage, multiplication and cyclicity can be computed
+there, proving cyclicity in the limit.  The Lean theorem
+\texttt{algebraicLimitTrace\_isUnitalCyclic} proves this quotient-level
+argument using mathlib's directed algebraic direct limit.
+\end{proof}
+
+\begin{theorem}[AlgebraicInductiveLimitTracialState, formal target AIT-002]
+Let \((A_i,\alpha_{ij})\) be as in Theorem AIT-001, now with unital complex
+star algebras and star-preserving connecting maps.  If every \(\tau_i\) is an
+algebraic tracial state and the same compatibility condition holds, then the
+algebraic direct limit has a canonical involution and its induced functional
+is unital, cyclic, and positive on star-squares:
+\begin{equation*}
+  \tau_{\mathrm{alg}}(z^*z)\in\mathbb R_{\geq0}
+  \qquad (z\in\varinjlim_i A_i).
+\end{equation*}
+\end{theorem}
+
+\begin{proof}
+Define the star of the class of \((i,a)\) to be the class of \((i,a^*)\).
+This is well-defined because each connecting map preserves the involution.
+For a representative \(z=\iota_i(a)\), both \(z^*z\) and its trace are
+represented at the same stage by \(a^*a\), where positivity is an assumption.
+The Lean module \texttt{AlgebraicStarDirectLimit} checks the quotient-level
+well-definedness of the involution, its involutivity, additivity, and reversal
+of multiplication, as well as the displayed positivity conclusion.  This is
+still a statement about the \emph{algebraic} direct limit: it asserts neither
+continuity nor normality after a completion.
+\end{proof}
+
+\begin{theorem}[Algebraic quasi-local trace transport, formal target ALT-001]
+Let \((A_i,\alpha_{ij})\) and \((D_i,\delta_{ij})\) be directed systems of
+unital complex star algebras.  Suppose star-algebra equivalences
+\(e_i:A_i\to D_i\) satisfy
+\begin{equation*}
+  e_j\circ\alpha_{ij}=\delta_{ij}\circ e_i,
+\end{equation*}
+and compatible target algebraic tracial states \(\tau_i\) are given.  Then the
+induced algebraic direct-limit star-algebra equivalence pulls the target-limit
+trace back to an algebraic tracial state on \(\varinjlim_i A_i\), with
+\begin{equation*}
+  \tau_{\mathrm{source}}(\iota_i(a))=\tau_i(e_i(a)).
+\end{equation*}
+\end{theorem}
+
+\begin{proof}
+The finite-stage equivalences induce the algebraic-limit star-algebra
+equivalence, and the compatible target-stage states glue by Theorem AIT-002.
+Pull back the latter state.  The finite-stage formula follows by evaluating
+both constructions on a representative.  Lean checks this argument in
+\texttt{AlgebraicLimitTrace\-Transport.lean}; it is algebraic and does not
+assert a C$^*$-continuous or normal extension.
+\end{proof}
+
+\begin{theorem}[Conditional finite-pure-sector trace]
+Assume a normal \(*\)-isomorphism
+\begin{equation*}
+  \Phi:\cM_\Gamma \longrightarrow
+  \cB(\mathcal K)\,\bar\otimes\,\cR,
+\end{equation*}
+where \(\dim\mathcal K<\infty\), \(\cR\) is the hyperfinite type
+\(II_1\) factor, and the tensor product carries the product of the normalized
+matrix trace and the unique normalized trace of \(\cR\).  Then its pullback
+along \(\Phi\) is a faithful normal tracial state on \(\cM_\Gamma\).
+\end{theorem}
+
+\begin{proof}
+The finite-dimensional normalized matrix trace and the normalized trace of
+\(\cR\) are faithful normal tracial states.  Their normal tensor product is a
+faithful normal tracial state; transport it by the normal isomorphism.  The
+algebraic tracial part is Theorem TPT-002.  Normality and faithfulness are
+preserved by a normal \(*\)-isomorphism.
+\end{proof}
+
+\begin{remark}[Infinite pure sector]
+If \(\mathcal K\) is infinite dimensional, \(\cB(\mathcal K)\) has no
+tracial state.  Hence \(\cB(\mathcal K)\bar\otimes\cR\) cannot acquire a
+tracial state by tensoring the trace on \(\cR\) with a trace on the first
+factor.  The correct object in this case is the faithful normal semifinite
+trace obtained from the standard semifinite trace on \(\cB(\mathcal K)\) and
+the finite trace on \(\cR\).  This is the type \(II_\infty\) case, not the
+type \(II_1\) case.  The Lean module
+\texttt{ProperlyInfiniteTraceObstruction.lean} checks the algebraic core: if
+two isometries have range projections summing to the identity, unital cyclicity
+would give \(1=1+1\) for the trace value of the identity.  Identifying such
+isometries in a particular infinite von Neumann representation is a separate
+analytic step.
+\end{remark}
+
+\subsection*{Corrected analytic target}
+
+The analytic theorem needed to connect the checked algebraic results to a
+stabilizer region should be stated with the following explicit hypotheses.
+Let \(I\) be the coordinate set, let \(P\subset I\) label the pure
+coordinates, and put \(C=I\setminus P\).  Assume:
+\begin{enumerate}
+\item \(V_{\mathcal G}\) has an adapted Hamel symplectic basis
+\(\{z_i,x_i:i\in I\}\), every basis vector has finite lattice support, and
+\(W_{\mathcal G}=\operatorname{span}_{\mathbb F_2}\{z_i:i\in P\}\);
+\item the symplectic coordinate map is equipped with the finite-support
+Pauli phase convention of Proposition~\ref{prop:explicit_pauli_phase_correction},
+\item the phase convention is calibrated to the stabilizer character as in
+Proposition~\ref{prop:stabilizer_character_calibration},
+\item its induced map on finite Pauli words extends to a C\(^*\)-isomorphism
+from the coordinate UHF algebra onto the regional quasi-local algebra; and
+\item the restriction of the global GNS representation to that regional
+algebra is quasi-equivalent to the GNS representation of the restricted
+product state.
+\end{enumerate}
+The first condition uses finite support of each coordinate pair, not a
+uniform support bound.  It makes every finite coordinate word a finite lattice
+Pauli word, while the Hamel-basis condition makes every finite lattice Pauli
+word a finite coordinate word.  The phase condition is independent: a
+symplectic map fixes the commutator but not necessarily the chosen Pauli
+multiplier.  It must also be calibrated to the phases of the actual
+stabilizer group, since a label alone does not determine a $+1$ stabilizer.
+The C\(^*\)-extension and GNS comparison are also distinct:
+algebraic word-level surjectivity alone does not identify the weak closures in
+the two representations.
+
+Under these five assumptions the product-state GNS representation has the
+spatial form
+\begin{equation*}
+  \pi_{\widetilde\omega}(\mathcal P_I)''
+  \cong \cB(\mathcal K_P)\bar\otimes\cR_C,
+\end{equation*}
+where \(\mathcal K_P\) is the incomplete tensor-product Hilbert space of the pure
+coordinates and \(\cR_C\) is the tracial product factor of the mixed
+coordinates.  More precisely,
+\begin{equation*}
+  \cR_C\cong
+  \begin{cases}
+    M_{2^{\lvert C\rvert}}(\mathbb C),&\lvert C\rvert<\infty,\\
+    \cR,&\lvert C\rvert=\infty,
+  \end{cases}
+  \qquad
+  \dim\mathcal K_P=
+  \begin{cases}
+    2^{\lvert P\rvert},&\lvert P\rvert<\infty,\\
+    \infty,&\lvert P\rvert=\infty.
+  \end{cases}
+\end{equation*}
+Thus a normal tracial \emph{state} exists precisely when \(P\) is finite;
+when \(P\) is infinite, the tensor product instead has the natural faithful
+normal semifinite trace.  The finite type-I part of this statement is FAM-001;
+the product representation, normality, and factor classification remain the
+analytic work not yet expressible in the pinned Lean library.
+
+\subsection*{Why the current manuscript proof is not imported}
+
+The checked construction above is not a transcription of the current Overleaf
+proof.  In the 2026-08-02 checkout of
+\texttt{writing/overleaf\_prl\_stabilizer\_region\_algebras/main.tex}, the
+following load-bearing points remain unproved or misstated:
+\begin{enumerate}
+\item the theorem statement at lines 1740--1752 has no short-range or adapted
+finite-support symplectic-basis hypothesis, although its proof assumes one at
+lines 1905--1912;
+\item lines 1915--1920 declare the infinite Pauli \(*\)-isomorphism but do
+not construct it, fix its phases against the stabilizer character, or prove
+its C\(^*\)-extension;
+\item lines 1925--1945 assert the product density matrix without proving the
+precise stabilizer-membership criterion needed for all Pauli words;
+\item lines 1947--1967 invoke product-GNS factorization and classification
+without a normal/spatial tensor-product theorem, and the finite pure-sector
+matrix size is \(2^{\lvert P\rvert}\), not the number of pure coordinates;
+and
+\item lines 1972--1995 do not establish equality of the two folia or a normal
+isomorphism of the weak closures: the required comparison of normal preduals
+and summability is left as an explicit question at lines 1992--1995.
+\end{enumerate}
+The formalization therefore proves the algebraic pieces that can be justified
+and exposes the analytic hypotheses that must be supplied before the regional
+factor statement can be promoted to a theorem.
+
+\subsection*{Analytic proof obligations before a full theorem}
+
+To instantiate the conditional theorem for a stabilizer region, one must prove:
+\begin{enumerate}
+\item an exhaustion-compatible, finite-support adapted symplectic coordinate
+map; the finite-support phase correction is then given by
+Proposition~\ref{prop:explicit_pauli_phase_correction} and must be calibrated
+by Proposition~\ref{prop:stabilizer_character_calibration};
+\item the induced quasi-local C\(^*\)-isomorphism;
+\item factorization of the restricted regional state into pure and normalized-tracial
+coordinate states; and
+\item a spatial/normal extension identifying the bicommutants.
+\end{enumerate}
+Without all four, the displayed regional tensor-product isomorphism remains a
+hypothesis, not a consequence of short-range entanglement.
+
+\subsection*{Checked Lean boundary}
+
+The pinned mathlib checkout has preliminary abstract and concrete von
+Neumann-algebra definitions, but not the required tensor-product, normal-state,
+hyperfiniteness, or factor-classification API.  The Lean structure
+\texttt{ProductModelTraceData} records an algebra, a model
+algebra, a \(*\)-equivalence, and an algebraic tracial state on the model.  Its
+theorem \texttt{inducedTrace\_isAlgebraicTracialState} constructs the pullback
+state.  Thus, once the analytic construction supplies the normal
+tensor-product equivalence and the normal product trace, the purely algebraic
+part of the asserted induced-state conclusion is already checked.  The terms
+``normal,'' ``hyperfinite,'' and ``type \(II_1\)'' are not claimed by this Lean
+theorem.
+
+The tensor-matrix, dyadic-tower, and algebraic-direct-limit Lean modules
+additionally verify a concrete algebraic core of the infinite qubit product:
+the dyadic finite-stage traces descend to the directed limit and remain
+positive on star-squares.  To obtain the hyperfinite factor, one must still
+construct the relevant C\(^*\) and von Neumann completions and prove the four
+analytic obligations above.
+
+\subsection*{Sources}
+
+The source claim appears in the Overleaf manuscript, \texttt{main.tex},
+Theorem \texttt{thm:short\_range\_algebra} and the following proof discussion
+(local lines 1740--1973 in the 2026-08-02 checkout).  Its explicit unresolved
+markers occur at the coordinate map, product state, and tensor-product
+classification steps.  For the standard model-factor facts, use Takesaki I,
+Proposition IV.4.13 (represented tensor products), and Blackadar,
+Sections III.3.1.4 and III.3.4.2 (tracial infinite products and
+hyperfiniteness), as staged in the earlier project blueprint 012.
+
+\end{document}

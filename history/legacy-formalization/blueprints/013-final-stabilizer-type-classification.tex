@@ -1,0 +1,425 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable}
+\usepackage{hyperref}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{warning}[definition]{Warning}
+\newtheorem{convention}[definition]{Convention}
+
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{\detokenize{#1}}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+\newcommand{\depends}[1]{\par\noindent\textbf{Depends on.} #1}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cB}{\mathcal B}
+\newcommand{\cD}{\mathcal D}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cP}{\mathcal P}
+\newcommand{\cR}{\mathcal R}
+\newcommand{\Ftwo}{\mathbb F_2}
+
+\begin{document}
+
+\section*{Blueprint 013: Final Stabilizer Type Classification}
+
+\subsection*{Scope}
+
+This note promotes the final remaining blueprint block from
+\path{agents/2026-06-22-remaining-blueprint-suite-goal.md}.  It supports
+\[
+  \texttt{CPS-001},\quad
+  \texttt{IRANK-001},\quad
+  \texttt{CRVN-001},\quad
+  \texttt{MTT-001},\quad
+  \texttt{TYPE-001},\quad
+  \texttt{TYPE-002}.
+\]
+It is the final source-backed natural-language prerequisite before later Lean
+extraction of the canonical stabilizer projection-state type theorem.  It does
+not create Lean files or Aristotle packets.
+
+\subsection*{Source and Dependency Basis}
+
+The stabilizer-side theorem is project-local and comes from project proof note
+004, especially Theorem 5.1 and Corollaries 5.2--5.3.  The operator-algebra
+steps are not reproved here; they are routed through earlier dedicated
+blueprints:
+\[
+\begin{array}{ll}
+\texttt{STATE-002},\texttt{STATE-003},\texttt{STATE-004}
+  & \text{finite canonical states, quasi-local state, and restriction},\\
+\texttt{CPS-001},\texttt{IRANK-001}
+  & \text{named projection-state input and internal rank package},\\
+\texttt{PROD-001} & \text{product form after adapted symplectic reduction},\\
+\texttt{GNS-001},\texttt{GNS-004},\texttt{GNS-003},\texttt{VN-001},\texttt{VN-003}
+  & \text{canonical-state GNS data and represented-region transport},\\
+\texttt{CRVN-001}
+  & \text{canonical-state represented region von Neumann algebra},\\
+\texttt{TRACE-001},\texttt{TYPE-DEF-001},\texttt{TYPE-ALT-001}
+  & \text{trace criteria and direct factor type predicates},\\
+\texttt{MFH-001},\texttt{ITP-PURE-001},\texttt{ITP-TRACE-001},\texttt{TENSOR-001},
+\texttt{MTT-001}
+  & \text{pure--defect model factors and tensor type table}.
+\end{array}
+\]
+The projection-defined strengthening needed for the final theorem is named
+below as \(\mathrm{CPS}_{\Gamma,S'}\) and carried by \texttt{CPS-001}.
+
+\begin{convention}[Canonical projection-state scope]
+Let \(\Gamma\) be a finite or countably infinite qubit region.  Let \(S'\) be a
+consistent stabilizer extension with binary stabilizer label space \(W'\), and
+let
+\[
+  W'_\Gamma = W'\cap V_\Gamma
+\]
+be its internal region stabilizer space.  The state under consideration is the
+canonical stabilizer projection state \(\omega_{S'}\), restricted to the region
+quasi-local algebra \(\cA_\Gamma\).  This note does not classify arbitrary
+logical ground states, arbitrary non-canonical states, or states obtained by
+unproved quasi-local/gLU normal forms.
+\source{Project proof note 004, Convention 2.3, Lemma 2.4, Proposition 4.1,
+Theorem 5.1, and Warning 6.2, local PDF
+\path{../runs/2026-06-18-stabilizer-algebra-classification/artifacts/004-internal-stabilizer-reduction-type-classification-R1.pdf},
+PDF pp.~2--7; \path{blueprints/009-internal-stabilizer-reduction.tex}.}
+\status{Scope convention for \texttt{TYPE-001} and \texttt{TYPE-002}.}
+\end{convention}
+
+\subsection*{Named Inputs for the Capstone Theorem}
+
+\begin{definition}[ProjectionDefinedCanonicalStateInput, ID: CPS-001, project proof note 004 Convention 2.3, Lemma 2.4, Proposition 4.1, and Theorem 5.1, PDF pp.~2--6]
+The named input
+\(\mathrm{CPS}_{\Gamma,S'}\) means the following projection-defined
+canonical-state package.
+For every finite \(F\subseteq\Gamma\), there is a finite code projection
+\(q_F\in\cA_F\) onto the simultaneous eigenspace cut out by the internal
+stabilizer labels \(W'\cap V_F\) and their character values.  The finite
+state is the normalized projection trace
+\[
+  \omega_F(a)=\frac{\operatorname{Tr}_F(q_Fa)}{\operatorname{Tr}_F(q_F)},
+  \qquad a\in\cA_F,
+\]
+and this projection-state formula has the Pauli coefficient rule of
+\texttt{STATE-002}.  The finite states are compatible under inclusions, extend
+uniquely to the quasi-local state \(\omega_{S'}:\cA_\Gamma\to\mathbb C\) of
+\texttt{STATE-003}, and the restriction to any region is controlled by the
+internal stabilizer space as in \texttt{STATE-004}.
+\source{Project proof note 004, Convention 2.3, Lemma 2.4, Proposition 4.1,
+and Theorem 5.1, PDF pp.~2--6; \path{blueprints/002-canonical-state.tex};
+\path{blueprints/008-stabilizer-local-state-foundations.tex}, targets
+\texttt{STATE-002}, \texttt{STATE-003}, and \texttt{STATE-004}.}
+\depends{\texttt{STATE-002}, \texttt{STATE-003}, \texttt{STATE-004}.  The
+finite code-projection construction is recorded in
+\path{blueprints/008-stabilizer-local-state-foundations.tex} as the
+projection-state layer supporting \texttt{STATE-002}.}
+\lean{Formalization.Stabilizer.RegionType.ProjectionDefinedCanonicalStateInput}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proof}[Well-formedness]
+The finite projection \(q_F\) lives in the finite matrix algebra
+\(\cA_F\), so the normalized trace formula is a state once
+\(\operatorname{Tr}_F(q_F)>0\).  Compatibility and the quasi-local extension
+are precisely the data needed to make \(\omega_{S'}\) independent of the
+finite stage.  The definition records this as a named input rather than using
+the phrase ``canonical projection state'' as an unexpanded assumption.
+\end{proof}
+
+\begin{definition}[InternalRanks, ID: IRANK-001, project proof note 004 Definition 3.3 and Theorem 5.1, PDF pp.~4--6]
+Choose an algebraic adapted symplectic basis
+\[
+  \{z_i,x_i:i\in I\}
+\]
+for \(V_\Gamma\) such that
+\[
+  W'_\Gamma=\operatorname{span}_{\Ftwo}\{z_i:i\in P\}
+\]
+for some \(P\subseteq I\).  Define the internal fixed rank and internal defect
+rank by
+\[
+  p:=|P|=\dim_{\Ftwo}W'_\Gamma,\qquad
+  r:=|I\setminus P|.
+\]
+The ranks are finite or countably infinite.
+\source{Project proof note 004, Definition 3.3 and Theorem 5.1, PDF
+pp.~4--6; \path{blueprints/009-internal-stabilizer-reduction.tex},
+targets \texttt{SYMP-001}, \texttt{SYMP-002}, and \texttt{PROD-001}.}
+\depends{\texttt{SYMP-001}, \texttt{SYMP-002}, \texttt{PROD-001}.}
+\lean{Formalization.Stabilizer.InternalRanks}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{definition}[CanonicalStateRegionVN, ID: CRVN-001, Takesaki I Theorem I.9.14 and Definition II.3.2, PDF pp.~59--61, 92]
+Assume \(\mathrm{CPS}_{\Gamma,S'}\).  Applying \texttt{GNS-001} to the
+state \(\omega_{S'}|_{\cA_\Gamma}\) gives the canonical-state GNS triple
+\[
+  (\cH_{\omega_{S'}},\pi_{\omega_{S'}},\Omega_{\omega_{S'}})
+\]
+with
+\[
+  \omega_{S'}(a)=
+  \langle \pi_{\omega_{S'}}(a)\Omega_{\omega_{S'}},
+          \Omega_{\omega_{S'}}\rangle .
+\]
+The represented region von Neumann algebra of the canonical projection state
+is then
+\[
+  \cM_\Gamma(S') :=
+  \pi_{\omega_{S'}}(\cA_\Gamma)''\subseteq\cB(\cH_{\omega_{S'}}).
+\]
+\source{Project proof note 004, Theorem 5.1, PDF pp.~5--6;
+\path{blueprints/010-gns-represented-region-layer.tex}, targets
+\texttt{GNS-001}, \texttt{GNS-003}, \texttt{GNS-004}, \texttt{VN-001}, and
+\texttt{VN-003};
+Takesaki I, Theorem I.9.14, PDF pp.~59--61, Definition I.9.15, PDF p.~61,
+Definition II.3.2, PDF p.~92, and Theorem II.3.9, PDF pp.~94--95.}
+\depends{\texttt{CPS-001}, \texttt{GNS-001}, \texttt{GNS-003},
+\texttt{GNS-004}, \texttt{VN-001}, and \texttt{VN-003}.}
+\lean{Formalization.Stabilizer.RegionType.regionVN}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proof}[Well-formedness]
+The named input \(\mathrm{CPS}_{\Gamma,S'}\) supplies a state on the
+quasi-local algebra, so the GNS theorem applies.  The region algebra
+\(\cA_\Gamma\) is represented on the resulting Hilbert space, and the double
+commutant construction in \texttt{VN-001} turns its represented image into a
+concrete von Neumann algebra.  The product-state identification and spatial
+transport used later are not part of the definition; they enter through
+\texttt{GNS-003} and \texttt{VN-003}.
+\end{proof}
+
+\begin{definition}[RegionModelTraceTypeInput, ID: MTT-001]
+For \(P,R\subseteq I\), the named input
+\(\mathrm{MTT}_{P,R}\) means that the product model
+\[
+  \cP_P\bar\otimes\cD_R
+\]
+is interpreted using the direct factor type predicates of
+\texttt{TYPE-DEF-001}, the trace and semifiniteness criteria of
+\texttt{TRACE-001}, and the four-case model-factor theorem
+\texttt{TENSOR-001}.  If the Blackadar-backed model-factor proofs inside
+\texttt{TENSOR-001} have not yet been formalized, the only permitted extra
+assumptions are the named hypotheses
+\(\mathrm{MFH}_{\mathrm{factor}}\),
+\(\mathrm{MFH}_{\mathrm{tracial}\,M_2}\), and
+\(\mathrm{MFH}_{\cR\otimes\cB}\) from
+\path{blueprints/012-infinite-product-type-calculus.tex}.
+
+The GNS vector state on \(\cM_\Gamma(S')\) is normal by construction, but it
+is not assumed to be tracial in general.  The finite or semifinite traces used
+to recognize the displayed types are the model traces supplied by
+\texttt{ITP-TRACE-001}, \texttt{TENSOR-001}, and \texttt{TRACE-001}, then
+transported across the spatial isomorphism of \texttt{VN-003}.
+\source{\path{blueprints/011-von-neumann-type-theory.tex}, targets
+\texttt{TRACE-001}, \texttt{TYPE-DEF-001}, and \texttt{TYPE-ALT-001};
+\path{blueprints/012-infinite-product-type-calculus.tex}, targets
+\texttt{MFH-001}, \texttt{ITP-PURE-001}, \texttt{ITP-TRACE-001}, and
+\texttt{TENSOR-001}.}
+\depends{\texttt{TRACE-001}, \texttt{TYPE-DEF-001}, \texttt{TYPE-ALT-001},
+\texttt{MFH-001} if deferred, \texttt{ITP-PURE-001},
+\texttt{ITP-TRACE-001}, and \texttt{TENSOR-001}.}
+\lean{Formalization.Stabilizer.RegionType.ModelTraceTypeInput}
+\status{named_input_for_trace_and_type_criteria}
+\end{definition}
+
+\begin{proof}[Well-formedness]
+The input separates three pieces that are otherwise easy to conflate: normality
+of the GNS vector state, existence of model traces, and direct type predicates.
+All traces and type predicates are attached to concrete represented von
+Neumann algebras, and spatial transport preserves the relevant algebraic
+properties.  Thus the final theorem can cite \(\mathrm{MTT}_{P,R}\) without
+asserting that the canonical GNS vector state itself is a trace.
+\end{proof}
+
+\subsection*{Final Type Classification}
+
+\begin{theorem}[RegionTypeClassification, ID: TYPE-001, project proof note 004 Theorem 5.1, PDF pp.~5--6]
+Let \(\Gamma\), \(S'\), \(\omega_{S'}\), \(p\), \(r\), and
+\(\cM_\Gamma(S')\) be as above.  Assume the named inputs
+\(\mathrm{CPS}_{\Gamma,S'}\) and \(\mathrm{MTT}_{P,I\setminus P}\), and assume
+the adapted product-form and GNS transport hypotheses listed in the dependency
+line below.  Then \(\cM_\Gamma(S')\) satisfies the direct type predicates of
+\texttt{TYPE-DEF-001} as follows:
+\[
+\begin{array}{c|c|c}
+\text{internal fixed rank }p & \text{internal defect rank }r
+  & \text{type of }\cM_\Gamma(S')\\
+\midrule
+p<\infty & r<\infty & \text{finite type } I\\
+p=\infty & r<\infty & \text{type } I_\infty\\
+p<\infty & r=\infty & \text{hyperfinite type } II_1\\
+p=\infty & r=\infty & \text{type } II_\infty .
+\end{array}
+\]
+\source{Project proof note 004, Theorem 5.1, PDF pp.~5--6.  Stabilizer
+dependencies: \path{blueprints/008-stabilizer-local-state-foundations.tex} for
+region restriction and crossing-stabilizer invisibility;
+\path{blueprints/009-internal-stabilizer-reduction.tex} for adapted
+symplectic reduction and product form.  Operator-algebra dependencies:
+\path{blueprints/010-gns-represented-region-layer.tex} for \texttt{GNS-004}
+canonical projection-code GNS specialization and GNS transport;
+\path{blueprints/011-von-neumann-type-theory.tex} for type vocabulary; and
+\path{blueprints/012-infinite-product-type-calculus.tex} for the precise
+pure--defect model-factor type table and named conditional model-factor
+hypotheses.}
+\depends{\texttt{CPS-001}, \texttt{IRANK-001}, \texttt{CRVN-001},
+\texttt{STATE-002},
+\texttt{STATE-003}, \texttt{STATE-004}, \texttt{SYMP-001},
+\texttt{SYMP-002}, \texttt{PROD-001}, \texttt{GNS-001},
+\texttt{GNS-004}, \texttt{GNS-003}, \texttt{VN-001}, \texttt{VN-003},
+\texttt{TRACE-001},
+\texttt{ITP-PURE-001}, \texttt{ITP-TRACE-001}, \texttt{TENSOR-001},
+\texttt{TYPE-DEF-001}, \texttt{TYPE-ALT-001}, \texttt{MATRIX-001}, and
+\texttt{MTT-001}.}
+\lean{Formalization.Stabilizer.RegionType.type_classification}
+\status{blueprint_note_complete}
+\end{theorem}
+
+\begin{proof}
+By \texttt{CPS-001}, equivalently by
+\(\mathrm{CPS}_{\Gamma,S'}\), the state is the quasi-local extension of
+finite normalized code-projection states.  By \texttt{STATE-004}, the
+coefficients of
+\(\omega_{S'}|_{\cA_\Gamma}\) depend only on the internal stabilizer subspace
+\(W'_\Gamma\); crossing stabilizers affect the local type only through
+internal products that lie in \(W'_\Gamma\).  By \texttt{SYMP-001} and
+\texttt{SYMP-002}, an algebraic adapted symplectic basis transports the region
+Pauli algebra to a formal product qubit algebra with
+\[
+  W'_\Gamma=\operatorname{span}_{\Ftwo}\{z_i:i\in P\}.
+\]
+By \texttt{PROD-001}, the transported state is the product of pure
+\(Z\)-eigenstates over \(P\) and normalized traces over \(I\setminus P\):
+\[
+  \bigotimes_{i\in P}\omega_{Z,\epsilon_i}
+  \otimes
+  \bigotimes_{i\in I\setminus P}\operatorname{tr}_2 .
+\]
+The signs \(\epsilon_i\in\{\pm1\}\) record the stabilizer character.  They
+change only the one-site pure vector states and are removed by one-site unitary
+conjugacies, so they do not change the represented model factor type.
+
+The canonical-state GNS specialization in \texttt{GNS-004} supplies
+\((\cH_{\omega_{S'}},\pi_{\omega_{S'}},\Omega_{\omega_{S'}})\), and
+\texttt{VN-001} defines
+\(\cM_\Gamma(S')=\pi_{\omega_{S'}}(\cA_\Gamma)''\).  By \texttt{GNS-003} and
+\texttt{VN-003}, state transport by the adapted \(*\)-isomorphism gives a
+spatial isomorphism between \(\cM_\Gamma(S')\) and the represented
+pure--defect product factor
+\[
+  \cP_P\bar\otimes\cD_{I\setminus P},
+\]
+where \(\cP_P\) is the pure-mode product factor and \(\cD_{I\setminus P}\) is
+the tracial-defect product factor of
+\path{blueprints/012-infinite-product-type-calculus.tex}.
+
+The named input \texttt{MTT-001}, written
+\(\mathrm{MTT}_{P,I\setminus P}\), says that the product model is classified
+by \texttt{TENSOR-001}, with any deferred Blackadar model-factor claims
+exposed only through \texttt{MFH-001}.  Applying \texttt{TENSOR-001} gives
+exactly the four displayed cases.  The traces used
+to identify the finite and semifinite cases are the model traces from
+\texttt{TRACE-001} and \texttt{TENSOR-001}; the proof does not require the
+canonical GNS vector state to be tracial.  Spatial isomorphism preserves the
+factor type predicates from \texttt{TYPE-DEF-001}, so the same direct type
+table holds for \(\cM_\Gamma(S')\).
+\end{proof}
+
+\begin{corollary}[NoTypeIIIRegion, ID: TYPE-002, project proof note 004 Theorem 5.1, PDF pp.~5--6]
+No canonical projection state of a Pauli stabilizer extension produces a type
+III represented region algebra under this finite/countable internal-stabilizer
+classification.
+\source{Project proof note 004, Theorem 5.1, PDF pp.~5--6; Takesaki I,
+Theorem V.1.19, Corollary V.1.20, and Definition V.1.21, PDF pp.~316--317,
+for factor alternatives and semifiniteness; Blackadar III.3.1.4, PDF p.~302;
+III.3.1.6, PDF p.~303; and III.3.4.2, PDF p.~317, for the \(II_1\) and \(II_\infty\) model
+identifications used in \texttt{TENSOR-001}.}
+\depends{\texttt{TYPE-001}, \texttt{TRACE-001}, \texttt{TYPE-DEF-001},
+\texttt{TYPE-ALT-001}, \texttt{TENSOR-001}, and \texttt{MTT-001}.}
+\lean{Formalization.Stabilizer.RegionType.no_typeIII}
+\status{blueprint_note_complete}
+\end{corollary}
+
+\begin{proof}
+The four cases of \texttt{TYPE-001} are finite type I, type \(I_\infty\),
+hyperfinite type \(II_1\), and type \(II_\infty\), stated using the direct
+predicates of \texttt{TYPE-DEF-001}.  By the factor type alternatives in
+\texttt{TYPE-ALT-001}, a factor satisfying any one of these four predicates is
+not type III.  Equivalently, \(\mathrm{MTT}_{P,I\setminus P}\) supplies finite
+or faithful semifinite normal model traces in all four cases, and
+\texttt{TRACE-001} identifies these as semifinite cases rather than the
+non-semifinite type III alternative.
+\end{proof}
+
+\begin{warning}[No gLU or arbitrary-state conclusion]
+The proof uses an algebraic adapted symplectic basis and the projection-defined
+canonical state whose coefficients are computed by \(\mathrm{CPS}_{\Gamma,S'}\).
+It does not assert that the basis change is implemented by a geometrically
+local Clifford circuit, finite-depth circuit, gLU, or quasi-local automorphism.
+It also does not classify arbitrary logical ground states or arbitrary states
+extending the same stabilizer constraints.
+\source{Project proof note 004, Warning 6.2, PDF p.~7; current goal file
+\path{agents/2026-06-22-remaining-blueprint-suite-goal.md}, Non-Goals.}
+\status{Scope caveat for later Lean theorem statements.}
+\end{warning}
+
+\subsection*{Lean Extraction Notes}
+
+\begin{longtable}{@{}p{0.16\linewidth}p{0.34\linewidth}p{0.40\linewidth}@{}}
+\toprule
+Target & Intended file & Notes \\
+\midrule
+\endhead
+\texttt{CPS-001} &
+\texttt{Formalization/Stabilizer/RegionTypeInputs.lean} &
+Named projection-defined canonical-state input package; use before stating the
+capstone theorem. \\
+\texttt{IRANK-001} &
+\texttt{Formalization/Stabilizer/RegionTypeInputs.lean} &
+Internal fixed and defect ranks extracted from the adapted symplectic product
+form. \\
+\texttt{CRVN-001} &
+\texttt{Formalization/Stabilizer/RegionTypeInputs.lean} &
+Canonical-state GNS represented region algebra using \texttt{GNS-004} and
+\texttt{VN-001}. \\
+\texttt{MTT-001} &
+\texttt{Formalization/Stabilizer/RegionTypeInputs.lean} &
+Named model trace/type input package, with \texttt{MFH-001} explicit whenever
+the Blackadar model-factor proofs are deferred. \\
+\texttt{TYPE-001} &
+\texttt{Formalization/Stabilizer/TypeRestrictions.lean} &
+State the theorem for canonical projection states, finite/countable regions,
+and the internal ranks \(p,r\).  Expose
+\(\mathrm{CPS}_{\Gamma,S'}\), \(\mathrm{MTT}_{P,I\setminus P}\), and any
+\(\mathrm{MFH}\) model-factor assumptions explicitly until the corresponding
+earlier Lean targets exist. \\
+\texttt{TYPE-002} &
+\texttt{Formalization/Stabilizer/TypeRestrictions.lean} &
+Should be a short corollary of \texttt{TYPE-001} plus the project-local factor
+type alternatives and trace criteria.  Do not generalize it to arbitrary
+logical states. \\
+\bottomrule
+\end{longtable}
+
+\begin{thebibliography}{9}
+\bibitem{TakesakiI}
+M. Takesaki, \emph{Theory of Operator Algebras I}.  Local source:
+\path{../sources/takesaki_1.pdf}.
+
+\bibitem{Blackadar}
+B. Blackadar, \emph{Operator Algebras}.  Local source:
+\path{../sources/blackadar.pdf}.
+
+\bibitem{ProjectNote004}
+Project proof note 004,
+\emph{Internal Stabilizer Reduction and Projection-State Type Classification}.
+Local source:
+\path{../runs/2026-06-18-stabilizer-algebra-classification/artifacts/004-internal-stabilizer-reduction-type-classification-R1.pdf}.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,139 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{#1}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} #1}
+
+\begin{document}
+
+\section*{Source Ledger}
+
+\begin{definition}[SourceLedger, ID: SRC-000]
+This file is the source ledger for the formalization blueprints.  It records
+the local source packets, exact locators, and blueprint files that support the
+current Lean-facing target manifest.
+\lean{}
+\status{updated}
+\end{definition}
+
+This ledger records the source texts used by the formalization blueprints.
+Fill locators before sending targets to Aristotle.
+
+\begin{itemize}
+\item Takesaki I: local PDF \texttt{../sources/takesaki\_1.pdf}; primary
+operator-algebra source.  Current locators: Definition I.9.4, PDF p.~56, for
+states as positive norm-one functionals; Lemma I.9.9 and Proposition I.9.12,
+PDF pp.~58--59, for continuity and norm control of positive linear
+functionals; Theorem I.9.14, PDF pp.~59--61, and Definition I.9.15, PDF
+p.~61, for cyclic/GNS representations; Definition II.3.2, PDF p.~92, for
+von Neumann algebras, generated double commutants, factors, and spatial
+isomorphism; Theorem II.2.6, PDF p.~90, for the strong/weak closure
+characterization of operator algebras; Lemma II.3.8 and Theorem II.3.9, PDF
+pp.~94--95, for the double-commutation approximation route and double
+commutation theorem; Proposition V.1.1, PDF p.~310, for basic
+projection-lattice operations in von Neumann algebras; Definition V.1.2, PDF
+p.~310, for Murray--von Neumann projection equivalence; Lemma V.1.7, PDF
+p.~312, and Theorem V.1.8, PDF p.~313, for central support and projection
+comparability;
+Definitions V.1.15--V.1.17, PDF p.~316, for finite/infinite projections and
+type I/II/III definitions; Lemma V.1.18, Theorem V.1.19, Corollary V.1.20,
+and Definition V.1.21, PDF pp.~316--317, for centrally orthogonal finite
+suprema, type decomposition, factor alternatives, and semifiniteness;
+Proposition V.1.23, Corollary V.1.28, and Definition V.1.33,
+PDF pp.~318--322, for finite matrix and type I model factors; Definition
+V.2.1, Theorem V.2.4, and Theorem V.2.15, PDF pp.~329--337, for trace
+interfaces and finite/semifinite trace recognition.
+\item Takesaki I tensor-product locator: Proposition IV.4.13, PDF p.~231, for
+the bicommutant of represented minimal tensor products as the von Neumann
+tensor product of represented bicommutants.
+\item Takesaki II: local PDF \texttt{../sources/Takesaki\_II.pdf}; primary
+operator-algebra source for later factor, trace, and type-comparison targets.
+\item Takesaki III: local PDF \texttt{../sources/Takesaki\_III.pdf}; primary
+operator-algebra source.  Current locators: Definition XIV.1.1, PDF p.~104,
+for inductive sequences of \(C^*\)-algebras; Definition XIV.1.3, PDF p.~105,
+for \(C^*\)-inductive limits; Definition XIV.1.5, PDF p.~106, for unital
+infinite \(C^*\)-tensor products; Definition XIV.1.6 and surrounding
+product-state construction, PDF p.~107, for infinite tensor products of
+von Neumann algebras with reference states.
+\item Kadison--Ringrose I: local PDF
+\texttt{../sources/kadison\_ringrose\_1.pdf}.  Current locators: Theorem 4.5.2
+and Proposition 4.5.3, PDF pp.~287--288, for GNS construction and uniqueness;
+Proposition 2.5.6 and Corollary 2.5.7, local PDF pp.~121--124, for strong
+limits of monotone projection sequences and their closed-range intersections.
+\item Kadison--Ringrose II: local PDF
+\texttt{../sources/kadison\_ringrose\_2.pdf}.  Current locators: Definition
+6.5.1, Theorem 6.5.2, Corollary 6.5.3, Remark 6.5.4, and Theorem 6.6.1,
+PDF pp.~57--63, for type decomposition, factor alternatives, type \(I_n\)
+factors, and the type III criterion.
+\item Blackadar, \emph{Operator Algebras}: local PDF
+\texttt{../sources/blackadar.pdf}.  Current locators: III.3.1.1--III.3.1.6,
+PDF pp.~301--303, for infinite tensor products and product-state factors
+(with III.3.1.6 on PDF p.~303);
+III.3.4.1--III.3.4.2, PDF p.~317, for hyperfiniteness and infinite tensor
+products of finite-dimensional algebras.
+\item Stabilizer classification project note:
+\texttt{../runs/2026-06-18-stabilizer-algebra-classification/artifacts/004-internal-stabilizer-reduction-type-classification-R1.tex}.
+\item Gottesman, \emph{Surviving as a Quantum Computer in a Classical World},
+Chapter 3.5, especially Definition 3.11 and Definition 3.13, PDF
+pp.~55--56, available at
+\texttt{https://www.cs.umd.edu/class/spring2024/cmsc858G/QECCbook-2024-ch1-8.pdf}.
+\item Mathlib operator-algebra coverage audit:
+\texttt{agents/2026-06-21-mathlib-operator-algebra-coverage-audit.md}.
+\item Master target dependency blueprint:
+\texttt{blueprints/006-full-type-classification-dependency-plan.tex}.
+\item Finite Pauli algebra and quasi-local interface blueprint:
+\texttt{blueprints/007-pauli-quasilocal-algebra.tex}, supporting
+\texttt{PAULI-002} and \texttt{QL-001}.
+\item Stabilizer and local-state foundations blueprint:
+\texttt{blueprints/008-stabilizer-local-state-foundations.tex}, supporting
+\texttt{PAULI-001}, \texttt{QL-002}, \texttt{STATE-002},
+\texttt{STATE-003}, and \texttt{STATE-004}.
+\item Internal stabilizer reduction blueprint:
+\texttt{blueprints/009-internal-stabilizer-reduction.tex}, supporting
+\texttt{SYMP-001}, \texttt{SYMP-002}, and \texttt{PROD-001}.  It cites project
+proof note 004, PDF pp.~3--5 for Lemma 3.1, Lemma 3.2, and Proposition 4.1,
+and PDF p.~7 for the locality caveat.
+\item Hilbert, GNS, and represented-region blueprint:
+\texttt{blueprints/010-gns-represented-region-layer.tex}, supporting
+\texttt{HILB-001}, \texttt{GNS-001}, \texttt{GNS-002}, \texttt{GNS-003},
+\texttt{GNS-004}, \texttt{VN-001}, \texttt{VN-003}, \texttt{VN-004},
+\texttt{VN-005}, \texttt{VN-006}, \texttt{VN-DCT-001}, \texttt{VN-007},
+\texttt{VN-008}, and \texttt{PROJ-LIM-001}.
+\item Project-local von Neumann type-theory blueprint:
+\texttt{blueprints/011-von-neumann-type-theory.tex}, supporting
+\texttt{VN-002}, \texttt{VECTOR-ANALYTIC-001}, \texttt{PROJ-001},
+\texttt{CENTRAL-SUPPORT-001}, \texttt{TRACE-001},
+\texttt{TYPE-DEF-001}, \texttt{TYPE-ALT-001}, \texttt{MATRIX-001},
+\texttt{REGION-VECTOR-001}, \texttt{REGION-VECTOR-NORMAL-001},
+\texttt{REGION-VECTOR-TRACE-001}, \texttt{REGION-VECTOR-FAITH-001},
+\texttt{TRACE-TYPE-CRITERION-001}, and \texttt{REGION-VECTOR-TYPE-001}.
+\item Infinite product and tensor type-calculus blueprint:
+\texttt{blueprints/012-infinite-product-type-calculus.tex}, supporting
+\texttt{MFH-001}, \texttt{ITP-001}, \texttt{ITP-PURE-001},
+\texttt{ITP-TRACE-001}, and \texttt{TENSOR-001}.  It uses Takesaki III,
+Definition XIV.1.6, PDF
+pp.~106--107, for the product-state infinite tensor product construction;
+Takesaki I, Proposition IV.4.13, PDF p.~231, for represented tensor-product
+bicommutants; and records Blackadar III.3.1.2--III.3.1.6, PDF pp.~301--303,
+plus III.3.4.1--III.3.4.2, PDF p.~317, as fallback locators for the exact
+factor, hyperfinite \(II_1\), and \(II_\infty\) model identifications not
+located in the checked Takesaki pages.
+\item Final stabilizer type-classification blueprint:
+\texttt{blueprints/013-final-stabilizer-type-classification.tex}, supporting
+\texttt{CPS-001}, \texttt{IRANK-001}, \texttt{CRVN-001}, \texttt{MTT-001},
+\texttt{TYPE-001}, and \texttt{TYPE-002}.  It cites project proof note 004,
+Theorem 5.1, PDF pp.~5--6, for the canonical projection-state classification
+and no-type-III statement, and Corollaries 5.2--5.3, PDF pp.~6--7, for the rank
+possibilities and effect of adding stabilizers.  It routes the
+operator-algebra input through \texttt{blueprints/010}, \texttt{blueprints/011},
+and \texttt{blueprints/012}.
+\end{itemize}
+
+\status{updated}
+
+\end{document}

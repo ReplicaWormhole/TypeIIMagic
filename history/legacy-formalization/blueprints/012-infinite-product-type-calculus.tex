@@ -1,0 +1,398 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable}
+\usepackage{hyperref}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{remark}[definition]{Remark}
+
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{\detokenize{#1}}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+\newcommand{\depends}[1]{\par\noindent\textbf{Depends on.} #1}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cB}{\mathcal B}
+\newcommand{\cD}{\mathcal D}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cP}{\mathcal P}
+\newcommand{\cR}{\mathcal R}
+
+\begin{document}
+
+\section*{Blueprint 012: Infinite Products and Tensor Type Calculus}
+
+\subsection*{Scope}
+
+This note promotes the fifth remaining blueprint block from
+\path{agents/2026-06-22-remaining-blueprint-suite-goal.md}.  It supports
+\[
+  \texttt{MFH-001},\quad
+  \texttt{ITP-001},\quad
+  \texttt{ITP-PURE-001},\quad
+  \texttt{ITP-TRACE-001},\quad
+  \texttt{TENSOR-001}.
+\]
+It supplies the infinite product and standard-factor type calculus consumed by
+the final stabilizer type-classification theorem.  It does not introduce Lean
+files or Aristotle packets.
+
+\subsection*{Source Policy for This Block}
+
+Takesaki III gives the primary infinite tensor product construction relative to
+normal product states and reference vectors.  Takesaki I gives the project-local
+type vocabulary, finite matrix and \(\cB(\cH)\) model factors, trace
+interfaces, and finite tensor-product representation bicommutants.  The
+specific statements that the countable tracial \(M_2\) product is the
+hyperfinite \(II_1\) factor \(\cR\), and that
+\(\cR\bar\otimes \cB(\cH)\) is type \(II_\infty\), were not located in the
+checked Takesaki locators.  They are recorded below either as precise
+Blackadar-backed theorem targets with proof routes, or as explicitly named
+conditional hypotheses that later theorem statements may assume if the local
+Lean development has not yet formalized those targets.
+
+\begin{definition}[InfiniteTensorProductVNStates, Takesaki III Definition XIV.1.6, PDF p.~107]
+Given a sequence \(\{\cM_n\}\) of von Neumann algebras and normal states
+\(\omega_n\) of \(\cM_n\), define the product state
+\(\omega=\bigotimes_{n=1}^{\infty}\omega_n\) on the \(C^*\)-algebraic
+infinite tensor product by
+\[
+  \omega(x_1\otimes x_2\otimes\cdots\otimes x_n\otimes 1\otimes 1\otimes
+  \cdots)
+  =
+  \omega_1(x_1)\omega_2(x_2)\cdots\omega_n(x_n).
+\]
+Let \(\{\pi_\omega,\cH_\omega,\xi_\omega\}\) be the cyclic representation of
+this product state.  The von Neumann algebra
+\[
+  \pi_\omega\!\left(\bigotimes_{n=1}^{\infty}\cM_n\right)''
+  \quad\hbox{on }\cH_\omega
+\]
+is called the infinite tensor product of \(\{\cM_n\}\) relative to the states
+\(\{\omega_n\}\).
+\end{definition}
+
+\begin{proposition}[TensorProductRepresentationBicommutant, Takesaki I Proposition IV.4.13, PDF p.~231]
+Let \(A_1\) and \(A_2\) be \(C^*\)-algebras, and let
+\(\{\pi_1,\mathcal H_1\}\) and \(\{\pi_2,\mathcal H_2\}\) be their respective
+representations.  Then
+\[
+  \{(\pi_1\otimes\pi_2)(A_1\otimes_{\min}A_2)\}''
+  =
+  \pi_1(A_1)''\bar\otimes\pi_2(A_2)'',
+\]
+where the latter means the tensor product of the von Neumann algebras
+\(\pi_1(A_1)''\) and \(\pi_2(A_2)''\).  In particular, if \(\pi_1\) and
+\(\pi_2\) are both irreducible, then so is \(\pi_1\otimes\pi_2\).
+\end{proposition}
+
+\begin{proof}
+The represented minimal tensor product is the uniform closure of the algebraic
+tensor product \(\pi_1(A_1)\otimes\pi_2(A_2)\), so it sits inside the von
+Neumann tensor product of the bicommutants.  Conversely, approximate each
+operator in \(\pi_1(A_1)''\) and \(\pi_2(A_2)''\) \(\sigma\)-strongly by
+represented elements and use the \(\sigma\)-strong continuity of tensoring by
+the identity to put the generators \(x_1\otimes 1\) and \(1\otimes x_2\) in
+the bicommutant.  The irreducible case follows because the bicommutants are
+full operator algebras.
+\end{proof}
+
+\begin{definition}[ModelFactorConditionalHypotheses, ID: MFH-001, Blackadar III.3.1.2--III.3.1.6 and III.3.4.1--III.3.4.2, PDF pp.~301--303, 317]
+If a later Lean extraction reaches the final type theorem before the
+Blackadar-backed model-factor targets in this note have been formalized, the
+only permitted high-level assumptions are the following named propositions:
+\begin{description}
+\item[\(\mathrm{MFH}_{\mathrm{factor}}\).]
+For every finite or countably infinite family
+\((\cM_i,\omega_i)_{i\in I}\) of factors with faithful normal reference
+states, the represented product
+\(\overline{\bigotimes}_{i\in I}(\cM_i,\omega_i)\) is a factor, and if all
+\(\omega_i\) are traces then the product GNS vector state is a faithful normal
+trace on that represented product.
+\item[\(\mathrm{MFH}_{\mathrm{tracial}\,M_2}\).]
+For \(R\) countably infinite, the product
+\[
+  \overline{\bigotimes}_{i\in R}(M_2(\mathbb C),\operatorname{tr}_2)
+\]
+is the hyperfinite type \(II_1\) factor \(\cR\), with faithful normal
+tracial vector state induced by \(\bigotimes_R\operatorname{tr}_2\).
+\item[\(\mathrm{MFH}_{\cR\otimes\cB}\).]
+For a separable infinite-dimensional Hilbert space \(\cH\),
+\(\cR\bar\otimes\cB(\cH)\) is a type \(II_\infty\) factor and admits the
+faithful semifinite normal trace obtained from the finite trace on \(\cR\)
+and the standard semifinite trace on \(\cB(\cH)\).
+\end{description}
+These assumptions are model-factor statements only.  They do not identify a
+stabilizer region algebra with any model factor; that identification must come
+separately from \texttt{PROD-001}, \texttt{GNS-003}, and \texttt{VN-003}.
+\source{Blackadar, \emph{Operator Algebras}, Sections III.3.1.2--III.3.1.6
+and III.3.4.1--III.3.4.2, local PDF \path{../sources/blackadar.pdf}, PDF
+pp.~301--303 and 317.}
+\depends{Blackadar model-factor source statements; consumed by
+\texttt{ITP-001}, \texttt{ITP-TRACE-001}, and \texttt{TENSOR-001} when those
+proofs are deferred.}
+\lean{Formalization.OperatorAlgebra.TensorTypeCalculus.ModelFactorHypotheses}
+\status{named_conditional_hypotheses_if_model_factor_proofs_are_deferred}
+\end{definition}
+
+\begin{proof}[Well-formedness]
+Each named hypothesis fixes its ambient von Neumann algebra, reference state
+or trace, and target type predicate before it is used.  The hypotheses are
+closed operator-algebra assertions about standard product models, so a later
+formal theorem can quantify them explicitly without hiding stabilizer-specific
+content inside a source citation.
+\end{proof}
+
+\subsection*{Product-State Infinite Tensor Products}
+
+\begin{definition}[ProductStateVN, ID: ITP-001, Takesaki III Definition XIV.1.6, PDF p.~107]
+Let \(I\) be finite or countably infinite.  For each \(i\in I\), let
+\(\cM_i\) be a von Neumann algebra with normal state \(\omega_i\).  The
+project infinite product package consists of:
+\begin{itemize}
+\item the C*-algebraic infinite tensor product when \(I\) is infinite and the
+usual finite tensor product when \(I\) is finite;
+\item the product state \(\bigotimes_{i\in I}\omega_i\);
+\item the GNS Hilbert space and cyclic representation of that product state;
+\item the represented von Neumann algebra
+\[
+  \overline{\bigotimes}_{i\in I}(\cM_i,\omega_i)
+  :=
+  \pi_{\otimes_i\omega_i}\!\left(\bigotimes_i \cM_i\right)'' .
+\]
+\end{itemize}
+\source{Takesaki III, Definition XIV.1.6, PDF p.~107, for the construction
+relative to normal states; Blackadar III.3.1.2, PDF pp.~301--302, for the
+product GNS and trace-preservation theorem route used in the stabilizer
+model.}
+\depends{\texttt{GNS-003}, \texttt{VN-001}, \texttt{VN-003}.}
+\lean{Formalization.OperatorAlgebra.InfiniteTensorProduct.productStateVN}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proposition}[InfiniteTensorProductFactorProduct, supporting ID: ITP-001, Blackadar III.3.1.3, PDF p.~302]
+If each \((\cM_i,\omega_i)\) in the product package is a factor with faithful
+normal reference state, then
+\[
+  \overline{\bigotimes}_{i\in I}(\cM_i,\omega_i)
+\]
+is a factor.
+\source{Blackadar, Proposition III.3.1.3, PDF p.~302.  Takesaki supplies the
+underlying relative-state product construction in Definition XIV.1.6, PDF
+p.~107.}
+\depends{\texttt{ITP-001}, \texttt{VN-002}.}
+\lean{Formalization.OperatorAlgebra.InfiniteTensorProduct.factor_product}
+\status{blueprint_note_complete}
+\end{proposition}
+
+\begin{proof}
+For finite \(I\), apply the finite tensor-product bicommutant theorem and the
+fact that a finite tensor product of factors has scalar center.  For countable
+\(I\), let \(E_F\) denote the normal product-state conditional expectation
+onto the finite subproduct over \(F\Subset I\).  If \(z\) is central in the
+represented infinite product, then \(E_F(z)\) is central in the finite
+subproduct and hence scalar.  The finite subproducts are increasing and
+\(\sigma\)-weakly dense in the product representation; normality of the
+expectations and density force \(z\) to agree with the scalar limit of
+\(E_F(z)\).  Thus the center is scalar.  Until this conditional-expectation
+argument is formalized locally, later theorem statements may assume exactly
+the \(\mathrm{MFH}_{\mathrm{factor}}\) clause of \texttt{MFH-001}.
+\end{proof}
+
+\subsection*{Pure-Mode Product Factor}
+
+\begin{proposition}[PureModeProductTypeI, ID: ITP-PURE-001, Takesaki III Definition XIV.1.6, PDF p.~107, Blackadar III.3.1.2, PDF pp.~301--302]
+Let \(\omega_{Z,+}\) be the pure \(+1\)-eigenstate of \(Z\) on
+\(M_2(\mathbb C)\), and let
+\[
+  \cP_P =
+  \overline{\bigotimes}_{i\in P}\bigl(M_2(\mathbb C),\omega_{Z,+}\bigr)
+\]
+for a finite or countably infinite set \(P\).  If \(P\) is finite, then
+\[
+  \cP_P \cong M_{2^{|P|}}(\mathbb C),
+\]
+and if \(P\) is countably infinite, then
+\[
+  \cP_P \cong \cB(\ell^2).
+\]
+Thus \(\cP_P\) is finite type \(I_{2^{|P|}}\) for finite \(P\), and type
+\(I_\infty\) for countably infinite \(P\).
+\source{Takesaki III, Definition XIV.1.6, PDF p.~107, for the relative-state
+infinite tensor product; Blackadar III.3.1.2, PDF pp.~301--302, for the
+commutant statement in finite-dimensional tensor products; Takesaki I,
+Proposition V.1.23, Corollary V.1.28, and Definition V.1.33, PDF pp.~318--322,
+for finite matrix and \(\cB(\cH)\) type I model factors.}
+\depends{\texttt{ITP-001}, \texttt{MATRIX-001}.}
+\lean{Formalization.OperatorAlgebra.PureModeProduct.typeI}
+\status{blueprint_note_complete}
+\end{proposition}
+
+\begin{proof}
+For a single site, the GNS representation of a pure vector state on
+\(M_2(\mathbb C)\) is the defining irreducible representation on
+\(\mathbb C^2\); its commutant is scalar.  Finite products give the defining
+representation of \(M_{2^{|P|}}(\mathbb C)\).  In the countable case, use the
+infinite tensor product Hilbert space relative to the reference \(+1\)
+eigenvectors.  The commutant of the product algebra is the product of the
+scalar one-site commutants, hence scalar, so the bicommutant is
+\(\cB(\cH_P)\).  The incomplete tensor product Hilbert space for countably
+many two-dimensional sites and a reference vector is separable infinite
+dimensional, hence isomorphic to \(\ell^2\).  The type conclusion is then
+\texttt{MATRIX-001}.
+\end{proof}
+
+\subsection*{Tracial Defect Product}
+
+\begin{proposition}[TracialDefectProductHyperfiniteII1, ID: ITP-TRACE-001, Blackadar III.3.1.4 and III.3.4.2, PDF pp.~302, 317]
+Let \(\operatorname{tr}_2\) be the normalized trace on \(M_2(\mathbb C)\), and
+let
+\[
+  \cD_R =
+  \overline{\bigotimes}_{i\in R}\bigl(M_2(\mathbb C),\operatorname{tr}_2\bigr)
+\]
+for a finite or countably infinite set \(R\).  If \(R\) is finite, then
+\[
+  \cD_R \cong M_{2^{|R|}}(\mathbb C)
+\]
+with its normalized finite trace.  If \(R\) is countably infinite, then
+\(\cD_R\) is the hyperfinite type \(II_1\) factor \(\cR\).
+\source{Takesaki III, Definition XIV.1.6, PDF p.~107, for the relative-state
+infinite tensor product; Blackadar III.3.1.4, PDF p.~302, for the tracial
+\(M_2\) product as a \(II_1\) factor; Blackadar III.3.4.1--III.3.4.2, PDF
+p.~317, for hyperfiniteness of infinite tensor products of finite-dimensional
+von Neumann algebras and hence of \(\cR\).}
+\depends{\texttt{ITP-001}, \texttt{TRACE-001}, \texttt{MATRIX-001}.}
+\lean{Formalization.OperatorAlgebra.TracialDefectProduct.hyperfiniteII1}
+\status{blueprint_note_complete}
+\end{proposition}
+
+\begin{proof}
+For finite \(R\), the algebra is the finite matrix tensor product, hence
+isomorphic to \(M_{2^{|R|}}(\mathbb C)\), and the product state is the
+normalized matrix trace.  For countably infinite \(R\), the one-site trace is
+faithful and normal, so \(\mathrm{MFH}_{\mathrm{factor}}\) gives factoriality
+and a faithful normal tracial vector state on the product.  Blackadar
+III.3.1.4 identifies this tracial product as the \(II_1\) factor \(R_1\).
+Blackadar III.3.4.1--III.3.4.2 give a directed family of finite-dimensional
+subalgebras with \(\sigma\)-weakly dense union, so the factor is hyperfinite.
+Until that source-backed identification is formalized locally, later theorem
+statements may assume exactly the \(\mathrm{MFH}_{\mathrm{tracial}\,M_2}\)
+clause of \texttt{MFH-001}.
+\end{proof}
+
+\subsection*{Pure--Defect Tensor Type Calculus}
+
+\begin{theorem}[PureDefectTensorTypeCalculus, ID: TENSOR-001, Takesaki I Proposition IV.4.13, PDF p.~231, Blackadar III.3.1.6, PDF p.~303]
+Let \(\cP_P\) and \(\cD_R\) be the pure-mode and tracial-defect model factors
+above.  The represented stabilizer product factor is
+\[
+  \cP_P \bar\otimes \cD_R .
+\]
+Its type is:
+\[
+\begin{array}{c|c|c}
+|P|<\infty & |R|<\infty & \hbox{finite type } I\\
+|P|=\infty & |R|<\infty & \hbox{type } I_\infty\\
+|P|<\infty & |R|=\infty & \hbox{hyperfinite type } II_1\\
+|P|=\infty & |R|=\infty & \hbox{type } II_\infty .
+\end{array}
+\]
+\source{Takesaki I, Proposition IV.4.13, PDF p.~231, for represented tensor
+product bicommutants; Takesaki I, Proposition V.1.23, Corollary V.1.28,
+Definition V.1.33, Definition V.2.1, and Theorem V.2.15, PDF pp.~318--337,
+for matrix/\(\cB(\cH)\) model factors and finite/semifinite trace interfaces;
+Blackadar III.3.1.4 and III.3.4.2, PDF pp.~302, 317, for the hyperfinite
+\(II_1\) factor; Blackadar III.3.1.6, PDF p.~303, for
+\(\cR\bar\otimes\cB(\cH)\) as type \(II_\infty\).}
+\depends{\texttt{ITP-PURE-001}, \texttt{ITP-TRACE-001},
+\texttt{TRACE-001}, \texttt{TYPE-DEF-001}, \texttt{TYPE-ALT-001},
+\texttt{MATRIX-001}; if the model-factor proofs are deferred,
+\texttt{MFH-001}, namely the named hypotheses
+\(\mathrm{MFH}_{\mathrm{factor}}\),
+\(\mathrm{MFH}_{\mathrm{tracial}\,M_2}\), and
+\(\mathrm{MFH}_{\cR\otimes\cB}\).}
+\lean{Formalization.OperatorAlgebra.TensorTypeCalculus.pure_defect_type}
+\status{blueprint_note_complete}
+\end{theorem}
+
+\begin{proof}
+Combine the model identifications from \texttt{ITP-PURE-001} and
+\texttt{ITP-TRACE-001}.  If \(P\) and \(R\) are finite, both factors are finite
+matrix algebras, so the tensor product is again a finite matrix factor and is
+finite type I by \texttt{MATRIX-001}.  If \(P\) is countably infinite and
+\(R\) is finite, then \(\cP_P\cong\cB(\ell^2)\) and tensoring with a finite
+matrix algebra only replaces \(\ell^2\) by an isomorphic separable
+infinite-dimensional Hilbert space; \texttt{MATRIX-001} gives type
+\(I_\infty\).
+
+If \(P\) is finite and \(R\) is countably infinite, then
+\(\cP_P\) is finite matrix and \(\cD_R\cong\cR\) by
+\texttt{ITP-TRACE-001}.  The product normalized trace is faithful and normal,
+and finite matrix amplification preserves the \(II_1\) factor property and
+hyperfiniteness.  If both \(P\) and \(R\) are countably infinite, then
+\[
+  \cP_P\bar\otimes\cD_R
+  \cong
+  \cB(\ell^2)\bar\otimes\cR
+  \cong
+  \cR\bar\otimes\cB(\ell^2).
+\]
+The trace from \(\cR\) tensored with the standard semifinite trace on
+\(\cB(\ell^2)\) is faithful, semifinite, and normal, so
+\texttt{TRACE-001} gives semifiniteness; Blackadar III.3.1.6, or exactly
+the \(\mathrm{MFH}_{\cR\otimes\cB}\) clause of \texttt{MFH-001} if deferred,
+identifies the factor type as \(II_\infty\).
+\end{proof}
+
+\subsection*{Lean Extraction Notes}
+
+\begin{longtable}{@{}p{0.18\linewidth}p{0.34\linewidth}p{0.38\linewidth}@{}}
+\toprule
+Target & Intended file & Notes \\
+\midrule
+\endhead
+\texttt{MFH-001} &
+\texttt{Formalization/OperatorAlgebra/TensorTypeCalculus.lean} &
+Expose only the three named Blackadar-backed model-factor hypotheses when the
+local Lean proofs of those model identifications are deferred. \\
+\texttt{ITP-001} &
+\texttt{Formalization/OperatorAlgebra/InfiniteTensorProduct.lean} &
+Start as a narrowly scoped product-state package for finite/countable products;
+do not attempt a general von Neumann algebra inductive-limit theory. \\
+\texttt{ITP-PURE-001} &
+\texttt{Formalization/OperatorAlgebra/PureModeProduct.lean} &
+The countable pure product can be formalized through scalar commutant and
+irreducibility, then identified with \(\cB(\ell^2)\). \\
+\texttt{ITP-TRACE-001} &
+\texttt{Formalization/OperatorAlgebra/TracialDefectProduct.lean} &
+Formalize the finite matrix case directly; if hyperfinite \(II_1\)
+infrastructure is absent, expose \(\mathrm{MFH}_{\mathrm{tracial}\,M_2}\) as
+an explicit theorem hypothesis. \\
+\texttt{TENSOR-001} &
+\texttt{Formalization/OperatorAlgebra/TensorTypeCalculus.lean} &
+Formalize only the four stabilizer model-factor cases before any general tensor
+type theorem, with \(\mathrm{MFH}_{\cR\otimes\cB}\) explicit if the
+Blackadar model proof is deferred. \\
+\bottomrule
+\end{longtable}
+
+\begin{thebibliography}{9}
+\bibitem{TakesakiI}
+M. Takesaki, \emph{Theory of Operator Algebras I}.  Local source:
+\path{../sources/takesaki_1.pdf}.
+
+\bibitem{TakesakiIII}
+M. Takesaki, \emph{Theory of Operator Algebras III}.  Local source:
+\path{../sources/Takesaki_III.pdf}.
+
+\bibitem{Blackadar}
+B. Blackadar, \emph{Operator Algebras}.  Local source:
+\path{../sources/blackadar.pdf}.
+\end{thebibliography}
+
+\end{document}

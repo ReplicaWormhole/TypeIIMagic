@@ -1,0 +1,47 @@
+Traceback (most recent call last):
+  File "<original-home>/.local/share/uv/tools/aristotlelib/lib/python3.13/site-packages/aristotlelib/api_request.py", line 137, in _make_request
+    response.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "<original-home>/.local/share/uv/tools/aristotlelib/lib/python3.13/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Server error '500 Internal Server Error' for url 'https://aristotle.harmonic.fun/api/v3/project/137c05f7-94d3-40fd-9002-828051520679/tasks?pagination_key=&limit=20&ascending=false'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<original-home>/.local/bin/aristotle", line 10, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "<original-home>/.local/share/uv/tools/aristotlelib/lib/python3.13/site-packages/aristotlelib/cli/controller.py", line 171, in main
+    return args.func(args)
+           ~~~~~~~~~^^^^^^
+  File "<original-home>/.local/share/uv/tools/aristotlelib/lib/python3.13/site-packages/aristotlelib/cli/api_action.py", line 84, in run
+    asyncio.run(self.run_action(args))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "<original-home>/anaconda3/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "<original-home>/anaconda3/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "<original-home>/anaconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "<original-home>/.local/share/uv/tools/aristotlelib/lib/python3.13/site-packages/aristotlelib/cli/command/tasks.py", line 42, in run_action
+    tasks, pagination_key = await project.get_tasks(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )
+    ^
+  File "<original-home>/.local/share/uv/tools/aristotlelib/lib/python3.13/site-packages/aristotlelib/project.py", line 318, in get_tasks
+    response = await client.get(f"/{self.endpoint_prefix}/{self.project_id}/tasks", params=params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<original-home>/.local/share/uv/tools/aristotlelib/lib/python3.13/site-packages/aristotlelib/api_request.py", line 61, in get
+    return await self._make_request("GET", endpoint, params=params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<original-home>/.local/share/uv/tools/aristotlelib/lib/python3.13/site-packages/aristotlelib/api_request.py", line 163, in _make_request
+    raise AristotleAPIError(
+    ...<2 lines>...
+    ) from e
+aristotlelib.api_request.AristotleAPIError: API request failed with status 500: Internal Server Error

@@ -1,0 +1,1049 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable}
+\usepackage{hyperref}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{convention}[definition]{Convention}
+\newtheorem{warning}[definition]{Warning}
+
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{\detokenize{#1}}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+\newcommand{\depends}[1]{\par\noindent\textbf{Depends on.} #1}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\Ftwo}{\mathbb F_2}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\spanF}{\operatorname{span}_{\mathbb F_2}}
+
+\begin{document}
+
+\section*{Blueprint 009: Internal Stabilizer Reduction}
+
+\subsection*{Scope}
+
+This note promotes the second remaining blueprint block from
+\path{agents/2026-06-22-remaining-blueprint-suite-goal.md}.  It supports
+targets
+\[
+  \texttt{SYMP-FIN-001},\qquad
+  \texttt{SYMP-COUNT-BASIS-001},\qquad
+  \texttt{SYMP-FIN-RESTRICT-ISCOMPL-001},\qquad
+  \texttt{SYMP-ORTH-RESTRICT-NONDEG-001},\qquad
+  \texttt{SYMP-LININD-001},\qquad
+  \texttt{SYMP-HYP-EXT-001},\qquad
+  \texttt{SYMP-COUNT-FIN-001},\qquad
+  \texttt{SYMP-PAULI-FIN-COUNT-001},\qquad
+  \texttt{SYMP-INF-REC-001},\qquad
+  \texttt{SYMP-SPANNING-BASIS-001},\qquad
+  \texttt{SYMP-ADAPTED-CLOSED-001},\qquad
+  \texttt{SYMP-INF-CE-001},\qquad
+  \texttt{SYMP-CLOSED-PARTNER-001},\qquad
+  \texttt{SYMP-SUP-HYP-NONDEG-001},\qquad
+  \texttt{SYMP-ORTH-COMP-001},\qquad
+  \texttt{SYMP-WSPLIT-PRESERVE-001},\qquad
+  \texttt{SYMP-PAIR-RESIDUAL-001},\qquad
+  \texttt{SYMP-STEP-CLOSED-001},\qquad
+  \texttt{SYMP-W-EQ-SPAN-001},\qquad
+  \texttt{SYMP-FRESH-PERP-001},\qquad
+  \texttt{SYMP-BOT-NONDEG-001},\qquad
+  \texttt{SYMP-SEQUENCES-CLOSED-001},\qquad
+  \texttt{SYMP-INF-REC-CLOSED-001},\qquad
+  \texttt{SYMP-001},\qquad
+  \texttt{SYMP-002},\qquad
+  \texttt{PROD-001}.
+\]
+It does not add Lean declarations, Aristotle packets, operator-algebra type
+claims, or any local-circuit/gLU claim.  The goal is only the algebraic
+stabilizer-side reduction used later by the GNS and type-classification
+layers.
+
+\subsection*{Source Basis}
+
+The main project-local source is
+\begin{center}
+\path{../runs/2026-06-18-stabilizer-algebra-classification/artifacts/004-internal-stabilizer-reduction-type-classification-R1.pdf}.
+\end{center}
+The relevant source locators are:
+\begin{itemize}
+\item Lemma 3.1, PDF pp.~3--4: adapted symplectic basis for a countable
+isotropic subspace.
+\item Lemma 3.2, PDF p.~4: adapted symplectic basis induces a Pauli-algebra
+\(*\)-isomorphism.
+\item Proposition 4.1, PDF pp.~4--5: product form after symplectic basis
+reduction.
+\item Warning 6.2, PDF p.~7: the basis change is algebraic and need not be
+geometrically local.
+\end{itemize}
+The finite Pauli and quasi-local algebra conventions are supplied by
+\path{blueprints/007-pauli-quasilocal-algebra.tex}.  The region-restriction
+and crossing-invisibility input is supplied by
+\path{blueprints/008-stabilizer-local-state-foundations.tex}.
+
+\subsection*{Conventions}
+
+\begin{convention}[Region label space and internal stabilizers]
+Let \(\Lambda\) be a finite or countably infinite region.  Its finite-support
+binary Pauli label space is
+\[
+  V_\Lambda=(\Lambda\to_0\Ftwo)\oplus(\Lambda\to_0\Ftwo)
+\]
+with the binary symplectic commutation form \(\sigma\).  Let
+\(W\subseteq V_\Lambda\) be an isotropic internal stabilizer subspace.  In the
+application \(W=W'_\Lambda=W'\cap V_\Lambda\), where \(W'\) is the stabilizer
+label space of an extension \(S'\).
+\source{\path{blueprints/008-stabilizer-local-state-foundations.tex},
+targets \texttt{PAULI-001}, \texttt{QL-002}, and \texttt{STATE-004}; project
+proof note 004, Lemma 2.4, PDF p.~3.}
+\status{Convention for all targets in this note.}
+\end{convention}
+
+\begin{convention}[Symplectic basis notation]
+A symplectic basis of \(V_\Lambda\) is a family
+\[
+  \{z_i,x_i:i\in I\}
+\]
+such that every vector of \(V_\Lambda\) is a finite \(\Ftwo\)-linear
+combination of the \(z_i,x_i\), and
+\[
+  \sigma(z_i,z_j)=0,\qquad
+  \sigma(x_i,x_j)=0,\qquad
+  \sigma(z_i,x_j)=\delta_{ij}.
+\]
+The index set \(I\) is finite or countable.
+\source{Project proof note 004, Lemma 3.1, PDF pp.~3--4.}
+\status{Notation for \texttt{SYMP-FIN-001}, \texttt{SYMP-001}, and
+\texttt{SYMP-002}, and for the checked support targets used in the countable
+assembly.}
+\end{convention}
+
+\subsection*{Adapted Symplectic Basis}
+
+\begin{lemma}[FiniteAdaptedSymplecticBasis, ID: SYMP-FIN-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+Let \(\Lambda\) be finite, so that \(V_\Lambda\) is finite-dimensional over
+\(\Ftwo\).  Let \(W\subseteq V_\Lambda\) be isotropic for the nondegenerate
+symplectic form \(\sigma\).  Then there are a natural number \(n\), vectors
+\[
+  z,x:\{0,\ldots,n-1\}\longrightarrow V_\Lambda,
+\]
+and a subset \(P\subseteq\{0,\ldots,n-1\}\) such that \(z,x\) form a
+symplectic basis of \(V_\Lambda\) and
+\[
+  W=\spanF\{z_i:i\in P\}.
+\]
+\source{Project proof note 004, Lemma 3.1, finite-dimensional part of the
+proof, PDF pp.~3--4.}
+\depends{\texttt{PAULI-001}.}
+\lean{Formalization.Stabilizer.adaptedSymplecticBasis_finite}
+\status{lean_checked supporting finite case for \texttt{SYMP-001}.}
+\end{lemma}
+
+\begin{proof}
+The finite proof is the symplectic Gram--Schmidt construction from Lemma 3.1
+with termination supplied by finite dimension.  If \(W=0\), choose a nonzero
+vector \(z_0\), use nondegeneracy to find \(x_0\) with
+\(\sigma(z_0,x_0)=1\), split off the hyperbolic plane
+\(\spanF\{z_0,x_0\}\), and recurse on its orthogonal complement.  If
+\(W\neq0\), choose \(0\neq z_0\in W\), find \(x_0\) with
+\(\sigma(z_0,x_0)=1\), and use isotropy to decompose
+\[
+  W=\spanF\{z_0\}\oplus \bigl(W\cap \spanF\{z_0,x_0\}^{\perp}\bigr).
+\]
+The restriction of \(\sigma\) to the orthogonal complement is again
+nondegenerate and alternating.  Finite-dimensional induction on the orthogonal
+complement gives adapted vectors for the intersection term, and adjoining
+\((z_0,x_0)\) gives the desired finite adapted symplectic basis.
+\end{proof}
+
+\subsection*{Checked Support Targets From the Countable Assembly}
+
+\begin{lemma}[CountableSubmoduleBasis, ID: SYMP-COUNT-BASIS-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+Let \(V\) be a countable \(\Ftwo\)-vector space and let
+\(W\subseteq V\) be a subspace.  Then there are a type \(S\), a basis
+\[
+  b:S\longrightarrow W
+\]
+of \(W\) as an \(\Ftwo\)-vector space, and a countability structure on \(S\).
+\source{Project proof note 004, Lemma 3.1, countable-basis setup for the
+countable recursive construction, PDF pp.~3--4; standard vector-space basis
+existence.}
+\depends{\texttt{PAULI-001}.}
+\lean{Formalization.Stabilizer.exists_countable_basis_submodule}
+\status{lean_checked support target returned by
+\texttt{SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24}.}
+\end{lemma}
+
+\begin{proof}
+Choose a basis of \(W\) by the vector-space basis theorem.  Since \(W\) is a
+subtype of the countable type \(V\), \(W\) is countable.  The basis map is
+injective, so its index type injects into a countable type and is therefore
+countable.
+\end{proof}
+
+\begin{lemma}[FiniteRestrictIsCompl, ID: SYMP-FIN-RESTRICT-ISCOMPL-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+Let \(V\) be an \(\Ftwo\)-vector space with an alternating bilinear form
+\(B\).  Let \(H\subseteq V\) be finite-dimensional.  If the restriction
+\(B|_H\) is nondegenerate, then \(H\) and its orthogonal complement
+\[
+  H^\perp=\{v\in V:B(v,h)=0\text{ for all }h\in H\}
+\]
+are complementary subspaces:
+\[
+  V=H\oplus H^\perp .
+\]
+No finite-dimensionality assumption on \(V\) is required.
+\source{Project proof note 004, Lemma 3.1, finite-stage hyperbolic splitting
+used inside the countable construction, PDF pp.~3--4.}
+\depends{\texttt{SYMP-FIN-001}.}
+\lean{Formalization.Stabilizer.finite_restrict_isCompl}
+\status{lean_checked support target returned by
+\texttt{SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24}.}
+\end{lemma}
+
+\begin{proof}
+The intersection \(H\cap H^\perp\) is zero by nondegeneracy of \(B|_H\).
+For \(u\in V\), the functional \(h\mapsto B(h,u)\) on the finite-dimensional
+space \(H\) is represented by a unique \(h_0\in H\), because \(B|_H\) is
+nondegenerate.  Then \(u-h_0\) is orthogonal to \(H\), so
+\(u=h_0+(u-h_0)\in H+H^\perp\).  Thus the sum is direct and exhaustive.
+\end{proof}
+
+\begin{lemma}[OrthogonalRestrictNondegenerate, ID: SYMP-ORTH-RESTRICT-NONDEG-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+Let \(B\) be a nondegenerate alternating bilinear form on \(V\).  Let
+\(H\subseteq V\) be finite-dimensional and suppose \(B|_H\) is
+nondegenerate.  Then the restriction of \(B\) to \(H^\perp\) is
+nondegenerate.
+\source{Project proof note 004, Lemma 3.1, recursive passage to the
+orthogonal complement, PDF pp.~3--4.}
+\depends{\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001}.}
+\lean{Formalization.Stabilizer.orthogonal_restrict_nondeg}
+\status{lean_checked support target returned by
+\texttt{SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24}.}
+\end{lemma}
+
+\begin{proof}
+By \texttt{SYMP-FIN-RESTRICT-ISCOMPL-001}, every \(v\in V\) decomposes
+uniquely as \(h+h'\), with \(h\in H\) and \(h'\in H^\perp\).  If an element
+of \(H^\perp\) pairs trivially with all of \(H^\perp\), it also pairs
+trivially with \(H\) by orthogonality, hence with all of \(V\).  The
+nondegeneracy of \(B\) on \(V\) then forces it to be zero.  The same argument
+applies on the right side of the bilinear form.
+\end{proof}
+
+\begin{lemma}[SymplecticLinearIndependentGeneral, ID: SYMP-LININD-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+Let \(V\) be an \(\Ftwo\)-vector space, let \(B\) be an
+\(\Ftwo\)-valued bilinear form on \(V\), let \(I\) be any index type, and let
+\(z,x:I\to V\) satisfy
+\[
+  B(z_i,z_j)=0,\qquad B(x_i,x_j)=0,\qquad
+  B(z_i,x_j)=\delta_{ij}
+\]
+for all \(i,j\in I\).  Then the combined family
+\[
+  I\oplus I\longrightarrow V,\qquad
+  \operatorname{inl}(i)\mapsto z_i,\quad
+  \operatorname{inr}(i)\mapsto x_i
+\]
+is linearly independent over \(\Ftwo\).
+\source{Project proof note 004, Lemma 3.1, independence check for the
+finite-support symplectic family in the countable construction, PDF
+pp.~3--4.}
+\depends{\texttt{SYMP-FIN-001}.}
+\lean{Formalization.Stabilizer.symplectic_linearIndependent_general}
+\status{lean_checked support target returned by
+\texttt{SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24}.}
+\end{lemma}
+
+\begin{proof}
+A linear dependence has finite support.  Pairing the dependence with \(x_k\)
+extracts the coefficient of \(z_k\), and pairing it with \(z_k\) extracts the
+coefficient of \(x_k\).  All coefficients are therefore zero.
+\end{proof}
+
+\begin{lemma}[HyperbolicExtension, ID: SYMP-HYP-EXT-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+Let \(B\) be a nondegenerate alternating bilinear form on \(V\).  Let
+\(H\subseteq V\) be finite-dimensional and suppose \(B|_H\) is
+nondegenerate.  For any \(t\notin H\), there are \(p,q\in H^\perp\) such that
+\[
+  B(p,q)=1,\qquad p\neq0,\qquad
+  t\in H+\spanF\{p\}.
+\]
+\source{Project proof note 004, Lemma 3.1, one-step hyperbolic extension in
+the recursive adapted-basis construction, PDF pp.~3--4.}
+\depends{\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001},
+\texttt{SYMP-ORTH-RESTRICT-NONDEG-001}.}
+\lean{Formalization.Stabilizer.exists_hyperbolic_extension}
+\status{lean_checked support target returned by
+\texttt{SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24}.}
+\end{lemma}
+
+\begin{proof}
+Split \(t=h+p\) using \(V=H\oplus H^\perp\).  Since \(t\notin H\), the
+orthogonal component \(p\) is nonzero.  By nondegeneracy of \(B\) on
+\(H^\perp\), choose \(q\in H^\perp\) with \(B(p,q)=1\).  The decomposition
+also gives \(t\in H+\spanF\{p\}\).
+\end{proof}
+
+\begin{theorem}[CountableAdaptedFiniteDimensional, ID: SYMP-COUNT-FIN-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+If \(V\) is finite-dimensional over \(\Ftwo\), \(B\) is nondegenerate and
+alternating, and \(W\subseteq V\) is isotropic, then there are a countable
+type \(I\), vectors \(z,x:I\to V\), and \(P\subseteq I\) such that
+\[
+  \{z_i,x_i:i\in I\}
+\]
+is a symplectic basis and \(W=\spanF\{z_i:i\in P\}\).
+\source{Project proof note 004, Lemma 3.1, finite-dimensional part recast
+with a countable index, PDF pp.~3--4.}
+\depends{\texttt{SYMP-FIN-001}.}
+\lean{Formalization.Stabilizer.exists_adapted_symplectic_countable_of_finiteDimensional}
+\status{lean_checked support target returned by
+\texttt{SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24}.}
+\end{theorem}
+
+\begin{proof}
+Apply the checked finite adapted-basis theorem and take \(I\) to be the
+finite index type of the resulting basis.  Every finite type is countable.
+\end{proof}
+
+\begin{theorem}[FiniteRegisterCountableIndexAdapted, ID: SYMP-PAULI-FIN-COUNT-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+For a finite qubit label type \(\Gamma\), every isotropic subspace
+\[
+  W\subseteq V_\Gamma
+\]
+has an adapted symplectic basis with the same countable-index output shape as
+\texttt{SYMP-001}.
+\source{Project proof note 004, Lemma 3.1, finite-dimensional part recast
+for \(\texttt{PauliLabel}\), PDF pp.~3--4.}
+\depends{\texttt{PAULI-001}, \texttt{SYMP-COUNT-FIN-001}.}
+\lean{Formalization.Stabilizer.adaptedSymplecticBasis_countableIndex_of_finite}
+\status{lean_checked support target returned by
+\texttt{SYMP-001-COUNTABLE-ASSEMBLY-2026-06-24}.}
+\end{theorem}
+
+\begin{proof}
+For finite \(\Gamma\), the Pauli label space \(V_\Gamma\) is
+finite-dimensional.  Apply \texttt{SYMP-COUNT-FIN-001} to the canonical
+symplectic form \(\sigma\) on \(\texttt{PauliLabel}\).
+\end{proof}
+
+\begin{theorem}[CountableInfiniteAdaptedSymplecticRecursion, ID: SYMP-INF-REC-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+Let \(V\) be a countable \(\Ftwo\)-vector space that is not
+finite-dimensional.  Let \(B\) be a nondegenerate alternating bilinear form on
+\(V\), and let \(W\subseteq V\) be isotropic.  Then there are sequences
+\[
+  z,x:\mathbb N\longrightarrow V
+\]
+and a subset \(P\subseteq\mathbb N\) such that
+\[
+  B(z_i,z_j)=0,\qquad B(x_i,x_j)=0,\qquad
+  B(z_i,x_j)=\delta_{ij},
+\]
+the combined family \(z,x\) is a basis of \(V\), and
+\[
+  W=\spanF\{z_i:i\in P\}.
+\]
+\source{Project proof note 004, Lemma 3.1, countable-dimensional recursive
+Gram--Schmidt construction, PDF pp.~3--4.}
+\depends{\texttt{SYMP-COUNT-BASIS-001},
+\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001},
+\texttt{SYMP-ORTH-RESTRICT-NONDEG-001}, \texttt{SYMP-LININD-001},
+\texttt{SYMP-HYP-EXT-001}.}
+\lean{Formalization.Stabilizer.exists_adapted_symplectic_countable_infinite}
+\status{blocked false as stated by
+\texttt{SYMP-INF-REC-001-2026-06-24}; see
+\texttt{SYMP-ADAPTED-CLOSED-001} and \texttt{SYMP-INF-CE-001}.}
+\end{theorem}
+
+\begin{proof}
+There is no proof of this unrestricted statement.  The Lean-checked theorem
+\texttt{SYMP-ADAPTED-CLOSED-001} proves that any adapted symplectic basis with
+\(W=\spanF\{z_i:i\in P\}\) forces \(W\) to be \(B\)-closed:
+\[
+  W^{\perp\perp}=W .
+\]
+The Lean-checked counterexample \texttt{SYMP-INF-CE-001} gives an isotropic
+subspace of \(\texttt{PauliLabel}\,\mathbb N\) that is not \(B\)-closed and
+therefore has no adapted symplectic basis.  The residual-step proof sketch
+above was missing precisely this closedness hypothesis: without it, the
+spanning-side partner need not remain in \(W^\perp\), and the final
+\(W=\spanF\{z_i:i\in P\}\) conclusion fails.
+\end{proof}
+
+\begin{lemma}[SymplecticBasisOfSpanning, ID: SYMP-SPANNING-BASIS-001]
+Let \(B\) be an \(\Ftwo\)-valued bilinear form on \(V\), let \(I\) be an
+index type, and let \(z,x:I\to V\) satisfy
+\[
+  B(z_i,z_j)=0,\qquad B(x_i,x_j)=0,\qquad
+  B(z_i,x_j)=\delta_{ij}.
+\]
+If the combined range of \(z\) and \(x\) spans \(V\), then the combined
+family \(I\oplus I\to V\) is a basis of \(V\).
+\depends{\texttt{SYMP-LININD-001}.}
+\lean{Formalization.Stabilizer.symplectic_basis_of_spanning}
+\status{lean_checked support target returned by
+\texttt{SYMP-INF-REC-001-2026-06-24}.}
+\end{lemma}
+
+\begin{proof}
+\texttt{SYMP-LININD-001} gives linear independence from the symplectic
+pairing relations.  Combining linear independence with the spanning
+hypothesis gives a basis by \(\texttt{Module.Basis.mk}\).
+\end{proof}
+
+\begin{theorem}[AdaptedSymplecticBasisImpliesClosed, ID: SYMP-ADAPTED-CLOSED-001]
+Let \(B\) be an alternating \(\Ftwo\)-valued bilinear form on \(V\).  Suppose
+\(z,x:I\to V\) satisfy the symplectic pairing relations, suppose
+\(\{z_i,x_i:i\in I\}\) is a basis of \(V\), and suppose
+\[
+  W=\spanF\{z_i:i\in P\}
+\]
+for some \(P\subseteq I\).  Then \(W\) is \(B\)-closed:
+\[
+  W^{\perp\perp}=W.
+\]
+\depends{\texttt{SYMP-LININD-001}.}
+\lean{Formalization.Stabilizer.adapted_symplectic_closed}
+\status{lean_checked obstruction target returned by
+\texttt{SYMP-INF-REC-001-2026-06-24}.}
+\end{theorem}
+
+\begin{proof}
+Expand an arbitrary vector in the adapted symplectic basis.  If
+\(u\in W^{\perp\perp}\), then pairing \(u\) against \(x_j\) for
+\(j\notin P\) kills the coefficient of \(z_j\), while pairing \(u\) against
+each \(z_j\) kills the coefficient of \(x_j\).  Thus \(u\) is a finite
+linear combination only of the \(z_i\) with \(i\in P\), hence \(u\in W\).
+The reverse inclusion \(W\subseteq W^{\perp\perp}\) follows from the
+definition of orthogonal complement.
+\end{proof}
+
+\begin{theorem}[InfiniteNonclosedIsotropicCounterexample, ID: SYMP-INF-CE-001]
+In the Pauli label space \(\texttt{PauliLabel}\,\mathbb N\), let
+\[
+  W_{\mathrm{cex}}
+  =
+  \spanF\{\,Z_i+Z_{i+1}:i\in\mathbb N\,\}.
+\]
+Then \(W_{\mathrm{cex}}\) is isotropic but not \(B\)-closed.  In particular,
+there are no sequences \(z,x:\mathbb N\to\texttt{PauliLabel}\,\mathbb N\)
+and no \(P\subseteq\mathbb N\) satisfying the unrestricted
+\texttt{SYMP-INF-REC-001} conclusion for \(W_{\mathrm{cex}}\).
+\depends{\texttt{PAULI-001}, \texttt{SYMP-ADAPTED-CLOSED-001}.}
+\lean{Formalization.Stabilizer.cexW_no_adapted_symplectic_basis}
+\status{lean_checked counterexample returned by
+\texttt{SYMP-INF-REC-001-2026-06-24}.}
+\end{theorem}
+
+\begin{proof}
+The generators \(Z_i+Z_{i+1}\) have no \(X\)-coordinate, so their
+symplectic pairings with each other vanish and \(W_{\mathrm{cex}}\) is
+isotropic.  The vector \(Z_0\) is not in \(W_{\mathrm{cex}}\): the total
+\(Z\)-coordinate sum vanishes on each generator but is \(1\) on \(Z_0\).
+On the other hand, any vector orthogonal to all generators has equal
+successive \(X\)-coordinates; finite support forces all of those
+coordinates to vanish, so \(Z_0\in W_{\mathrm{cex}}^{\perp\perp}\).  Thus
+\(W_{\mathrm{cex}}^{\perp\perp}\ne W_{\mathrm{cex}}\).  By
+\texttt{SYMP-ADAPTED-CLOSED-001}, an adapted symplectic basis for
+\(W_{\mathrm{cex}}\) would force closedness, contradiction.
+\end{proof}
+
+\begin{lemma}[ClosedOrthogonalPartner, ID: SYMP-CLOSED-PARTNER-001]
+Let \(B\) be an alternating \(\Ftwo\)-valued bilinear form on \(V\), let
+\(W\subseteq V\) satisfy \(W^{\perp\perp}=W\), and let
+\[
+  r\in W^\perp\setminus W.
+\]
+Then there exists \(s\in W^\perp\) such that
+\[
+  B(r,s)=1.
+\]
+\depends{\texttt{SYMP-ADAPTED-CLOSED-001}.}
+\lean{Formalization.Stabilizer.closed_orthogonal_partner}
+\status{proved and Lean-checked from Aristotle task
+\texttt{64779911-a022-4fb9-bd7a-42b99cc12d74}.}
+\end{lemma}
+
+\begin{proof}
+If \(B(r,s)=0\) for every \(s\in W^\perp\), then by definition
+\(r\in W^{\perp\perp}\).  The closedness hypothesis gives
+\(r\in W\), contradicting \(r\notin W\).  Therefore some \(s\in W^\perp\)
+has \(B(r,s)\ne0\); over \(\Ftwo\), this means \(B(r,s)=1\).
+\end{proof}
+
+\subsection*{Closed-\(W\) Recursion Support Lemmas}
+
+The following project-local support lemmas are the mathematical spine of the
+Lean proof of \texttt{SYMP-INF-REC-CLOSED-001}.  The Lean file also contains
+recursion-state records and stability lemmas used to encode the dovetailing;
+those are implementation plumbing for this proof, not separate mathematical
+targets.
+
+\begin{lemma}[SupHyperbolicRestrictNondegenerate, ID: SYMP-SUP-HYP-NONDEG-001]
+Let \(H\subseteq V\) be finite-dimensional and suppose \(B|_H\) is
+nondegenerate.  If \(z_0,x_0\in H^\perp\) and \(B(z_0,x_0)=1\), then the
+restriction of \(B\) to
+\[
+  H+\spanF\{z_0,x_0\}
+\]
+is nondegenerate.
+\depends{\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001},
+\texttt{SYMP-ORTH-RESTRICT-NONDEG-001}.}
+\lean{Formalization.Stabilizer.sup_hyperbolic_restrict_nondegenerate}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{lemma}
+
+\begin{proof}
+The summand \(H\) is orthogonal to \(\spanF\{z_0,x_0\}\) because both new
+vectors lie in \(H^\perp\).  The restriction on \(H\) is nondegenerate by
+hypothesis, and the restriction on \(\spanF\{z_0,x_0\}\) is the two-dimensional
+hyperbolic form.  A vector orthogonal to the whole sum has zero \(H\)-component
+and zero hyperbolic component, hence is zero.
+\end{proof}
+
+\begin{lemma}[OrthogonalComponentMemOrthogonal, ID: SYMP-ORTH-COMP-001]
+Assume \(B|_H\) is nondegenerate and
+\[
+  W=(W\cap H)+(W\cap H^\perp).
+\]
+If \(t=h+r\in W^\perp\), with \(h\in H\) and \(r\in H^\perp\), then
+\[
+  h\in W^\perp,\qquad r\in W^\perp .
+\]
+\depends{\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001}.}
+\lean{Formalization.Stabilizer.orthogonal_component_mem_orthogonal}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{lemma}
+
+\begin{proof}
+Write every \(w\in W\) as \(w=w_H+w_\perp\) with
+\(w_H\in W\cap H\) and \(w_\perp\in W\cap H^\perp\).  Since
+\(t\in W^\perp\), \(B(h+r,w)=0\).  The cross pairings
+\(B(h,w_\perp)\) and \(B(r,w_H)\) vanish by orthogonality of \(H\) and
+\(H^\perp\), so separately \(B(h,w_H)=0\) and \(B(r,w_\perp)=0\).  Varying
+\(w\) gives \(h,r\in W^\perp\).
+\end{proof}
+
+\begin{lemma}[AdaptedWsplitPreserved, ID: SYMP-WSPLIT-PRESERVE-001]
+Assume \(W\) is isotropic and
+\[
+  W=(W\cap H)+(W\cap H^\perp).
+\]
+Let \(z_0,x_0\in H^\perp\) satisfy \(B(z_0,x_0)=1\).  If either
+\[
+  z_0\in W
+\]
+or
+\[
+  z_0,x_0\in W^\perp,
+\]
+then the same split invariant holds after adjoining the pair:
+\[
+  W=\bigl(W\cap (H+\spanF\{z_0,x_0\})\bigr)
+    +\bigl(W\cap (H+\spanF\{z_0,x_0\})^\perp\bigr).
+\]
+\depends{\texttt{SYMP-SUP-HYP-NONDEG-001},
+\texttt{SYMP-ORTH-COMP-001}.}
+\lean{Formalization.Stabilizer.adapted_Wsplit_preserved}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{lemma}
+
+\begin{proof}
+Use the old split to write \(w\in W\) as \(a+c\).  In the \(P\)-pair case
+\(z_0\in W\), decompose the \(H^\perp\)-part into its \(z_0\)-coefficient and
+the residual orthogonal to the new hyperbolic plane; isotropy of \(W\) forces
+the residual to stay in \(W\).  In the \(O\)-pair case
+\(z_0,x_0\in W^\perp\), \(W\) is already orthogonal to the new hyperbolic
+plane, so the old \(H^\perp\)-part lies in the new orthogonal complement.
+\end{proof}
+
+\begin{lemma}[AdaptedPairFromResidual, ID: SYMP-PAIR-RESIDUAL-001]
+Assume \(B\) is nondegenerate and alternating, \(W\) is isotropic and
+\(B\)-closed, \(H\) is finite-dimensional with \(B|_H\) nondegenerate, and
+\[
+  W=(W\cap H)+(W\cap H^\perp).
+\]
+For every nonzero residual \(r\in H^\perp\), there are
+\(z_0,x_0\in H^\perp\) and a tag declaring either a \(P\)-pair or an
+\(O\)-pair such that
+\[
+  B(z_0,x_0)=1,\qquad
+  r\in \spanF\{z_0,x_0\},
+\]
+the new pair preserves nondegeneracy and the \(W\)-split invariant, and either
+\(z_0\in W\) or \(z_0,x_0\in W^\perp\) according to the tag.
+\depends{\texttt{SYMP-CLOSED-PARTNER-001},
+\texttt{SYMP-SUP-HYP-NONDEG-001}, \texttt{SYMP-ORTH-COMP-001},
+\texttt{SYMP-WSPLIT-PRESERVE-001}.}
+\lean{Formalization.Stabilizer.adapted_pair_from_residual}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{lemma}
+
+\begin{proof}
+There are three cases.  If \(r\in W\), take \(z_0=r\) and use
+nondegeneracy on \(H^\perp\) to choose \(x_0\in H^\perp\) with
+\(B(r,x_0)=1\).  If \(r\in W^\perp\setminus W\), use
+\texttt{SYMP-CLOSED-PARTNER-001} to find a partner in \(W^\perp\), then
+project that partner to \(H^\perp\) using the finite splitting; the component
+lemma keeps it in \(W^\perp\).  If \(r\notin W^\perp\), choose
+\(w\in W\) with \(B(r,w)=1\), split \(w\) along \(H\oplus H^\perp\), and use
+the \(H^\perp\)-component as the \(W\)-partner.  The previous support lemmas
+verify nondegeneracy and preservation of the split invariant in all cases.
+\end{proof}
+
+\begin{lemma}[AdaptedSymplecticStepClosed, ID: SYMP-STEP-CLOSED-001]
+Under the hypotheses of \texttt{SYMP-PAIR-RESIDUAL-001}, and assuming
+\(H^\perp\) contains a nonzero vector, every target \(t\in V\) is covered after
+one adapted extension: there are \(z_0,x_0\in H^\perp\) and a \(P/O\)-tag such
+that
+\[
+  t\in H+\spanF\{z_0,x_0\},
+\]
+the hyperbolic relations hold, and the nondegeneracy and \(W\)-split
+invariants are preserved.
+\depends{\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001},
+\texttt{SYMP-PAIR-RESIDUAL-001}.}
+\lean{Formalization.Stabilizer.adapted_symplectic_step}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{lemma}
+
+\begin{proof}
+Decompose \(t=h+r\) with \(h\in H\) and \(r\in H^\perp\).  If \(r=0\), use
+any nonzero vector in \(H^\perp\) and apply the residual-pair lemma; \(t\) is
+already in \(H\).  If \(r\ne0\), apply the residual-pair lemma directly to
+\(r\), which puts \(r\), and hence \(t\), in the enlarged span.
+\end{proof}
+
+\begin{lemma}[AdaptedWEqSpan, ID: SYMP-W-EQ-SPAN-001]
+Let \(z,x:I\to V\) satisfy the symplectic relations and let
+\(\operatorname{Sum.elim}(z,x)\) be a basis.  Suppose \(W\) is isotropic,
+\(z_i\in W\) for \(i\in P\), and \(z_i,x_i\in W^\perp\) for \(i\notin P\).
+Then
+\[
+  W=\spanF\{z_i:i\in P\}.
+\]
+\depends{\texttt{SYMP-LININD-001}, \texttt{SYMP-SPANNING-BASIS-001}.}
+\lean{Formalization.Stabilizer.adapted_W_eq_span}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{lemma}
+
+\begin{proof}
+Expand \(w\in W\) in the symplectic basis.  Pairing \(w\) with each
+\(z_i\) kills every \(x_i\)-coefficient, and pairing with \(x_i\) for
+\(i\notin P\) kills the \(z_i\)-coefficient outside \(P\).  Thus every
+\(w\in W\) lies in the span of \(\{z_i:i\in P\}\).  The reverse inclusion is
+the assumption \(z_i\in W\) for \(i\in P\).
+\end{proof}
+
+\begin{lemma}[FreshOrthogonalOfInfinite, ID: SYMP-FRESH-PERP-001]
+If \(V\) is not finite-dimensional, \(H\subseteq V\) is finite-dimensional,
+and \(B|_H\) is nondegenerate, then \(H^\perp\) contains a nonzero vector.
+\depends{\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001}.}
+\lean{Formalization.Stabilizer.exists_nonzero_mem_orthogonal_of_infinite}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{lemma}
+
+\begin{proof}
+If \(H^\perp=\{0\}\), then the complement splitting from
+\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001} gives \(V=H\), contradicting that
+\(V\) is not finite-dimensional.
+\end{proof}
+
+\begin{lemma}[RestrictBotNondegenerate, ID: SYMP-BOT-NONDEG-001]
+The restriction of any bilinear form to the zero submodule \(\{0\}\) is
+nondegenerate.
+\lean{Formalization.Stabilizer.restrict_bot_nondegenerate}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{lemma}
+
+\begin{proof}
+The zero submodule has only the zero vector, so both left and right kernels of
+the restricted form are trivial.
+\end{proof}
+
+\begin{theorem}[ExistsAdaptedSymplecticSequencesClosed, ID: SYMP-SEQUENCES-CLOSED-001]
+Under the hypotheses of \texttt{SYMP-INF-REC-CLOSED-001}, there exist
+sequences \(z,x:\mathbb N\to V\) and \(P\subseteq\mathbb N\) such that the
+symplectic pairing relations hold, \(z_i\in W\) for \(i\in P\),
+\(z_i,x_i\in W^\perp\) for \(i\notin P\), and
+\[
+  \spanF\{z_i,x_i:i\in\mathbb N\}=V.
+\]
+\depends{\texttt{SYMP-BOT-NONDEG-001}, \texttt{SYMP-FRESH-PERP-001},
+\texttt{SYMP-STEP-CLOSED-001}.}
+\lean{Formalization.Stabilizer.exists_adapted_symplectic_sequences}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{theorem}
+
+\begin{proof}
+Choose a surjective enumeration \(e:\mathbb N\to V\).  Start with
+\(H_0=0\), whose restriction is nondegenerate by
+\texttt{SYMP-BOT-NONDEG-001}.  At stage \(k\), apply
+\texttt{SYMP-STEP-CLOSED-001} to \(e_k\) and the current finite
+nondegenerate span \(H_k\).  This produces a new hyperbolic pair and preserves
+the symplectic, \(P/O\), nondegeneracy, and \(W\)-split invariants.  Dovetailing
+over the enumeration ensures every \(e_k\), hence every vector of \(V\), lies
+in the span of the limiting family.
+\end{proof}
+
+\begin{theorem}[CountableInfiniteAdaptedSymplecticRecursionClosed, ID: SYMP-INF-REC-CLOSED-001]
+Let \(V\) be a countable \(\Ftwo\)-vector space that is not
+finite-dimensional.  Let \(B\) be a nondegenerate alternating bilinear form on
+\(V\), and let \(W\subseteq V\) be isotropic and \(B\)-closed:
+\[
+  W^{\perp\perp}=W.
+\]
+Then there are sequences \(z,x:\mathbb N\to V\) and a subset
+\(P\subseteq\mathbb N\) such that the symplectic pairing relations hold, the
+combined family \(z,x\) is a basis of \(V\), and
+\[
+  W=\spanF\{z_i:i\in P\}.
+\]
+\depends{\texttt{SYMP-COUNT-BASIS-001},
+\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001},
+\texttt{SYMP-ORTH-RESTRICT-NONDEG-001}, \texttt{SYMP-LININD-001},
+\texttt{SYMP-HYP-EXT-001}, \texttt{SYMP-SPANNING-BASIS-001},
+\texttt{SYMP-CLOSED-PARTNER-001}, \texttt{SYMP-SUP-HYP-NONDEG-001},
+\texttt{SYMP-ORTH-COMP-001}, \texttt{SYMP-WSPLIT-PRESERVE-001},
+\texttt{SYMP-PAIR-RESIDUAL-001}, \texttt{SYMP-STEP-CLOSED-001},
+\texttt{SYMP-W-EQ-SPAN-001}, \texttt{SYMP-FRESH-PERP-001},
+\texttt{SYMP-BOT-NONDEG-001}, \texttt{SYMP-SEQUENCES-CLOSED-001}.}
+\lean{Formalization.Stabilizer.exists_adapted_symplectic_countable_infinite_closed}
+\status{proved and Lean-checked from Aristotle task
+\texttt{3ae275d6-ba2a-4849-942b-6f2cb283e913}.}
+\end{theorem}
+
+\begin{proof}
+The proof is the dovetailed recursive Gram--Schmidt construction, now with
+the missing closedness hypothesis made explicit.  At stages assigned to
+basis vectors of \(W\), the residual remains in \(W\) by finite correction
+inside the already represented \(W\)-span.  At stages assigned to spanning
+directions outside \(W\), the new residual lies in \(W^\perp\setminus W\);
+\texttt{SYMP-CLOSED-PARTNER-001} supplies a partner still inside \(W^\perp\).
+The finite nondegenerate restriction and orthogonal-complement lemmas preserve
+the finite-stage hyperbolic invariant.  The limiting family spans by the
+dovetailed enumeration, is linearly independent by \texttt{SYMP-LININD-001},
+and becomes a basis by \texttt{SYMP-SPANNING-BASIS-001}.  The \(W\)-stage
+invariant gives exactly \(W=\spanF\{z_i:i\in P\}\) by
+\texttt{SYMP-W-EQ-SPAN-001}.
+\end{proof}
+
+\begin{lemma}[AdaptedSymplecticBasis, ID: SYMP-001, project proof note 004 Lemma 3.1, PDF pp.~3--4]
+Let \(V_\Lambda\) be finite or countably dimensional over \(\Ftwo\), with
+nondegenerate symplectic form \(\sigma\), and let
+\(W\subseteq V_\Lambda\) be isotropic.  There is a symplectic basis
+\[
+  \{z_i,x_i:i\in I\}
+\]
+of \(V_\Lambda\), with \(I\) finite or countable, and a subset \(P\subseteq I\)
+such that
+\[
+  W=\spanF\{z_i:i\in P\}.
+\]
+\source{Project proof note 004, Lemma 3.1, PDF pp.~3--4.}
+\depends{\texttt{PAULI-001}, \texttt{SYMP-FIN-001},
+\texttt{SYMP-COUNT-BASIS-001},
+\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001},
+\texttt{SYMP-ORTH-RESTRICT-NONDEG-001}, \texttt{SYMP-LININD-001},
+\texttt{SYMP-HYP-EXT-001}, \texttt{SYMP-COUNT-FIN-001},
+\texttt{SYMP-PAULI-FIN-COUNT-001}, \texttt{SYMP-INF-REC-CLOSED-001}.}
+\lean{Formalization.Stabilizer.adaptedSymplecticBasis}
+\status{blueprint_note_complete; Lean checked for the finite subcase and
+the listed countable-assembly support lemmas only; the unrestricted
+infinite-dimensional recursive assembly is false as stated, and downstream
+countable uses must prove \(B\)-closedness or use
+\texttt{SYMP-INF-REC-CLOSED-001}.}
+\end{lemma}
+
+\begin{proof}
+For the finite-dimensional case, use \texttt{SYMP-FIN-001}.  In the countable
+case, start with any countable basis \(\{w_i:i\in P\}\) of \(W\).  The
+construction is recursive and replaces this basis by another basis
+\(\{z_i:i\in P\}\) of the same subspace.  At a finite stage, suppose
+hyperbolic pairs have already been chosen with
+\(\sigma(z_i,x_j)=\delta_{ij}\) and all \(z\)-\(z\) and \(x\)-\(x\) pairings
+zero.  For the next basis vector \(w_k\in W\), first set
+\[
+  z_k=w_k+\sum_{i<k}\sigma(w_k,x_i)z_i .
+\]
+This vector still lies in \(W\), is independent modulo the previous
+\(z_i\)'s, and satisfies \(\sigma(z_k,x_i)=0\) for every \(i<k\), while
+isotropy of \(W\) gives \(\sigma(z_k,z_i)=0\).
+
+Nondegeneracy gives some candidate \(y\) with \(\sigma(z_k,y)=1\).  Replace
+\[
+  y\quad\text{by}\quad
+  y+\sum_{i<k}\sigma(y,x_i)z_i+\sum_{i<k}\sigma(y,z_i)x_i
+\]
+to make it orthogonal to all previously chosen \(z_i\)'s and \(x_i\)'s.  This
+correction preserves \(\sigma(z_k,y)=1\) because \(z_k\) is already orthogonal
+to the previous pairs.  Finally replace \(y\) by
+\[
+  x_k=y+\sigma(y,y)z_k .
+\]
+Over \(\Ftwo\) the symplectic form is alternating, so this last correction is
+usually vacuous, but it records the finite-stage Gram--Schmidt normalization;
+the resulting \(x_k\) has the required pairings with all previous pairs and
+with \(z_k\).
+
+After all vectors of \(W\) have been paired, the algebraic span \(H\) of the
+chosen hyperbolic pairs is nondegenerate: every vector of \(H\) has finite
+support in the chosen pairs, and the first nonzero coefficient is detected by
+pairing with the corresponding partner.  Hence
+\[
+  V_\Lambda=H\oplus H^\perp
+\]
+and \(H^\perp\) is again symplectic.  Choose a finite or countable symplectic
+basis of \(H^\perp\) by the same recursive Gram--Schmidt extension procedure
+applied to an enumeration of a vector-space basis.  Combining this basis with
+the paired basis of \(W\) gives the required adapted symplectic basis.
+
+The Lean formalization currently contains the finite case and the support
+targets \texttt{SYMP-COUNT-BASIS-001},
+\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001},
+\texttt{SYMP-ORTH-RESTRICT-NONDEG-001}, \texttt{SYMP-LININD-001},
+\texttt{SYMP-HYP-EXT-001}, \texttt{SYMP-COUNT-FIN-001},
+\texttt{SYMP-PAULI-FIN-COUNT-001}, and the corrected closed-\(W\) support
+targets through \texttt{SYMP-INF-REC-CLOSED-001}.  The
+\texttt{SYMP-INF-REC-001-2026-06-24} response refuted this unrestricted
+countable version.  The corrected countable path
+\texttt{SYMP-INF-REC-CLOSED-001}, which requires \(W^{\perp\perp}=W\), is
+now Lean-checked; downstream countable applications must prove that closedness
+hypothesis before using it.
+\end{proof}
+
+\subsection*{Adapted Pauli Isomorphism}
+
+\begin{lemma}[AdaptedPauliIso, ID: SYMP-002, project proof note 004 Lemma 3.2, PDF p.~4]
+Let \(\{z_i,x_i:i\in I\}\) be a symplectic basis of \(V_\Lambda\).  Let
+\(\cA_I\) be the formal qubit quasi-local algebra generated by Pauli pairs
+\(\{Z_i,X_i:i\in I\}\).  There is a \(*\)-isomorphism
+\[
+  \alpha:\cA_I\longrightarrow \cA_\Lambda
+\]
+which sends the formal Pauli label
+\[
+  \sum_{i\in F}(a_i z_i+b_i x_i),\qquad F\Subset I,
+\]
+to the Pauli operator in \(\cA_\Lambda\) with the same binary label, up to the
+fixed representative-section phase convention.
+\source{Project proof note 004, Lemma 3.2, PDF p.~4;
+\path{blueprints/007-pauli-quasilocal-algebra.tex}, targets
+\texttt{PAULI-002} and \texttt{QL-001}.}
+\depends{\texttt{SYMP-001}, \texttt{PAULI-002}, \texttt{QL-001},
+\texttt{QL-002}.}
+\lean{Formalization.Stabilizer.adaptedPauliIso}
+\status{blueprint_note_complete}
+\end{lemma}
+
+\begin{proof}
+For a finite subset \(F\subseteq I\), the vectors
+\(\{z_i,x_i:i\in F\}\) form a finite symplectic basis of their span.  Choose
+the Pauli representatives \(P(z_i)\) and \(P(x_i)\) using the phase convention
+fixed in \path{blueprints/007-pauli-quasilocal-algebra.tex}.  The commutation
+relations among these representatives are exactly the standard finite-qubit
+relations:
+\[
+  P(z_i)P(x_j)=(-1)^{\delta_{ij}}P(x_j)P(z_i),
+\]
+with all \(z\)-\(z\) and \(x\)-\(x\) pairs commuting.  Therefore the finite
+assignment
+\[
+  Z_i\mapsto P(z_i),\qquad X_i\mapsto P(x_i),\qquad i\in F,
+\]
+extends to a \(*\)-isomorphism from
+\(\bigotimes_{i\in F}M_2(\mathbb C)\) onto the finite Pauli algebra generated
+by those representatives.
+
+If \(F\subseteq F'\), the finite isomorphisms agree with the unital inclusions
+because the same representative section is used on the smaller set.  Taking
+the directed union and then the quasi-local norm closure gives the
+\(*\)-isomorphism \(\alpha:\cA_I\to\cA_\Lambda\).
+\end{proof}
+
+\begin{warning}[Algebraic, not geometrically local]
+The symplectic basis in \texttt{SYMP-001} is algebraic.  Its vectors may mix
+distant physical sites in \(\Lambda\).  Consequently \(\alpha\) is an
+algebraic UHF identification and need not be implemented by a finite-depth
+Clifford circuit, quasi-local automorphism, gLU, or any geometrically local
+normal form.
+\source{Project proof note 004, Warning 6.2, PDF p.~7.}
+\status{Scope caveat for \texttt{SYMP-001}, \texttt{SYMP-002}, and
+\texttt{PROD-001}.}
+\end{warning}
+
+\subsection*{Product Form of the Canonical State}
+
+\begin{proposition}[ProductFormCanonicalState, ID: PROD-001, project proof note 004 Proposition 4.1, PDF pp.~4--5]
+Let \(S'\) be a consistent stabilizer extension with internal region subspace
+\[
+  W'_\Lambda=W'\cap V_\Lambda.
+\]
+Choose an adapted symplectic basis as in \texttt{SYMP-001}, so that
+\[
+  W'_\Lambda=\spanF\{z_i:i\in P\}.
+\]
+Transport the restricted canonical state \(\omega_{S'}|_{\cA_\Lambda}\) along
+the isomorphism \(\alpha\) of \texttt{SYMP-002}.  If the stabilizer character
+has values \(\epsilon_i=\chi(z_i)\in\{\pm1\}\), the transported state on
+\(\cA_I\) is
+\[
+  \bigotimes_{i\in P}\omega_{Z,\epsilon_i}
+  \otimes
+  \bigotimes_{i\in I\setminus P}\tr_2,
+\]
+where \(\omega_{Z,\epsilon_i}\) is the one-site \(Z_i=\epsilon_i\) eigenstate
+and \(\tr_2\) is the normalized one-site trace.
+\source{Project proof note 004, Proposition 4.1, PDF pp.~4--5;
+\path{blueprints/002-canonical-state.tex}, target \texttt{STATE-001};
+\path{blueprints/008-stabilizer-local-state-foundations.tex}, targets
+\texttt{STATE-003} and \texttt{STATE-004}.}
+\depends{\texttt{STATE-001}, \texttt{STATE-003}, \texttt{STATE-004},
+\texttt{SYMP-001}, \texttt{SYMP-002}.}
+\lean{Formalization.Stabilizer.productFormCanonicalState}
+\status{blueprint_note_complete}
+\end{proposition}
+
+\begin{proof}
+Every formal finite Pauli label has the adapted-coordinate form
+\[
+  v=\sum_{i\in F}(a_i z_i+b_i x_i),
+\]
+with \(F\Subset I\).  By the region-restriction theorem \texttt{STATE-004},
+the restricted canonical state has a nonzero coefficient at \(v\) exactly when
+\[
+  v\in W'_\Lambda=\spanF\{z_i:i\in P\}.
+\]
+In adapted coordinates this is equivalent to
+\[
+  b_i=0\ \text{for all } i,\qquad
+  a_i=0\ \text{for all } i\notin P.
+\]
+When this condition holds, the coefficient is the stabilizer character value
+\[
+  \chi(v)=\prod_{i\in P}\epsilon_i^{a_i}.
+\]
+
+For \(i\in P\), the one-site \(Z_i=\epsilon_i\) eigenstate has Pauli
+coefficients \(1\) on the identity, \(\epsilon_i\) on \(Z_i\), and \(0\) on
+\(X_i\) and \(X_iZ_i\).  For \(i\notin P\), the normalized trace has
+coefficient \(1\) on the identity and \(0\) on the nonidentity Pauli labels.
+The tensor product of these one-site states therefore has exactly the same
+finite Pauli coefficients as the transported canonical state.
+
+The finite Pauli basis from \texttt{PAULI-002} determines every finite-local
+observable by its coefficients.  Hence the two states agree on every finite
+local algebra.  By the quasi-local extension uniqueness in \texttt{STATE-003},
+they agree on the quasi-local completion.
+\end{proof}
+
+\subsection*{Lean Extraction Notes}
+
+\begin{longtable}{@{}p{0.15\linewidth}p{0.34\linewidth}p{0.41\linewidth}@{}}
+\toprule
+Target & Intended file & Notes \\
+\midrule
+\endhead
+\texttt{SYMP-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasis.lean} &
+Algebra over \(\texttt{ZMod 2}\); no topology or geometry.  The countable
+case can be staged through finite recursive extension lemmas. \\
+\texttt{SYMP-FIN-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasis.lean} &
+Lean-checked finite-dimensional arbitrary-isotropic adapted basis theorem,
+used as the finite-stage engine for \texttt{SYMP-001}. \\
+\texttt{SYMP-COUNT-BASIS-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked countable basis extraction for subspaces of countable
+\(\Ftwo\)-modules. \\
+\texttt{SYMP-FIN-RESTRICT-ISCOMPL-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked finite nondegenerate restriction complement splitting, without
+assuming the ambient space finite-dimensional. \\
+\texttt{SYMP-ORTH-RESTRICT-NONDEG-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked nondegeneracy of the restricted form on the orthogonal
+complement. \\
+\texttt{SYMP-LININD-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked linear independence of arbitrary-index symplectic families. \\
+\texttt{SYMP-HYP-EXT-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked one-step hyperbolic extension over a finite nondegenerate
+subspace. \\
+\texttt{SYMP-COUNT-FIN-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked countable-index packaging of the finite-dimensional adapted
+basis theorem. \\
+\texttt{SYMP-PAULI-FIN-COUNT-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked countable-index output shape for finite
+\(\texttt{PauliLabel}\) registers. \\
+\texttt{SYMP-INF-REC-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Blocked false as stated: arbitrary isotropic \(W\) need not be
+\(B\)-closed. \\
+\texttt{SYMP-SPANNING-BASIS-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked basis construction from symplectic relations plus spanning. \\
+\texttt{SYMP-ADAPTED-CLOSED-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked necessary closedness obstruction for adapted symplectic bases. \\
+\texttt{SYMP-INF-CE-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked nonclosed isotropic counterexample in
+\(\texttt{PauliLabel}\,\mathbb N\). \\
+\texttt{SYMP-CLOSED-PARTNER-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked dependency: closedness supplies a partner in \(W^\perp\). \\
+\texttt{SYMP-SUP-HYP-NONDEG-001},
+\texttt{SYMP-ORTH-COMP-001},
+\texttt{SYMP-WSPLIT-PRESERVE-001},
+\texttt{SYMP-PAIR-RESIDUAL-001},
+\texttt{SYMP-STEP-CLOSED-001},
+\texttt{SYMP-W-EQ-SPAN-001},
+\texttt{SYMP-FRESH-PERP-001},
+\texttt{SYMP-BOT-NONDEG-001},
+\texttt{SYMP-SEQUENCES-CLOSED-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Lean-checked mathematical support package returned with
+\texttt{SYMP-INF-REC-CLOSED-001}; recursion-state records and stability lemmas
+inside the Lean file are implementation plumbing for this package. \\
+\texttt{SYMP-INF-REC-CLOSED-001} &
+\texttt{Formalization/Stabilizer/SymplecticBasisCountable.lean} &
+Corrected infinite-dimensional countable recursive assembly under
+\(W^{\perp\perp}=W\); Lean-checked. \\
+\texttt{SYMP-002} &
+\texttt{Formalization/Stabilizer/AdaptedPauliIso.lean} &
+Build from finite Pauli algebra universality and compatible quasi-local
+inclusions.  Countable uses now require the closed version of
+\texttt{SYMP-001}; keep representative-section phases explicit. \\
+\texttt{PROD-001} &
+\texttt{Formalization/Stabilizer/ProductForm.lean} &
+Prove equality of states by equality of Pauli coefficients on finite local
+algebras, then use the \(\texttt{STATE-003}\) extension/uniqueness interface;
+do not rely on unrestricted countable \(\texttt{SYMP-001}\). \\
+\bottomrule
+\end{longtable}
+
+\begin{thebibliography}{9}
+\bibitem{ProofNote004}
+Project proof note 004,
+\emph{Internal Stabilizer Reduction and Projection-State Type Classification}.
+Local source:
+\path{../runs/2026-06-18-stabilizer-algebra-classification/artifacts/004-internal-stabilizer-reduction-type-classification-R1.pdf}.
+\end{thebibliography}
+
+\end{document}

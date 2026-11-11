@@ -1,0 +1,46 @@
+/-
+# Reusable formal infrastructure
+
+This is the stable import surface for checked algebraic, finite-dimensional,
+and finite-stage material. It does not claim to establish the manuscript's
+infinite von Neumann algebra theorem.
+
+For manuscript-facing dependencies, import `Formalization.Manuscript`.
+For retained exploratory material, import its file directly and consult
+`CONTEXT-LEDGER.md`.
+-/
+
+import Formalization.TraceTransport
+import Formalization.FiniteMatrixTrace
+import Formalization.FiniteCornerTrace
+import Formalization.FiniteTensorTrace
+import Formalization.AlgebraicInductiveTrace
+import Formalization.AlgebraicStarDirectLimit
+import Formalization.AlgebraicLimitStarHom
+import Formalization.AlgebraicLimitTraceTransport
+import Formalization.AlgebraicLimitStateTransport
+import Formalization.MatrixOverTrace
+import Formalization.TensorMatrixEquiv
+import Formalization.DyadicTensorTower
+import Formalization.SingleQubitPauli
+import Formalization.FiniteQubitPauli
+import Formalization.QubitMatrixState
+import Formalization.FinitePureMixedQubitState
+import Formalization.PureCoordinateNotTracial
+import Formalization.CoherentBasisEquiv
+import Formalization.FinitePureUHFProduct
+import Formalization.SymplecticCoordinates
+import Formalization.AdaptedStabilizerSubspace
+import Formalization.FiniteQubitPauliSelection
+import Formalization.CStarEquivExtension
+import Formalization.PauliCocycleCompatibility
+import Formalization.StabilizerCharacterCalibration
+import Formalization.QuadraticPhaseRefinement
+import Formalization.FiniteSupportQuadraticRefinement
+import Formalization.CoordinateQuadraticPhase
+import Formalization.FinitePureUHFTraceTransport
+import Formalization.ProperlyInfiniteTraceObstruction
+import Formalization.PhaseCorrectedWordBasisEquiv
+import Formalization.WordBasisExtension
+import AristotleCandidates.BicommutantVonNeumannCore
+import AristotleCandidates.ConcreteCStarCompletion

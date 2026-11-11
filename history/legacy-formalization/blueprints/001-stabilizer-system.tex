@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}[definition]{Lemma}
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{#1}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+
+\begin{document}
+
+\section*{Blueprint 001: Algebraic Stabilizer System}
+
+\subsection*{Scope}
+
+This note is the prerequisite informal source for Lean target `SYS-001`.  It
+only formalizes the algebraic Pauli-label layer.  It does not define Hilbert
+spaces, concrete Pauli operators, states, GNS representations, quasi-local
+algebras, or von Neumann algebras.
+
+\subsection*{Conventions}
+
+All vector spaces in this note are over \(\mathbb F_2\).  The notation
+\(\mathbb F_2^{(\Gamma)}\) means finitely supported functions
+\(\Gamma\to\mathbb F_2\).  Thus every dot product below is a finite sum.
+
+\begin{definition}[StabilizerSystem, ID: SYS-001, Gottesman Chapter 3.5, Definitions 3.11 and 3.13, PDF pp.~55--56; project proof note 004, region Pauli label space and internal stabilizer space]
+Let \(\Gamma\) be a qubit index set.  The Pauli label space is the
+finite-support \(\mathbb F_2\)-vector space
+\[
+  V_\Gamma := \mathbb F_2^{(\Gamma)} \oplus \mathbb F_2^{(\Gamma)}.
+\]
+It carries the standard alternating symplectic form
+\[
+  \sigma((x,z),(x',z')) = x\cdot z' + z\cdot x' \in \mathbb F_2.
+\]
+A stabilizer label subspace is an isotropic subspace
+\[
+  W \leq V_\Gamma, \qquad \sigma|_{W\times W}=0.
+\]
+\source{Gottesman, \emph{Surviving as a Quantum Computer in a Classical World},
+Chapter 3.5, Definition 3.11 and Definition 3.13, PDF pp.~55--56, for the
+binary symplectic representation of Paulis, the symplectic product, and weak
+self-duality/isotropy of stabilizer subspaces.  Project proof note 004,
+``Region Pauli label space'' and ``Internal stabilizer space of an extension'',
+for the finite-support countable-region adaptation.}
+\lean{Formalization.Stabilizer.StabilizerSystem}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proof}[Informal well-formedness check]
+The finitely supported functions \(\mathbb F_2^{(\Gamma)}\) form an
+\(\mathbb F_2\)-vector space under pointwise addition and scalar
+multiplication.  Their direct sum with itself is therefore an
+\(\mathbb F_2\)-vector space.  If \(x,z,x',z'\) are finitely supported, then
+the products \(x_jz'_j\) and \(z_jx'_j\) are nonzero at only finitely many
+indices, so the displayed formula for \(\sigma\) is a well-defined element of
+\(\mathbb F_2\).  Bilinearity follows from distributivity in \(\mathbb F_2\).
+The condition \(\sigma(w,w')=0\) for all \(w,w'\in W\) is exactly the
+binary-symplectic statement that the corresponding Pauli labels commute, so it
+is the algebraic stabilizer condition used by the later state and type notes.
+\end{proof}
+
+\end{document}

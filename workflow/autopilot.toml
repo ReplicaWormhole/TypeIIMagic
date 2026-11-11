@@ -1,0 +1,227 @@
+poll_seconds = 300
+codex_timeout_seconds = 0
+
+[notifications]
+telegram_enabled = false
+
+[[project]]
+id = "finite_fiber"
+root = "lean/finite_fibers"
+paper_root = "sources/manuscript"
+paper_entry = "manuscript/main.tex"
+task_root = "lean/finite_fibers/aristotle_tasks"
+queue = [
+  "FF15-finite-region-full-pauli-multiplication.md",
+  "FF16-full-pauli-support-locality.md",
+  "FF17-full-pauli-stabilizer-density.md",
+  "FF18-full-pauli-directed-local-system.md",
+  "FF19-quasilocal-state-gns-interface.md",
+  "FF20-stabilizer-support-corner-instantiation.md",
+  "FF21-finite-range-support-corner-construction.md",
+  "FF22-finite-range-tracial-corner-fullness.md",
+  "FF23-no-type-three-central-summands.md",
+]
+
+[[project]]
+id = "stabilizer_two_lane"
+root = "lean/stabilizer"
+paper_root = "sources/manuscript"
+paper_entry = "manuscript/main.tex"
+task_root = "lean/stabilizer/aristotle_tasks"
+
+[[project.job]]
+package_id = "P47"
+plan_lane = "G"
+packet = "P47-center-finite-projection-core.md"
+depends_on = []
+
+[[project.job]]
+package_id = "P48"
+plan_lane = "G"
+packet = "P48-general-lattice-projection-tower.md"
+depends_on = []
+
+[[project.job]]
+package_id = "P49"
+plan_lane = "G"
+packet = "P49-finite-corner-trace.md"
+depends_on = ["P47", "P48"]
+
+[[project.job]]
+package_id = "P49A"
+plan_lane = "shared"
+packet = "P49A-strong-operator-closed-von-neumann.md"
+depends_on = ["P48"]
+
+[[project.job]]
+package_id = "P49B"
+plan_lane = "shared"
+packet = "P49B-von-neumann-bicommutant-theorem.md"
+depends_on = ["P49A"]
+
+[[project.job]]
+package_id = "P49C"
+plan_lane = "shared"
+packet = "P49C-kaplansky-density.md"
+depends_on = ["P49B"]
+
+[[project.job]]
+package_id = "P50"
+plan_lane = "G"
+packet = "P50-normal-faithful-corner-trace.md"
+depends_on = ["P49", "P49C"]
+
+[[project.job]]
+package_id = "P50U"
+plan_lane = "shared"
+packet = "P50U-ultraweak-normality-bridge.md"
+depends_on = ["P50"]
+
+[[project.job]]
+package_id = "P51"
+plan_lane = "G"
+packet = "P51-full-finite-corner-central-exclusion.md"
+depends_on = ["P47", "P50"]
+
+[[project.job]]
+package_id = "P52"
+plan_lane = "H"
+packet = "P52-coherent-local-hyperbolic-coordinates.md"
+depends_on = []
+
+[[project.job]]
+package_id = "P53"
+plan_lane = "H"
+packet = "P53-local-hyperbolic-algebraic-alpha.md"
+depends_on = ["P52"]
+
+[[project.job]]
+package_id = "P54"
+plan_lane = "H"
+packet = "P54-uhf-reference-representation.md"
+depends_on = []
+
+[[project.job]]
+package_id = "P55"
+plan_lane = "H"
+packet = "P55-regional-concrete-cstar-alpha.md"
+depends_on = ["P53", "P54"]
+enabled = false
+
+[[project.job]]
+package_id = "P55A"
+plan_lane = "H"
+packet = "P55A-local-hyperbolic-finite-stage-uhf-bridge.md"
+depends_on = ["P53"]
+
+[[project.job]]
+package_id = "P55B"
+plan_lane = "H"
+packet = "P55B-local-hyperbolic-source-uhf-bridge.md"
+depends_on = ["P53", "P55A"]
+
+[[project.job]]
+package_id = "P55C"
+plan_lane = "H"
+packet = "P55C-local-hyperbolic-concrete-representations.md"
+depends_on = ["P53", "P54", "P55B"]
+
+[[project.job]]
+package_id = "P55D"
+plan_lane = "H"
+packet = "P55D-regional-concrete-cstar-alpha.md"
+depends_on = ["P53", "P55C"]
+
+[[project.job]]
+package_id = "P56"
+plan_lane = "H"
+packet = "P56-regional-product-state-identity.md"
+depends_on = ["P55D"]
+enabled = false
+
+[[project.job]]
+package_id = "P56R"
+plan_lane = "H"
+packet = "P56R-regional-cstar-product-state.md"
+depends_on = ["P55D"]
+
+[[project.job]]
+package_id = "P57A"
+plan_lane = "shared"
+packet = "P57A-vacuum-restricted-itp-core.md"
+depends_on = []
+
+[[project.job]]
+package_id = "P57"
+plan_lane = "H"
+packet = "P57-product-gns-tensor-factorization.md"
+depends_on = ["P54", "P56R", "P57A"]
+
+[[project.job]]
+package_id = "P58"
+plan_lane = "H"
+packet = "P58-mixed-uhf-hyperfinite-factor.md"
+depends_on = ["P54"]
+
+[[project.job]]
+package_id = "P59"
+plan_lane = "H"
+packet = "P59-local-hyperbolic-factor-trace-theorem.md"
+depends_on = ["P57", "P58"]
+enabled = false
+
+[[project.job]]
+package_id = "P59A"
+plan_lane = "H"
+packet = "P59A-concrete-pure-mixed-product-data.md"
+depends_on = ["P55D", "P56R"]
+
+[[project.job]]
+package_id = "P57B"
+plan_lane = "shared"
+packet = "P57B-vacuum-itp-completion.md"
+depends_on = ["P57A"]
+
+[[project.job]]
+package_id = "P57C"
+plan_lane = "H"
+packet = "P57C-pure-gns-type-one-factor.md"
+depends_on = ["P59A", "P57B"]
+
+[[project.job]]
+package_id = "P59B"
+plan_lane = "H"
+packet = "P59B-mixed-gns-uhf-bridge.md"
+depends_on = ["P59A", "P58"]
+
+[[project.job]]
+package_id = "P59R"
+plan_lane = "H"
+packet = "P59R-regional-factor-transport.md"
+depends_on = ["P57", "P57C", "P59B"]
+
+[[project.job]]
+package_id = "P59T"
+plan_lane = "H"
+packet = "P59T-regional-trace-weight.md"
+depends_on = ["P59R", "P50U"]
+
+[[project.job]]
+package_id = "P60"
+plan_lane = "G"
+packet = "P60-full-corner-semifinite-weight.md"
+depends_on = ["P51", "P50U"]
+enabled = false
+
+[[project.job]]
+package_id = "P60R"
+plan_lane = "G"
+packet = "P60R-full-corner-standard-semifiniteness-repair.md"
+depends_on = ["P51", "P50U"]
+
+[[project.job]]
+package_id = "P61"
+plan_lane = "reconnection"
+packet = "P61-hyperbolic-implies-central-criterion.md"
+depends_on = ["P51", "P59R"]
+enabled = false

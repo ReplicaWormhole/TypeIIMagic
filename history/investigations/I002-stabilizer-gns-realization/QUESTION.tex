@@ -1,0 +1,68 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[a4paper,margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{question}{Question}
+\newtheorem{assumption}{Assumption}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\G}{\Gamma}
+\newcommand{\id}{\mathbf 1}
+
+\title{Question I002: Stabilizer/GNS Realization of the Finite-Fiber Theorem}
+\date{August 3, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{question}
+For the consistent stabilizer system and regional von Neumann algebra in the
+current Overleaf manuscript, can the hypotheses used by the checked abstract
+support-corner theorem be derived from the actual GNS construction?  More
+precisely, can one formally verify the chain
+\begin{equation}
+  \begin{aligned}
+    \text{local support projections }p_n
+    &\longrightarrow q \\
+    &\longrightarrow \text{a tracial, projection-faithful, full corner }q\cM_\G q \\
+    &\longrightarrow \text{finite central fibers}?
+  \end{aligned}
+  \label{eq:question_chain}
+\end{equation}
+\end{question}
+
+\begin{assumption}[Fidelity rule]
+Every theorem in this investigation must use either an implemented
+construction or an explicitly named hypothesis corresponding to a precise
+manuscript step.  In particular, neither GNS cyclicity, strong closure,
+Kaplansky density, nor direct-integral type classification may be replaced by
+a project-local axiom or silently folded into an opaque ``stabilizer''
+structure.
+\end{assumption}
+
+\paragraph{Approved scope.}
+The investigation formalizes the finite group-average construction of local
+supports, their monotonicity under nested stabilizer subgroups, the canonical
+strong limit of the resulting decreasing projections, and the
+vector-functional/dense-orbit implications yielding faithfulness on
+projections and fullness in Lean.  It connects these results to the checked
+full-tracial-corner theorem from I001, while keeping the GNS orbit and
+corner-traciality hypotheses explicit rather than silently constructing them.
+It includes a source-mapped technical note, compiled PDF, and fresh
+independent mathematical and Lean/API reviews.
+
+\paragraph{Known infrastructure boundary.}
+Mathlib~v4.28 contains a GNS representation construction, but its source
+records the cyclic-vector construction as unfinished.  It has no bundled
+direct-integral or type-III-factor API.  The current formalization also does
+not construct the tensor-product Pauli action, the compatible finite-volume
+density matrices, or the local-to-von-Neumann corner-trace extension.  The
+final record must distinguish the checked theorem from these exact upstream
+blockers; it may not label the whole stabilizer theorem formally proved.
+
+\end{document}

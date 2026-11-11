@@ -1,0 +1,43 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+\newtheorem{theorem}{Theorem}
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{#1}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+
+\begin{document}
+
+\section*{Blueprint 005: Type-Restriction Targets}
+
+\paragraph{Superseded note.}
+This historical draft is superseded by
+\texttt{blueprints/013-final-stabilizer-type-classification.tex}.  It is
+preserved only as provenance for the earlier draft and should not be used as an
+active Aristotle source.
+
+\begin{theorem}[RegionTypeClassification, superseded ID: TYPE-001]
+For a canonical stabilizer projection state on a countable region, the
+represented region von Neumann algebra has one of the following types,
+according to its internal fixed rank \(p\) and defect rank \(r\):
+\[
+\begin{array}{c|c|c}
+p<\infty & r<\infty & \text{finite type I}\\
+p=\infty & r<\infty & \text{type } I_\infty\\
+p<\infty & r=\infty & \text{hyperfinite type } II_1\\
+p=\infty & r=\infty & \text{type } II_\infty.
+\end{array}
+\]
+In particular no canonical projection state in this class produces a type III
+region algebra.
+\source{Project proof note 004, Theorem 5.1.  Operator-algebra backend:
+Kadison--Ringrose I, Theorem 4.5.2 and Proposition 4.5.3, PDF pp.~287--288;
+Kadison--Ringrose II, Definition 6.5.1, Theorem 6.5.2, Corollary 6.5.3,
+Remark 6.5.4, and Theorem 6.6.1, PDF pp.~57--63; Blackadar,
+III.3.1.1--III.3.1.6, PDF pp.~301--304, and III.3.4.1--III.3.4.2,
+PDF p.~317.}
+\lean{Formalization.Stabilizer.RegionType}
+\status{blueprint_draft_master_dependency_plan_complete}
+\end{theorem}
+
+\end{document}

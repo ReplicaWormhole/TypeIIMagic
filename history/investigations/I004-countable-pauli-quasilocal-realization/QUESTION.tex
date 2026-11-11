@@ -1,0 +1,63 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[a4paper,margin=1.15in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{question}{Question}
+\newtheorem{assumption}{Assumption}
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\bbC}{\mathbb C}
+\newcommand{\id}{\mathbf 1}
+
+\title{Question I004: Countable Pauli Realization and the Quasi-Local Algebra}
+\date{August 3, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{question}
+Can the ordered finite-qubit system of I003 be realized faithfully inside a
+single concrete operator algebra on a countable configuration Hilbert space,
+then completed to the quasi-local $C^*$-algebra used in the manuscript?  Can
+the compatible finite stabilizer functionals be extended to a positive,
+normalized global state in a way that can subsequently feed the existing GNS
+and support-corner layers?
+\end{question}
+
+\begin{assumption}[Fidelity rule]
+The construction must distinguish three objects: the finite ordered matrix
+chain, its concrete image in bounded operators, and the norm-closed
+quasi-local $C^*$-algebra.  A module direct limit is not to be called an
+algebraic or normed $C^*$-inductive limit.  No claim about the regional GNS
+product orbit, corner traciality, or type classification may be made before
+its corresponding hypothesis is implemented.
+\end{assumption}
+
+\paragraph{Approved scope.}
+The investigation begins with the countable binary configuration group
+\begin{equation}
+  K=\mathbb N\to_0\mathbb Z/2\mathbb Z,
+  \qquad
+  \cH= L^2(K,\mathrm{count};\bbC),
+  \label{eq:configuration_hilbert_space}
+\end{equation}
+and constructs the local shift and phase operators.  It then seeks a checked
+finite/tail factorization identifying the finite-site Pauli image with the
+finite matrix algebra tensored by the tail identity.  On that basis it will
+form a concrete increasing union and its norm closure, and will extend the
+compatible finite functionals only after proving the required boundedness and
+positivity statements.
+
+\paragraph{Deliberate boundary.}
+This investigation does not assume that the countable representation alone
+already supplies the local stabilizer restriction condition, the
+regional/complementary GNS product-orbit density, or the strong extension of
+the corner trace.  A direct-integral or type-III conclusion is also outside
+its scope.  Those are separate obligations required to instantiate all
+hypotheses of I002.
+
+\end{document}

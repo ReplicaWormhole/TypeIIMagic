@@ -1,0 +1,87 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{url}
+
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}[definition]{Lemma}
+\newcommand{\source}[1]{\par\noindent\textbf{Source.} #1}
+\newcommand{\lean}[1]{\par\noindent\textbf{Lean target.} \texttt{#1}}
+\newcommand{\status}[1]{\par\noindent\textbf{Status.} \texttt{\detokenize{#1}}}
+
+\begin{document}
+
+\section*{Blueprint 002: Canonical Stabilizer State}
+
+\subsection*{Scope}
+
+This note supports target `STATE-001'.  It formalizes only the Pauli-label
+coefficient rule for the canonical stabilizer projection state attached to an
+isotropic stabilizer label subspace and a consistent sign character.  It does
+not yet formalize the Pauli \(C^*\)-algebra, positivity of the resulting
+linear functional, GNS data, or any von Neumann algebra.
+
+\subsection*{Conventions}
+
+Let \(S=(\Gamma,W)\) be the algebraic stabilizer system of `SYS-001', so
+\[
+  W\leq V_\Gamma
+  =
+  \mathbb F_2^{(\Gamma)}\oplus \mathbb F_2^{(\Gamma)}
+\]
+is isotropic.  A stabilizer character is a group homomorphism
+\[
+  \chi:W\to\{\pm 1\}
+\]
+from the additive stabilizer label group to the multiplicative sign group.
+Equivalently, in Lean we may encode the same character as an additive map
+\[
+  \bar\chi:W\to\mathbb F_2
+\]
+and read the sign as \( (-1)^{\bar\chi(w)} \).
+
+\begin{definition}[CanonicalStatePackage, ID: STATE-001, project proof note 004, stabilizer character, crossing-stabilizer locality, and product form; Gottesman Chapter 3.5, Definition 3.13, PDF p.~56]
+Given an isotropic stabilizer label subspace \(W\leq V_\Gamma\) and a
+stabilizer character \(\chi:W\to\{\pm1\}\), the canonical coefficient state on
+Pauli labels is determined on basis Pauli labels by
+\[
+  \omega(P_v)=
+  \begin{cases}
+    \chi(v), & v\in W,\\
+    0, & v\notin W.
+  \end{cases}
+\]
+\source{Project proof note
+\path{../runs/2026-06-18-stabilizer-algebra-classification/artifacts/004-internal-stabilizer-reduction-type-classification-R1.tex},
+``Stabilizer character'', ``Crossing stabilizers do not change the local
+coefficients'', and ``Product form after symplectic basis reduction'', for the
+canonical projection-state Pauli coefficient rule and its character convention.
+Gottesman, \emph{Surviving as a Quantum Computer in a Classical World},
+Chapter 3.5, Definition 3.13, PDF p.~56, for stabilizer labels as commuting
+binary symplectic subspaces.}
+\lean{Formalization.Stabilizer.CanonicalStatePackage}
+\status{blueprint_note_complete}
+\end{definition}
+
+\begin{proof}[Informal well-formedness and state-origin check]
+The formula is well formed at the Pauli-label coefficient level because every
+label \(v\in V_\Gamma\) either lies in the stabilizer subspace \(W\) or does
+not.  In the first case the coefficient is the sign prescribed by the
+character \(\chi\); in the second case the coefficient is zero.  The character
+condition is the consistency condition for assigning simultaneous stabilizer
+eigenvalues to commuting stabilizer labels: if \(w,w'\in W\), then the
+coefficient assigned to the product label \(w+w'\) is
+\(\chi(w+w')=\chi(w)\chi(w')\).  The isotropy of \(W\) from `SYS-001' is the
+binary-symplectic commutation condition needed for this simultaneous
+assignment.
+
+The project proof note verifies the operator-algebraic origin of this
+coefficient rule for the canonical projection state and shows that, after an
+adapted symplectic basis reduction, the restriction is a tensor product of
+one-site \(Z\)-eigenstates on fixed modes and normalized traces on unfixed
+modes.  That product-form argument is the positivity/state justification for
+the informal mathematics.  The present Lean target records only the
+blueprint-backed algebraic coefficient package; formal positivity as a
+\(C^*\)-state is reserved for the later Pauli-algebra and GNS targets.
+\end{proof}
+
+\end{document}
