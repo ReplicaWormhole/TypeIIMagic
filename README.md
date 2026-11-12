@@ -1,12 +1,47 @@
 # TypeIIMagic
 
-The existing stabilizer/operator-algebra formalization, its development record,
-and the Aristotle–Codex loop that produced it.
+This repository contains a partial Lean formalization of the stabilizer-system
+results discussed in Sections II.A–C of
+[Infinite magic and the emergence of the continuum](https://arxiv.org/abs/2610.20790).
+It preserves both the formalization and the development record of the
+Codex–Aristotle workflow that produced it.
 
-This repository preserves a working research snapshot rather than starting a new
-formalization. The record includes the Lean sources, original task packets,
-returned source snapshots, integration reviews, actual Codex traces, and saved
-supervisor state. The original local repositories are left untouched.
+## Project status
+
+As of November 2026, Aristotle
+[no longer supports Lean-only projects](https://aristotle.harmonic.fun/docs/overview).
+Consequently, this project's automated formalization workflow is discontinued
+in its current form.
+
+The existing Lean development can still be built and checked locally.
+The orchestration code and saved state are preserved, but continuing the
+automated workflow would require adapting it to another supported backend.
+The continuation instructions below document the historical workflow.
+
+## How the formalization was developed
+
+The paper's proofs served as a mathematical blueprint from which Codex
+prepared formalization packages for Aristotle. These packages are preserved in
+[`lean/finite_fibers/aristotle_tasks/`](lean/finite_fibers/aristotle_tasks/)
+and [`lean/stabilizer/aristotle_tasks/`](lean/stabilizer/aristotle_tasks/).
+
+A Python supervisor,
+[`workflow/aristotle_autopilot.py`](workflow/aristotle_autopilot.py),
+was configured to poll Aristotle at five-minute intervals. When a task
+finished, the supervisor downloaded its output and invoked Codex to review
+the result, integrate acceptable changes, and run Lean builds and axiom checks.
+Following an accepted review, the supervisor submitted the next prepared
+package whose dependencies had been accepted. Partial or rejected results
+halted the affected queue.
+
+The repository retains the task packets, returned artifacts, prompts,
+integration reviews, Codex traces, and supervisor state.
+[`history/TIMELINE.md`](history/TIMELINE.md) provides a chronological entry
+point into this record.
+
+The formalization remains incomplete. Proved results, explicit assumptions,
+partial results, and unresolved obligations are distinguished in
+[`STATE.md`](STATE.md).
 
 ## Read the current state
 
